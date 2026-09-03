@@ -1,0 +1,17 @@
+[
+  {
+    "id": "mock-project-wedding",
+    "properties": {
+      "Title": { "title": [{ "plain_text": "互動婚禮網站" }] },
+      "Slug": { "rich_text": [{ "plain_text": "wedding" }] },
+      "Owner": { "multi_select": [{ "name": "Yura" }, { "name": "Wilson" }] },
+      "RoleAttribution": { "rich_text": [{ "plain_text": "Yura: 視覺/動效, Wilson: 架構/彈幕" }] },
+      "TechStack": { "multi_select": [{ "name": "Vue 3" }, { "name": "TypeScript" }, { "name": "Tailwind" }, { "name": "Canvas" }] },
+      "Summary": { "rich_text": [{ "plain_text": "雙人協作打造的互動婚禮網站,展示彈幕引擎與視差故事時間軸。" }] },
+      "DemoUrl": { "url": "https://wei-yuu.github.io/projects/wedding" },
+      "RepoUrl": { "url": "https://github.com/wei-yuu/wei-yuu.github.io" },
+      "Featured": { "checkbox": true },
+      "Order": { "number": 1 }
+    }
+  }
+]

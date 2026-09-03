@@ -1,0 +1,14 @@
+[
+  {
+    "id": "mock-experience-wilson-1",
+    "properties": {
+      "Company": { "title": [{ "plain_text": "範例科技股份有限公司" }] },
+      "Role": { "rich_text": [{ "plain_text": "資深前端工程師" }] },
+      "TargetUser": { "select": { "name": "Wilson" } },
+      "Period": { "date": { "start": "2018-07-01", "end": null } },
+      "IsCurrent": { "checkbox": true },
+      "Highlights": { "rich_text": [{ "plain_text": "主導前端架構改版,Lighthouse 效能分數由 62 提升至 95。" }] },
+      "TechUsed": { "multi_select": [{ "name": "Vue 3" }, { "name": "TypeScript" }, { "name": "Vite" }] }
+    }
+  }
+]

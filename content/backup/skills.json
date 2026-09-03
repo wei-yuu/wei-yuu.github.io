@@ -1,0 +1,12 @@
+[
+  {
+    "id": "mock-skill-1",
+    "properties": {
+      "SkillName": { "title": [{ "plain_text": "Vue 3 Composition API" }] },
+      "Category": { "select": { "name": "Frontend Core" } },
+      "TargetUser": { "select": { "name": "Wilson" } },
+      "Proficiency": { "select": { "name": "Expert" } },
+      "Order": { "number": 1 }
+    }
+  }
+]

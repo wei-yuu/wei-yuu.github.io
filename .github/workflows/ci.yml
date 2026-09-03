@@ -1,0 +1,78 @@
+name: CI & Deploy
+
+# SRS §5.2:PR 僅觸發無副作用的 Stage 1-2(不消耗 Notion API 額度、不暴露 Secrets);
+# 只有 push main / workflow_dispatch / 每週排程,才會跑到會打 Notion API 與部署的 Stage 3-4。
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # SRS §3.5:每週一 04:00 (UTC+8) 排程備援自動同步
+    - cron: '0 20 * * 0'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Stage 1 + Stage 2:所有事件(含 PR)都跑
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 'Stage 1: Lint & Typecheck'
+        run: |
+          npm run lint
+          npm run typecheck
+      - name: 'Stage 2: Unit Testing'
+        run: npm run test
+
+  # Stage 3 / 3.5 / 4:只在 push main、手動觸發或排程時跑,PR 不會執行這個 job
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 'Stage 3: Fetch Content & Generate SSG'
+        run: |
+          npm run fetch:content
+          npm run generate
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DB_PROJECTS: ${{ secrets.NOTION_DB_PROJECTS }}
+          NOTION_DB_EXP: ${{ secrets.NOTION_DB_EXP }}
+          NOTION_DB_SKILLS: ${{ secrets.NOTION_DB_SKILLS }}
+      - name: 'Stage 3.5: E2E Testing'
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+        env:
+          CI: true
+      - name: 'Stage 4: Deploy to GitHub Pages'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+      - id: deployment
+        uses: actions/deploy-pages@v4
