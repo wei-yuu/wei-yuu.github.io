@@ -1,36 +1,48 @@
 <script setup lang="ts">
-const SITE_URL = 'https://wei-yuu.github.io'
+const siteConfig = useSiteConfig()
+const { profile } = useProfileContent('Yura')
+
+// Notion People.JobTitle/SeoDescription 還沒填時,用這兩句當合理預設值,
+// 不要讓 SEO meta 空白或顯示 undefined。
+const jobTitle = computed(() => profile.value?.jobTitle || '前端工程師')
+const description = computed(
+  () => profile.value?.seoDescription || 'Yura 的個人履歷與作品集,專精互動動效與視覺呈現。',
+)
+const pageTitle = computed(() => `Yura ｜ ${jobTitle.value}`)
+const pageUrl = computed(() => `${siteConfig.url}/yura`)
 
 // SRS §2.4:每個獨立頁面要有各自的 OG meta 與 JSON-LD,不是共用首頁那組
 useSeoMeta({
-  title: 'Yura ｜ 前端工程師',
-  description: 'Yura 的個人履歷與作品集,專精互動動效與視覺呈現。',
-  ogTitle: 'Yura ｜ 前端工程師',
-  ogDescription: 'Yura 的個人履歷與作品集,專精互動動效與視覺呈現。',
+  title: pageTitle,
+  description,
+  ogTitle: pageTitle,
+  ogDescription: description,
   ogType: 'profile',
-  ogUrl: `${SITE_URL}/yura`,
+  ogUrl: pageUrl,
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: `${SITE_URL}/yura` }],
+  link: [{ rel: 'canonical', href: pageUrl }],
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'ProfilePage',
-        mainEntity: {
-          '@type': 'Person',
-          name: 'Yura',
-          jobTitle: '前端工程師',
-          url: `${SITE_URL}/yura`,
-        },
-      }),
+      innerHTML: computed(() =>
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ProfilePage',
+          mainEntity: {
+            '@type': 'Person',
+            name: 'Yura',
+            jobTitle: jobTitle.value,
+            url: pageUrl.value,
+          },
+        }),
+      ),
     },
   ],
 })
 </script>
 
 <template>
-  <ResumeProfile person="Yura" job-title="前端工程師 · 視覺與互動動效" />
+  <ResumeProfile person="Yura" :job-title="jobTitle" />
 </template>

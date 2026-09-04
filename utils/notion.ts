@@ -1,4 +1,4 @@
-import type { DateRange, ExperienceItem, NotionPage, SkillItem } from '~/types/notion'
+import type { DateRange, ExperienceItem, NotionPage, PersonItem, SkillItem } from '~/types/notion'
 
 // 純函式,不碰 fs/網路,方便在 server API 與單元測試裡共用。
 // 每個 get* 對應一種 Notion 屬性形態,型別不符就回傳安全預設值,不拋例外——
@@ -67,6 +67,15 @@ export function mapExperience(page: NotionPage): ExperienceItem {
     isCurrent: getCheckbox(page, 'IsCurrent'),
     highlights: getRichText(page, 'Highlights'),
     techUsed: getRollupNames(page, 'TechUsedNames'),
+  }
+}
+
+export function mapPerson(page: NotionPage): PersonItem {
+  return {
+    id: page.id,
+    name: getTitleText(page, 'Name'),
+    jobTitle: getRichText(page, 'JobTitle'),
+    seoDescription: getRichText(page, 'SeoDescription'),
   }
 }
 

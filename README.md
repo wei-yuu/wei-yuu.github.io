@@ -11,12 +11,13 @@ npm run dev        # http://localhost:3000
 
 ## 內容管線
 
-三個 Notion 資料庫(Projects / Experiences / Skills)是內容主幹,`scripts/fetch-notion.ts`
+四個 Notion 資料庫(Projects / Experiences / Skills / People)是內容主幹,`scripts/fetch-notion.ts`
 在建置期抓取並正規化,失敗時逐資料庫降級讀取 `content/backup/*.json`(已提交至 git,
-作為第一次建置或 Notion 完全不可用時的種子資料)。
+作為第一次建置或 Notion 完全不可用時的種子資料)。Owner/TargetUser/TechStack/TechUsed
+採 Relation + Rollup 指向 People/TechStack 兩個共用主資料庫,詳見 SRS §3.1。
 
 ```bash
-cp .env.example .env   # 填入 NOTION_API_KEY 與三個資料庫 ID
+cp .env.example .env   # 填入 NOTION_API_KEY 與四個資料庫 ID
 npm run fetch:content  # 產出 .cache/active-content.json,並逆向覆寫 content/backup/*.json
 ```
 
@@ -36,5 +37,5 @@ npm run test:e2e    # Stage 3.5,對 .output/public 跑 Playwright
 `.github/workflows/ci.yml`:PR 只跑 Stage 1-2;push main / `workflow_dispatch` /
 每週一 04:00(UTC+8)排程,才會跑到會打 Notion API 與部署 GitHub Pages 的 Stage 3-4。
 
-Secrets(`NOTION_API_KEY`、`NOTION_DB_PROJECTS`、`NOTION_DB_EXP`、`NOTION_DB_SKILLS`)
-存於 GitHub Organization Secrets,見 SRS §3.4。
+Secrets(`NOTION_API_KEY`、`NOTION_DB_PROJECTS`、`NOTION_DB_EXP`、`NOTION_DB_SKILLS`、
+`NOTION_DB_PEOPLE`)存於 GitHub Organization Secrets,見 SRS §3.4。

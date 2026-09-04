@@ -83,8 +83,16 @@ export interface SkillItem {
   order: number | null
 }
 
+export interface PersonItem {
+  id: string
+  name: string
+  jobTitle: string
+  seoDescription: string
+}
+
 export interface ProfileContent {
   experiences: ExperienceItem[]
   skills: SkillItem[]
+  people: PersonItem[]
   updatedAt: string
 }

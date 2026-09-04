@@ -10,6 +10,7 @@ import {
   getTitleText,
   isForPerson,
   mapExperience,
+  mapPerson,
   mapSkill,
 } from '../../utils/notion'
 
@@ -150,6 +151,32 @@ describe('mapExperience / mapSkill', () => {
       targetUsers: ['Wilson', 'Yura'],
       proficiency: 'Expert',
       order: 1,
+    })
+  })
+
+  it('mapPerson 把 People 資料庫的欄位轉成乾淨的 PersonItem', () => {
+    const page = makePage({
+      Name: { type: 'title', title: [{ plain_text: 'Wilson' }] },
+      JobTitle: { type: 'rich_text', rich_text: [{ plain_text: '前端工程師 · 架構與資料管線工程' }] },
+      SeoDescription: { type: 'rich_text', rich_text: [{ plain_text: 'Wilson 的個人履歷與作品集。' }] },
+    })
+
+    expect(mapPerson(page)).toEqual({
+      id: 'test-id',
+      name: 'Wilson',
+      jobTitle: '前端工程師 · 架構與資料管線工程',
+      seoDescription: 'Wilson 的個人履歷與作品集。',
+    })
+  })
+
+  it('mapPerson 對還沒填 JobTitle/SeoDescription 的資料,回傳空字串而不是拋錯', () => {
+    const page = makePage({ Name: { type: 'title', title: [{ plain_text: 'Yura' }] } })
+
+    expect(mapPerson(page)).toEqual({
+      id: 'test-id',
+      name: 'Yura',
+      jobTitle: '',
+      seoDescription: '',
     })
   })
 })

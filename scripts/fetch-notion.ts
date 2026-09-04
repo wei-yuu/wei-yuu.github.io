@@ -92,11 +92,16 @@ async function runPipeline() {
   const experiences = await fetchDbWithRetry('experiences', requireEnv('NOTION_DB_EXP'))
   await sleep(400)
   const skills = await fetchDbWithRetry('skills', requireEnv('NOTION_DB_SKILLS'))
+  await sleep(400)
+  // People 原本只是 Owner/TargetUser 的 Relation 目標,現在也直接抓取自己的欄位
+  // (JobTitle/SeoDescription),供 /yura、/wilson 頁面的 SEO meta 使用。
+  const people = await fetchDbWithRetry('people', requireEnv('NOTION_DB_PEOPLE'))
 
   const activeContent = {
     projects,
     experiences,
     skills,
+    people,
     updatedAt: new Date().toISOString(),
   }
   await fs.outputJson(path.join(CACHE_DIR, 'active-content.json'), activeContent, { spaces: 2 })

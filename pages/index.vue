@@ -1,7 +1,9 @@
 <script setup lang="ts">
 // Sprint 1 佔位首頁,雙人工作室品牌內容(日夜模式、雙門戶導流卡片)於 Sprint 4 實作。
 // 這裡先補上 SRS §2.4 要求的 WebSite JSON-LD 與基本 SEO meta,不等 Sprint 4 才補。
-const SITE_URL = 'https://wei-yuu.github.io'
+// SITE_URL 統一來源是 nuxt.config.ts 的 site.url(useSiteConfig 由 @nuxtjs/sitemap
+// 帶的 nuxt-site-config 提供),不要在每個頁面各寫一份常數——換自訂網域時只改一個地方。
+const siteConfig = useSiteConfig()
 
 useSeoMeta({
   title: 'wei-yuu ｜ Yura & Wilson',
@@ -11,16 +13,18 @@ useSeoMeta({
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: SITE_URL }],
+  link: [{ rel: 'canonical', href: computed(() => siteConfig.url) }],
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'wei-yuu',
-        url: SITE_URL,
-      }),
+      innerHTML: computed(() =>
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'wei-yuu',
+          url: siteConfig.url,
+        }),
+      ),
     },
   ],
 })

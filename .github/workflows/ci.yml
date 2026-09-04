@@ -64,6 +64,7 @@ jobs:
           NOTION_DB_PROJECTS: ${{ secrets.NOTION_DB_PROJECTS }}
           NOTION_DB_EXP: ${{ secrets.NOTION_DB_EXP }}
           NOTION_DB_SKILLS: ${{ secrets.NOTION_DB_SKILLS }}
+          NOTION_DB_PEOPLE: ${{ secrets.NOTION_DB_PEOPLE }}
       - name: 'Stage 3.5: E2E Testing'
         run: |
           npx playwright install --with-deps chromium

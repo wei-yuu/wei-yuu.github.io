@@ -19,5 +19,11 @@ export function useProfileContent(person: 'Yura' | 'Wilson') {
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
   )
 
-  return { experiences, skills, status, error }
+  // People 資料庫的 Name 就是單一人名(不是 Owner/TargetUser 那種多人 Relation),
+  // 直接用大小寫無關比對取那一筆,不需要 isForPerson 的陣列比對邏輯。
+  const profile = computed(() =>
+    (data.value?.people ?? []).find((item) => item.name.toLowerCase() === person.toLowerCase()),
+  )
+
+  return { experiences, skills, profile, status, error }
 }
