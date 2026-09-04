@@ -15,11 +15,18 @@ export default defineNuxtConfig({
     typeCheck: false, // CI 另外跑 `vue-tsc --noEmit`(Stage 1),避免重複拖慢 dev/build
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/sitemap'],
+
+  css: ['~/assets/css/main.css'],
 
   image: {
     // SRS §2.1:建置期自動轉檔 WebP/AVIF
     format: ['avif', 'webp'],
+  },
+
+  // SRS §2.4:@nuxtjs/sitemap 需要知道網站正式網域才能產出正確的絕對網址
+  site: {
+    url: 'https://wei-yuu.github.io',
   },
 
   app: {

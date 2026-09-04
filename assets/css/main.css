@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SRS §2.5/§4:標準 A4 列印樣式。過濾導覽列與非必要動畫,
+   輸出乾淨雙頁履歷,可直接透過瀏覽器列印成 PDF。 */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  /* Safari 的已知 bug:@page margin 生效時,html/body 有時仍套用畫面寬度去縮放整頁內容,
+     導致列印結果跟畫面比例跑掉。明確鎖定 A4 寬度可繞過這個問題。 */
+  html,
+  body {
+    width: 210mm;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* SRS §2.3:使用者開啟系統減弱動態偏好時,不論是不是列印情境都要降級為靜態展示。
+   Sprint 3 的彈幕/視差動畫元件都應遵循這個全域規則,不要各自重複實作判斷邏輯。 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
