@@ -1,14 +1,254 @@
 [
   {
-    "id": "mock-experience-wilson-1",
+    "object": "page",
+    "id": "3d036cd8-ad0e-809a-b66c-d31b6a4eccdf",
+    "created_time": "2026-09-03T07:59:00.000Z",
+    "last_edited_time": "2026-09-03T09:15:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80df-9966-dff6ecf93f3e"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
     "properties": {
-      "Company": { "title": [{ "plain_text": "範例科技股份有限公司" }] },
-      "Role": { "rich_text": [{ "plain_text": "資深前端工程師" }] },
-      "TargetUser": { "select": { "name": "Wilson" } },
-      "Period": { "date": { "start": "2018-07-01", "end": null } },
-      "IsCurrent": { "checkbox": true },
-      "Highlights": { "rich_text": [{ "plain_text": "主導前端架構改版,Lighthouse 效能分數由 62 提升至 95。" }] },
-      "TechUsed": { "multi_select": [{ "name": "Vue 3" }, { "name": "TypeScript" }, { "name": "Vite" }] }
-    }
+      "Highlights": {
+        "id": "%3BAr%3E",
+        "type": "rich_text",
+        "rich_text": []
+      },
+      "TechUsedNames": {
+        "id": "%3D%7C%3E%3D",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "TypeScript",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "TypeScript",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Tailwindcss",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Tailwindcss",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Claude Code",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Claude Code",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "React",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "React",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "TargetUser": {
+        "id": "MJUN",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa"
+          }
+        ],
+        "has_more": false
+      },
+      "TargetUserName": {
+        "id": "%60t%3BC",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Wilson",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Wilson",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "IsCurrent": {
+        "id": "eHG%60",
+        "type": "checkbox",
+        "checkbox": true
+      },
+      "Period": {
+        "id": "f%3Cva",
+        "type": "date",
+        "date": {
+          "start": "2025-03-24",
+          "end": null,
+          "time_zone": null
+        }
+      },
+      "TechUsed": {
+        "id": "z%5Ekl",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8064-865d-dc7ad440d086"
+          },
+          {
+            "id": "3d036cd8-ad0e-8040-beca-d6bc3d2e9fe8"
+          },
+          {
+            "id": "3d036cd8-ad0e-8047-aa59-cf1bb57ecb68"
+          },
+          {
+            "id": "3d036cd8-ad0e-8004-82a1-fa9fef0d1b42"
+          }
+        ],
+        "has_more": false
+      },
+      "Role": {
+        "id": "%7DMdP",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "高級工程師",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "高級工程師",
+            "href": null
+          }
+        ]
+      },
+      "Company": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "ASUS 華碩電腦",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "ASUS 華碩電腦",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/ASUS-3d036cd8ad0e809ab66cd31b6a4eccdf",
+    "public_url": null,
+    "archived": false
   }
 ]

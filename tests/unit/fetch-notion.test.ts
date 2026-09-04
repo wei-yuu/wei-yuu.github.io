@@ -9,16 +9,19 @@ vi.mock('@notionhq/client', () => ({
   })),
 }))
 
-// 模擬 fs-extra,把「本地備份」換成記憶體內的假檔案系統
+// 模擬 fs-extra,把「本地備份」換成記憶體內的假檔案系統。
+// 來源程式碼是 `import fs from 'fs-extra'`(default import),mock 也必須提供 `default`,
+// 否則測試會通過但真實執行時 default import 拿到的形狀不一樣(這正是今天發生過的 bug)。
 const fakeFs = new Map<string, unknown>()
-vi.mock('fs-extra', () => ({
+const fsExtraMock = {
   ensureDir: vi.fn().mockResolvedValue(undefined),
   outputJson: vi.fn(async (filePath: string, data: unknown) => {
     fakeFs.set(filePath, data)
   }),
   pathExists: vi.fn(async (filePath: string) => fakeFs.has(filePath)),
   readJson: vi.fn(async (filePath: string) => fakeFs.get(filePath)),
-}))
+}
+vi.mock('fs-extra', () => ({ default: fsExtraMock, ...fsExtraMock }))
 
 const { fetchDbWithRetry, requireEnv, runPipeline, BACKUP_DIR, CACHE_DIR } = await import(
   '../../scripts/fetch-notion'

@@ -3,7 +3,11 @@
 // start_cursor 分頁與逐資料庫獨立降級(任一資料庫失敗不影響其他資料庫)。
 import { Client } from '@notionhq/client'
 import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
-import * as fs from 'fs-extra'
+// 注意:必須用 default import,不能用 `import * as fs`——fs-extra 是 CJS 模組,
+// readJson/outputJson 等方法是動態掛載到 module.exports 上,cjs-module-lexer 靜態分析
+// 抓不到,`import * as fs` 合成出來的 namespace 上就會缺這些方法(pathExists/ensureDir
+// 因為是靜態賦值,不受影響,所以只有部分方法在真實執行時才會炸,測試用 mock 蓋不到)。
+import fs from 'fs-extra'
 import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 

@@ -1,12 +1,143 @@
 [
   {
-    "id": "mock-skill-1",
+    "object": "page",
+    "id": "3d036cd8-ad0e-805c-b12a-e70df7a1272b",
+    "created_time": "2026-09-03T08:23:00.000Z",
+    "last_edited_time": "2026-09-03T09:15:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80d4-a255-ee5bc2ece337"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
     "properties": {
-      "SkillName": { "title": [{ "plain_text": "Vue 3 Composition API" }] },
-      "Category": { "select": { "name": "Frontend Core" } },
-      "TargetUser": { "select": { "name": "Wilson" } },
-      "Proficiency": { "select": { "name": "Expert" } },
-      "Order": { "number": 1 }
-    }
+      "TargetUser": {
+        "id": "%3Acx%5C",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa"
+          },
+          {
+            "id": "3d036cd8-ad0e-80dc-9d6d-e295b4192b26"
+          }
+        ],
+        "has_more": false
+      },
+      "Category": {
+        "id": "Bkg%3F",
+        "type": "select",
+        "select": {
+          "id": "d73b18f0-eced-4ed3-a724-7e1061dc8341",
+          "name": "Frontend Core",
+          "color": "purple"
+        }
+      },
+      "Proficiency": {
+        "id": "GEy%7D",
+        "type": "select",
+        "select": {
+          "id": "wA>a",
+          "name": "Expert",
+          "color": "gray"
+        }
+      },
+      "Order": {
+        "id": "%5BcAM",
+        "type": "number",
+        "number": 1
+      },
+      "TargetUserNames": {
+        "id": "%7D%3CS%60",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Wilson",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Wilson",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Yura",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Yura",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "SkillName": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Vue 3 Composition API",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Vue 3 Composition API",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/Vue-3-Composition-API-3d036cd8ad0e805cb12ae70df7a1272b",
+    "public_url": null,
+    "archived": false
   }
 ]
