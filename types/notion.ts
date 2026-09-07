@@ -62,6 +62,12 @@ export interface DateRange {
   end: string | null
 }
 
+// Highlights 支援兩層:主項 + 縮排子項(對應 Notion 原生的 • / ◦ 兩層項目符號)
+export interface HighlightItem {
+  text: string
+  children: string[]
+}
+
 // 解析後給頁面用的乾淨資料型別
 export interface ExperienceItem {
   id: string
@@ -70,7 +76,7 @@ export interface ExperienceItem {
   targetUsers: string[]
   period: DateRange | null
   isCurrent: boolean
-  highlights: string
+  highlights: HighlightItem[]
   techUsed: string[]
 }
 

@@ -12,6 +12,7 @@ import {
   mapExperience,
   mapPerson,
   mapSkill,
+  splitHighlights,
 } from '../../utils/notion'
 
 function makePage(properties: NotionPage['properties']): NotionPage {
@@ -83,6 +84,59 @@ describe('Notion 屬性解析器', () => {
   })
 })
 
+describe('splitHighlights', () => {
+  it('Notion 原生兩層項目符號(• 主項 / ◦ 子項)正確拆成巢狀結構', () => {
+    const text =
+      '  • 擔任前端團隊 Lead (約 4 人)\n' +
+      '      ◦ 負責定義技術選型、分配開發任務\n' +
+      '      ◦ 建立團隊間的溝通橋樑\n' +
+      '  • 主動建立前端開發規範與自動化流程\n' +
+      '      ◦ 提升程式碼一致性與團隊協作效率'
+
+    expect(splitHighlights(text)).toEqual([
+      {
+        text: '擔任前端團隊 Lead (約 4 人)',
+        children: ['負責定義技術選型、分配開發任務', '建立團隊間的溝通橋樑'],
+      },
+      {
+        text: '主動建立前端開發規範與自動化流程',
+        children: ['提升程式碼一致性與團隊協作效率'],
+      },
+    ])
+  })
+
+  it('子項出現在第一個主項之前時,直接忽略(沒有父項可以掛)', () => {
+    expect(splitHighlights('◦ 沒有父項的子項\n• 正常主項')).toEqual([
+      { text: '正常主項', children: [] },
+    ])
+  })
+
+  it('相容舊格式:純手動編號的單層文字,視為沒有子項的主項', () => {
+    const text = '1. 擔任前端團隊 Lead (約 4 人)- 負責定義技術選型\n2. 主動建立前端開發規範\n\n'
+    expect(splitHighlights(text)).toEqual([
+      { text: '擔任前端團隊 Lead (約 4 人)- 負責定義技術選型', children: [] },
+      { text: '主動建立前端開發規範', children: [] },
+    ])
+  })
+
+  it('沒有任何符號時,整段當一個沒有子項的主項', () => {
+    expect(splitHighlights('單純一段話的重點')).toEqual([
+      { text: '單純一段話的重點', children: [] },
+    ])
+  })
+
+  it('空字串回傳空陣列', () => {
+    expect(splitHighlights('')).toEqual([])
+  })
+
+  it('編號用全角「、」也能正確去除', () => {
+    expect(splitHighlights('1、第一項\n2、第二項')).toEqual([
+      { text: '第一項', children: [] },
+      { text: '第二項', children: [] },
+    ])
+  })
+})
+
 describe('isForPerson', () => {
   it('忽略大小寫比對人名', () => {
     expect(isForPerson(['Wilson', 'Yura'], 'wilson')).toBe(true)
@@ -101,7 +155,10 @@ describe('mapExperience / mapSkill', () => {
       },
       Period: { type: 'date', date: { start: '2025-03-24', end: null } },
       IsCurrent: { type: 'checkbox', checkbox: true },
-      Highlights: { type: 'rich_text', rich_text: [] },
+      Highlights: {
+        type: 'rich_text',
+        rich_text: [{ plain_text: '  • 擔任前端團隊 Lead\n      ◦ 負責分配任務\n  • 主動建立開發規範\n\n' }],
+      },
       TechUsedNames: {
         type: 'rollup',
         rollup: {
@@ -121,7 +178,10 @@ describe('mapExperience / mapSkill', () => {
       targetUsers: ['Wilson'],
       period: { start: '2025-03-24', end: null },
       isCurrent: true,
-      highlights: '',
+      highlights: [
+        { text: '擔任前端團隊 Lead', children: ['負責分配任務'] },
+        { text: '主動建立開發規範', children: [] },
+      ],
       techUsed: ['TypeScript', 'React'],
     })
   })
