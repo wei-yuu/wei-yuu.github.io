@@ -58,7 +58,7 @@
         "type": "number",
         "number": 1
       },
-      "TargetUserNames": {
+      "TargetUserName": {
         "id": "%7D%3CS%60",
         "type": "rollup",
         "rollup": {

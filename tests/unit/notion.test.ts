@@ -190,7 +190,7 @@ describe('mapExperience / mapSkill', () => {
     const page = makePage({
       SkillName: { type: 'title', title: [{ plain_text: 'Vue 3 Composition API' }] },
       Category: { type: 'select', select: { name: 'Frontend Core' } },
-      TargetUserNames: {
+      TargetUserName: {
         type: 'rollup',
         rollup: {
           type: 'array',

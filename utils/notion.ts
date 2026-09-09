@@ -117,7 +117,7 @@ export function mapSkill(page: NotionPage): SkillItem {
     id: page.id,
     skillName: getTitleText(page, 'SkillName'),
     category: getSelectName(page, 'Category'),
-    targetUsers: getRollupNames(page, 'TargetUserNames'),
+    targetUsers: getRollupNames(page, 'TargetUserName'),
     proficiency: getSelectName(page, 'Proficiency'),
     order: getNumber(page, 'Order'),
   }
