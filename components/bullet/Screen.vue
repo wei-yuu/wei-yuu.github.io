@@ -20,7 +20,7 @@ import type { BulletMessage } from '~/types/bullet'
 // 事件)。所以額外 watch magazine,一有新資料就檢查有沒有空格子可以立刻填入。
 //
 // :key 用彈幕自己的 id,不是軌道編號(index)——Bullet 元件在 onMounted 時要量測
-// 軌道跟文字的實際寬度來算動畫位移量(見 bullet/index.vue),如果 key 不變、Vue
+// 軌道跟文字的實際寬度來算動畫位移量(見 bullet/Bullet.vue),如果 key 不變、Vue
 // 重複使用同一個元件實例,onMounted 只會在第一則彈幕時跑一次,後面換的彈幕會沿用
 // 舊的量測結果。用 id 當 key,換彈幕時 Vue 會整個重新建立元件,每則都重新量測。
 const magazine = defineModel<BulletMessage[]>('magazine', { default: () => [] })
