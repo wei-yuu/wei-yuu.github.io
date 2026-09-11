@@ -34,6 +34,11 @@ export interface NotionRelationProperty {
   relation: Array<{ id: string }>
 }
 
+export interface NotionUrlProperty {
+  type: 'url'
+  url: string | null
+}
+
 export interface NotionRollupArrayProperty {
   type: 'rollup'
   rollup: {
@@ -51,6 +56,7 @@ export type NotionProperty =
   | NotionDateProperty
   | NotionRelationProperty
   | NotionRollupArrayProperty
+  | NotionUrlProperty
 
 export interface NotionPage {
   id: string
@@ -96,7 +102,28 @@ export interface PersonItem {
   seoDescription: string
 }
 
+// RoleAttribution 是「Yura: 視覺/動效, Wilson: 架構/彈幕」這種單行文字,
+// 拆成每人一列給 §4.2 的雙人分工矩陣渲染用。
+export interface RoleAttributionItem {
+  person: string
+  role: string
+}
+
+export interface ProjectItem {
+  id: string
+  title: string
+  slug: string
+  summary: string
+  roleAttribution: RoleAttributionItem[]
+  techStack: string[]
+  demoUrl: string | null
+  repoUrl: string | null
+  featured: boolean
+  order: number | null
+}
+
 export interface ProfileContent {
+  projects: ProjectItem[]
   experiences: ExperienceItem[]
   skills: SkillItem[]
   people: PersonItem[]

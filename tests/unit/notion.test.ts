@@ -8,10 +8,13 @@ import {
   getRollupNames,
   getSelectName,
   getTitleText,
+  getUrl,
   isForPerson,
   mapExperience,
   mapPerson,
+  mapProject,
   mapSkill,
+  parseRoleAttribution,
   splitHighlights,
 } from '../../utils/notion'
 
@@ -81,6 +84,39 @@ describe('Notion 屬性解析器', () => {
     })
     expect(getRollupNames(empty, 'OwnerNames')).toEqual([])
     expect(getRollupNames(makePage({}), 'Missing')).toEqual([])
+  })
+
+  it('getUrl 取出網址,型別不符或未填時回傳 null', () => {
+    const page = makePage({ DemoUrl: { type: 'url', url: 'https://wei-yuu.github.io/wedding' } })
+    expect(getUrl(page, 'DemoUrl')).toBe('https://wei-yuu.github.io/wedding')
+    expect(getUrl(makePage({ RepoUrl: { type: 'url', url: null } }), 'RepoUrl')).toBeNull()
+    expect(getUrl(makePage({}), 'Missing')).toBeNull()
+  })
+})
+
+describe('parseRoleAttribution', () => {
+  it('用逗號分人、冒號分角色,拆成結構化列表', () => {
+    expect(parseRoleAttribution('Yura: 視覺/動效, Wilson: 架構/彈幕')).toEqual([
+      { person: 'Yura', role: '視覺/動效' },
+      { person: 'Wilson', role: '架構/彈幕' },
+    ])
+  })
+
+  it('全形逗號與冒號也能正確拆分', () => {
+    expect(parseRoleAttribution('Yura：視覺，Wilson：架構')).toEqual([
+      { person: 'Yura', role: '視覺' },
+      { person: 'Wilson', role: '架構' },
+    ])
+  })
+
+  it('片段沒有冒號或任一邊為空時,直接跳過該片段', () => {
+    expect(parseRoleAttribution('Yura 視覺, Wilson: 架構, : 空人名, Yura2:')).toEqual([
+      { person: 'Wilson', role: '架構' },
+    ])
+  })
+
+  it('空字串回傳空陣列', () => {
+    expect(parseRoleAttribution('')).toEqual([])
   })
 })
 
@@ -237,6 +273,65 @@ describe('mapExperience / mapSkill', () => {
       name: 'Yura',
       jobTitle: '',
       seoDescription: '',
+    })
+  })
+
+  it('mapProject 把真實 Notion 回應形狀轉成乾淨的 ProjectItem', () => {
+    const page = makePage({
+      Title: { type: 'title', title: [{ plain_text: '互動婚禮網站' }] },
+      Slug: { type: 'rich_text', rich_text: [{ plain_text: 'wedding' }] },
+      Summary: { type: 'rich_text', rich_text: [{ plain_text: '雙人協作打造的互動婚禮網站。' }] },
+      RoleAttribution: {
+        type: 'rich_text',
+        rich_text: [{ plain_text: 'Yura: 視覺/動效, Wilson: 架構/彈幕' }],
+      },
+      TechStackNames: {
+        type: 'rollup',
+        rollup: {
+          type: 'array',
+          array: [
+            { type: 'title', title: [{ plain_text: 'Vue' }] },
+            { type: 'title', title: [{ plain_text: 'TypeScript' }] },
+          ],
+        },
+      },
+      DemoUrl: { type: 'url', url: 'https://wei-yuu.github.io/wedding' },
+      RepoUrl: { type: 'url', url: 'https://github.com/wei-yuu/wedding' },
+      Featured: { type: 'checkbox', checkbox: true },
+      Order: { type: 'number', number: 1 },
+    })
+
+    expect(mapProject(page)).toEqual({
+      id: 'test-id',
+      title: '互動婚禮網站',
+      slug: 'wedding',
+      summary: '雙人協作打造的互動婚禮網站。',
+      roleAttribution: [
+        { person: 'Yura', role: '視覺/動效' },
+        { person: 'Wilson', role: '架構/彈幕' },
+      ],
+      techStack: ['Vue', 'TypeScript'],
+      demoUrl: 'https://wei-yuu.github.io/wedding',
+      repoUrl: 'https://github.com/wei-yuu/wedding',
+      featured: true,
+      order: 1,
+    })
+  })
+
+  it('mapProject 對還沒填任何欄位的佔位列,回傳安全預設值而不是拋錯', () => {
+    const page = makePage({})
+
+    expect(mapProject(page)).toEqual({
+      id: 'test-id',
+      title: '',
+      slug: '',
+      summary: '',
+      roleAttribution: [],
+      techStack: [],
+      demoUrl: null,
+      repoUrl: null,
+      featured: false,
+      order: null,
     })
   })
 })

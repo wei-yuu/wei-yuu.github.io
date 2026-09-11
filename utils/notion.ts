@@ -4,6 +4,8 @@ import type {
   HighlightItem,
   NotionPage,
   PersonItem,
+  ProjectItem,
+  RoleAttributionItem,
   SkillItem,
 } from '~/types/notion'
 
@@ -49,6 +51,11 @@ export function getDateRange(page: NotionPage, key: string): DateRange | null {
   return p.date
 }
 
+export function getUrl(page: NotionPage, key: string): string | null {
+  const p = prop(page, key)
+  return p?.type === 'url' ? p.url : null
+}
+
 // Relation 本身只有 page id,實際名稱要靠 Rollup(見 SRS §3.1「額外關聯資料庫」段落),
 // 所以這裡故意只接受 rollup 型別,不去解析 relation 欄位。
 export function getRollupNames(page: NotionPage, key: string): string[] {
@@ -88,6 +95,32 @@ export function splitHighlights(text: string): HighlightItem[] {
     items.push({ text, children: [] })
   }
   return items
+}
+
+// RoleAttribution 是人工填寫的單行文字(如「Yura: 視覺/動效, Wilson: 架構/彈幕」),
+// 用逗號分人、冒號分角色,兩邊都用 trim 容錯全半角空白;格式不符的片段直接跳過,
+// 不讓一個打錯的逗號讓整個矩陣掛掉。
+export function parseRoleAttribution(text: string): RoleAttributionItem[] {
+  return text
+    .split(/[,，]/)
+    .map((segment) => segment.split(/[:：]/))
+    .filter((parts) => parts.length === 2 && parts[0].trim().length > 0 && parts[1].trim().length > 0)
+    .map(([person, role]) => ({ person: person.trim(), role: role.trim() }))
+}
+
+export function mapProject(page: NotionPage): ProjectItem {
+  return {
+    id: page.id,
+    title: getTitleText(page, 'Title'),
+    slug: getRichText(page, 'Slug'),
+    summary: getRichText(page, 'Summary'),
+    roleAttribution: parseRoleAttribution(getRichText(page, 'RoleAttribution')),
+    techStack: getRollupNames(page, 'TechStackNames'),
+    demoUrl: getUrl(page, 'DemoUrl'),
+    repoUrl: getUrl(page, 'RepoUrl'),
+    featured: getCheckbox(page, 'Featured'),
+    order: getNumber(page, 'Order'),
+  }
 }
 
 export function mapExperience(page: NotionPage): ExperienceItem {
