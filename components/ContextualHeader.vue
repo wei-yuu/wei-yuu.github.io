@@ -9,9 +9,7 @@
   >
     <NuxtLink to="/" class="font-semibold">wei-yuu</NuxtLink>
     <nav class="flex gap-3">
-      <!-- TODO(Sprint 4):首頁雙門戶導流卡片做好後,這裡的專案連結可能要重新規劃
-           (例如改成「有專案就自動列出」),目前先手動加這一個。 -->
-      <NuxtLink to="/projects/wedding" class="hover:underline" active-class="underline">婚禮案例</NuxtLink>
+      <NuxtLink to="/projects" class="hover:underline" active-class="underline">作品集</NuxtLink>
       <NuxtLink to="/yura" class="hover:underline" active-class="underline">Yura</NuxtLink>
       <NuxtLink to="/wilson" class="hover:underline" active-class="underline">Wilson</NuxtLink>
     </nav>
