@@ -1,4 +1,11 @@
-import type { DateRange, ExperienceItem, NotionPage, SkillItem } from '~/types/notion'
+import type {
+  DateRange,
+  ExperienceItem,
+  HighlightItem,
+  NotionPage,
+  PersonItem,
+  SkillItem,
+} from '~/types/notion'
 
 // 純函式,不碰 fs/網路,方便在 server API 與單元測試裡共用。
 // 每個 get* 對應一種 Notion 屬性形態,型別不符就回傳安全預設值,不拋例外——
@@ -57,6 +64,32 @@ export function isForPerson(targetUsers: string[], person: string): boolean {
   return targetUsers.some((name) => name.toLowerCase() === person.toLowerCase())
 }
 
+// Highlights 欄位在 Notion 裡是逐行分點填寫(Shift+Enter 換行),但 Notion API
+// 回傳的 rich_text 只是保留 \n 的一整串字串,不會自動拆成陣列或保留巢狀關係。
+// 支援兩種輸入慣例:
+//   1. Notion 原生兩層項目符號:「• 主項」+ 縮排的「◦ 子項」
+//   2. 純手動編號的單層文字:「1. xxx」「2. xxx」
+// 兩種都拆成同一種結構,渲染時用 <ul> 自動生成項目符號,不留手動打的符號/編號。
+export function splitHighlights(text: string): HighlightItem[] {
+  const lines = text
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+
+  const items: HighlightItem[] = []
+  for (const line of lines) {
+    const subItem = line.match(/^◦\s*(.*)$/)
+    if (subItem) {
+      items.at(-1)?.children.push(subItem[1])
+      continue
+    }
+    const topItem = line.match(/^[•-]\s*(.*)$/)
+    const text = topItem ? topItem[1] : line.replace(/^\d+[.、]\s*/, '')
+    items.push({ text, children: [] })
+  }
+  return items
+}
+
 export function mapExperience(page: NotionPage): ExperienceItem {
   return {
     id: page.id,
@@ -65,8 +98,17 @@ export function mapExperience(page: NotionPage): ExperienceItem {
     targetUsers: getRollupNames(page, 'TargetUserName'),
     period: getDateRange(page, 'Period'),
     isCurrent: getCheckbox(page, 'IsCurrent'),
-    highlights: getRichText(page, 'Highlights'),
+    highlights: splitHighlights(getRichText(page, 'Highlights')),
     techUsed: getRollupNames(page, 'TechUsedNames'),
+  }
+}
+
+export function mapPerson(page: NotionPage): PersonItem {
+  return {
+    id: page.id,
+    name: getTitleText(page, 'Name'),
+    jobTitle: getRichText(page, 'JobTitle'),
+    seoDescription: getRichText(page, 'SeoDescription'),
   }
 }
 

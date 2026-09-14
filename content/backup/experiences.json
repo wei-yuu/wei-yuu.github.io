@@ -3,7 +3,7 @@
     "object": "page",
     "id": "3d036cd8-ad0e-809a-b66c-d31b6a4eccdf",
     "created_time": "2026-09-03T07:59:00.000Z",
-    "last_edited_time": "2026-09-03T09:15:00.000Z",
+    "last_edited_time": "2026-09-07T09:09:00.000Z",
     "created_by": {
       "object": "user",
       "id": "17507561-74e1-4812-a305-00af82e1c357"
@@ -25,7 +25,25 @@
       "Highlights": {
         "id": "%3BAr%3E",
         "type": "rich_text",
-        "rich_text": []
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "  • 擔任前端團隊 Lead (約 4 人)\n      ◦ 負責定義技術選型、分配開發任務\n      ◦ 建立團隊間的溝通橋樑\n  • 主動建立前端開發規範與自動化流程\n      ◦ 提升程式碼一致性與團隊協作效率\n      ◦ 將混亂的開發模式轉型為結構化的工程\n  • EDR (Endpoint Detection and Response) 系統\n      ◦ 開發前端 Dashboard\n      ◦ 利用複雜的數據可視化技術（如圖表、樹狀結構）",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "  • 擔任前端團隊 Lead (約 4 人)\n      ◦ 負責定義技術選型、分配開發任務\n      ◦ 建立團隊間的溝通橋樑\n  • 主動建立前端開發規範與自動化流程\n      ◦ 提升程式碼一致性與團隊協作效率\n      ◦ 將混亂的開發模式轉型為結構化的工程\n  • EDR (Endpoint Detection and Response) 系統\n      ◦ 開發前端 Dashboard\n      ◦ 利用複雜的數據可視化技術（如圖表、樹狀結構）",
+            "href": null
+          }
+        ]
       },
       "TechUsedNames": {
         "id": "%3D%7C%3E%3D",
@@ -125,6 +143,11 @@
           "function": "show_original"
         }
       },
+      "Summary 1": {
+        "id": "AKGh",
+        "type": "rich_text",
+        "rich_text": []
+      },
       "TargetUser": {
         "id": "MJUN",
         "type": "relation",
@@ -134,6 +157,11 @@
           }
         ],
         "has_more": false
+      },
+      "Summary": {
+        "id": "OPeE",
+        "type": "rich_text",
+        "rich_text": []
       },
       "TargetUserName": {
         "id": "%60t%3BC",

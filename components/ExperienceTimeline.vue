@@ -18,7 +18,14 @@ defineProps<{ items: ExperienceItem[] }>()
         </span>
       </div>
       <p class="text-sm text-slate-600 dark:text-slate-300">{{ item.role }}</p>
-      <p v-if="item.highlights" class="mt-2 text-sm">{{ item.highlights }}</p>
+      <ul v-if="item.highlights.length" class="mt-2 list-disc space-y-1 pl-5 text-sm">
+        <li v-for="(point, index) in item.highlights" :key="index">
+          {{ point.text }}
+          <ul v-if="point.children.length" class="mt-1 list-[circle] space-y-0.5 pl-5 text-slate-500 dark:text-slate-400">
+            <li v-for="(child, childIndex) in point.children" :key="childIndex">{{ child }}</li>
+          </ul>
+        </li>
+      </ul>
       <ul v-if="item.techUsed.length" class="mt-2 flex flex-wrap gap-1">
         <li
           v-for="tech in item.techUsed"

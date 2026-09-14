@@ -2,6 +2,10 @@
   "name": "wei-yuu-website",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "packageManager": "npm@10.9.8",
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",

@@ -1,0 +1,196 @@
+[
+  {
+    "object": "page",
+    "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa",
+    "created_time": "2026-09-03T08:57:00.000Z",
+    "last_edited_time": "2026-09-04T09:16:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80c3-b209-f86edc4f2acc"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
+    "properties": {
+      "SeoDescription": {
+        "id": "ue_%7B",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Wilson 的個人履歷與作品集,專精架構設計與資料管線工程。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Wilson 的個人履歷與作品集,專精架構設計與資料管線工程。",
+            "href": null
+          }
+        ]
+      },
+      "JobTitle": {
+        "id": "%7D%3ADT",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "資深前端工程師．Senior Frontend Engineer",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "資深前端工程師．Senior Frontend Engineer",
+            "href": null
+          }
+        ]
+      },
+      "Name": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Wilson",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Wilson",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/Wilson-3d036cd8ad0e80559683d1b9ad218daa",
+    "public_url": null,
+    "archived": false
+  },
+  {
+    "object": "page",
+    "id": "3d036cd8-ad0e-80dc-9d6d-e295b4192b26",
+    "created_time": "2026-09-03T08:57:00.000Z",
+    "last_edited_time": "2026-09-04T09:16:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80c3-b209-f86edc4f2acc"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
+    "properties": {
+      "SeoDescription": {
+        "id": "ue_%7B",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Yura 的個人履歷與作品集,專精互動動效與視覺呈現。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Yura 的個人履歷與作品集,專精互動動效與視覺呈現。",
+            "href": null
+          }
+        ]
+      },
+      "JobTitle": {
+        "id": "%7D%3ADT",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "資深前端工程師．Senior Frontend Engineer",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "資深前端工程師．Senior Frontend Engineer",
+            "href": null
+          }
+        ]
+      },
+      "Name": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Yura",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Yura",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/Yura-3d036cd8ad0e80dc9d6de295b4192b26",
+    "public_url": null,
+    "archived": false
+  }
+]

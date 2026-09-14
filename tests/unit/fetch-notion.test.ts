@@ -95,26 +95,29 @@ describe('runPipeline', () => {
     process.env.NOTION_DB_PROJECTS = 'db-projects'
     process.env.NOTION_DB_EXP = 'db-experiences'
     process.env.NOTION_DB_SKILLS = 'db-skills'
+    process.env.NOTION_DB_PEOPLE = 'db-people'
   })
 
   afterEach(() => {
     delete process.env.NOTION_DB_PROJECTS
     delete process.env.NOTION_DB_EXP
     delete process.env.NOTION_DB_SKILLS
+    delete process.env.NOTION_DB_PEOPLE
   })
 
-  it('依序抓取三個資料庫,並把彙整結果寫入 .cache/active-content.json', async () => {
+  it('依序抓取四個資料庫,並把彙整結果寫入 .cache/active-content.json', async () => {
     queryMock.mockResolvedValue({ results: [{ id: 'row' }], next_cursor: null })
 
     await runPipeline()
 
-    expect(queryMock).toHaveBeenCalledTimes(3)
+    expect(queryMock).toHaveBeenCalledTimes(4)
     const cacheFile = path.join(CACHE_DIR, 'active-content.json')
     const cached = fakeFs.get(cacheFile) as Record<string, unknown>
     expect(cached).toMatchObject({
       projects: [{ id: 'row' }],
       experiences: [{ id: 'row' }],
       skills: [{ id: 'row' }],
+      people: [{ id: 'row' }],
     })
     expect(typeof cached.updatedAt).toBe('string')
   })
