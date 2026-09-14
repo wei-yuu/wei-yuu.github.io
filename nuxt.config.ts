@@ -32,6 +32,15 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'zh-Hant' },
+      // SRS §2.8/Website 設計文件 §3.4:防止首屏主題閃爍。這段必須在 Vue
+      // 掛載前、瀏覽器解析到 <body> 之前同步執行完,所以用原生 inline script
+      // 直接操作 DOM,不能等 composable/plugin 掛載後才處理。
+      script: [
+        {
+          key: 'wy-theme-init',
+          innerHTML: `(function(){try{var s=localStorage.getItem('wy-theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+        },
+      ],
     },
   },
 })
