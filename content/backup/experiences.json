@@ -3,7 +3,7 @@
     "object": "page",
     "id": "3d036cd8-ad0e-809a-b66c-d31b6a4eccdf",
     "created_time": "2026-09-03T07:59:00.000Z",
-    "last_edited_time": "2026-09-07T09:09:00.000Z",
+    "last_edited_time": "2026-09-07T09:18:00.000Z",
     "created_by": {
       "object": "user",
       "id": "17507561-74e1-4812-a305-00af82e1c357"
@@ -143,11 +143,6 @@
           "function": "show_original"
         }
       },
-      "Summary 1": {
-        "id": "AKGh",
-        "type": "rich_text",
-        "rich_text": []
-      },
       "TargetUser": {
         "id": "MJUN",
         "type": "relation",
@@ -157,11 +152,6 @@
           }
         ],
         "has_more": false
-      },
-      "Summary": {
-        "id": "OPeE",
-        "type": "rich_text",
-        "rich_text": []
       },
       "TargetUserName": {
         "id": "%60t%3BC",
