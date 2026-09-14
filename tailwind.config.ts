@@ -17,6 +17,27 @@ export default <Partial<Config>>{
   ],
   theme: {
     extend: {
+      // Website 設計文件 §3.1:字體與尺度。中文標題可選 Noto Serif TC 增加編
+      // 輯感,英文展示標題可選 Georgia,兩者都只是可選的強調用字,正文/導覽一律
+      // Noto Sans TC——所以只把這兩個獨立成 font-serif-tc / font-display-en,
+      // 不動預設的 font-sans。h1/h2/h3 各自拆桌機(-lg)/手機兩組數值,套用方式
+      // 是 `text-h1 lg:text-h1-lg`,對應文件給的手機╱桌機兩個尺寸區間。
+      fontFamily: {
+        sans: ['Noto Sans TC', 'system-ui', 'sans-serif'],
+        'serif-tc': ['Noto Serif TC', 'serif'],
+        'display-en': ['Georgia', 'serif'],
+      },
+      fontSize: {
+        h1: ['38px', { lineHeight: '1.25' }],
+        'h1-lg': ['60px', { lineHeight: '1.15' }],
+        h2: ['26px', { lineHeight: '1.3' }],
+        'h2-lg': ['32px', { lineHeight: '1.3' }],
+        h3: ['20px', { lineHeight: '1.35' }],
+        'h3-lg': ['22px', { lineHeight: '1.35' }],
+        body: ['16px', { lineHeight: '1.75' }],
+        'body-sm': ['14px', { lineHeight: '1.6' }],
+        btn: ['15px', { lineHeight: '1.4' }],
+      },
       colors: {
         wy: {
           bg: color('bg'),

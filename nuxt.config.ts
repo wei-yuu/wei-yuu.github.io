@@ -15,7 +15,17 @@ export default defineNuxtConfig({
     typeCheck: false, // CI 另外跑 `vue-tsc --noEmit`(Stage 1),避免重複拖慢 dev/build
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/sitemap'],
+  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/sitemap', '@nuxt/fonts'],
+
+  // Website 設計文件 §3.1:正文/導覽用 Noto Sans TC,中文標題可選 Noto Serif TC。
+  // @nuxt/fonts 會自動掃描實際用到的 font-family 並自架(self-host),不用自
+  // 己手動連 Google Fonts CDN,對 §2.2 的 LCP 門檻更友善。
+  fonts: {
+    defaults: {
+      weights: [400, 500, 600, 700],
+      subsets: ['latin', 'chinese-traditional'],
+    },
+  },
 
   css: ['~/assets/css/main.css'],
 
