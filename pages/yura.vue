@@ -44,5 +44,5 @@ useHead({
 </script>
 
 <template>
-  <ResumeProfile person="Yura" :job-title="jobTitle" />
+  <ResumeProfile person="Yura" :job-title="jobTitle" :bio="description" />
 </template>
