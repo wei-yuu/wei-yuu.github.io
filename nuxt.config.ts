@@ -42,6 +42,8 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'zh-Hant' },
+      // Website 設計文件 §5(A12):品牌 favicon,取代 Nuxt 預設的 favicon.ico。
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
       // SRS §2.8/Website 設計文件 §3.4:防止首屏主題閃爍。這段必須在 Vue
       // 掛載前、瀏覽器解析到 <body> 之前同步執行完,所以用原生 inline script
       // 直接操作 DOM,不能等 composable/plugin 掛載後才處理。

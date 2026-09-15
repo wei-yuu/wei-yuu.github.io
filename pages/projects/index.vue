@@ -5,7 +5,7 @@ const pageUrl = computed(() => `${siteConfig.url}/projects`)
 const { projects } = useProjects()
 
 useSeoMeta({
-  title: '專案作品集 ｜ wei-yuu',
+  title: '專案作品集 ｜ Wei Yu',
   description: 'Yura 與 Wilson 的作品集專案列表,點進去看每個案例的技術亮點剖析。',
   ogTitle: '專案作品集',
   ogDescription: 'Yura 與 Wilson 的作品集專案列表,點進去看每個案例的技術亮點剖析。',

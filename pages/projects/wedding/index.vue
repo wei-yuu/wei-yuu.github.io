@@ -28,7 +28,7 @@ const HIGHLIGHTS: ProjectHighlight[] = [
 ]
 
 useSeoMeta({
-  title: '互動婚禮網站 Case Study ｜ wei-yuu',
+  title: '互動婚禮網站 Case Study ｜ Wei Yu',
   description: summary,
   ogTitle: '互動婚禮網站 Case Study',
   ogDescription: summary,

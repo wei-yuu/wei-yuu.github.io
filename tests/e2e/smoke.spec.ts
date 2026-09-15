@@ -3,7 +3,8 @@ import { expect, test } from '@playwright/test'
 // SRS §5.1:驗證 SSG 靜態導出完整性。
 test('首頁能被靜態導出的 dist 正常服務', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('wei-yuu — Yura & Wilson')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('各自的風景，共同的海平線。')
+  await expect(page.getByRole('link', { name: 'Wei Yu' }).first()).toBeVisible()
 })
 
 test.describe('個人履歷頁', () => {

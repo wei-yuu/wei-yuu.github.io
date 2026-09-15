@@ -32,7 +32,7 @@ function handleKeydown(event: KeyboardEvent) {
   <header class="no-print sticky top-0 z-40 border-b border-wy-border-subtle bg-wy-nav backdrop-blur">
     <PageContainer>
       <div class="flex h-16 items-center justify-between lg:h-[72px]">
-        <NuxtLink to="/" class="text-h3 font-semibold text-wy-text" @click="closeMenu">wei-yuu</NuxtLink>
+        <NuxtLink to="/" class="text-h3 font-semibold text-wy-text" @click="closeMenu">Wei Yu</NuxtLink>
 
         <!-- 桌機/平板:常駐顯示 -->
         <nav aria-label="主要導覽" class="hidden items-center gap-5 md:flex">
