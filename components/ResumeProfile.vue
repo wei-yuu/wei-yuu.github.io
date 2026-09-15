@@ -13,6 +13,8 @@ const { experiences, skills, status } = useProfileContent(props.person)
     <ContextualHeader />
     <main class="print:max-w-none print:px-0">
       <PageContainer class="py-10 lg:py-14">
+        <PersonTabs class="mb-8" />
+
         <!-- Website 設計文件 §4.2/4.3:內容順序為姓名/職稱/簡介 → ... → 工作經歷 →
              技能分類,此區塊只負責姓名/職稱/簡介;不放星座裝飾語(星座僅為品牌靈感,
              不推定職能,§1.1 已明訂),也不放大頭照(A06 素材尚未交付)。 -->
