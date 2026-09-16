@@ -53,6 +53,7 @@ export default <Partial<Config>>{
           'accent-hover': color('accent-hover'),
           'accent-active': color('accent-active'),
           'on-accent': color('on-accent'),
+          'on-image': color('on-image'),
           focus: color('focus'),
           'selected-bg': color('selected-bg'),
           'selected-text': color('selected-text'),

@@ -12,14 +12,14 @@ test.describe('個人履歷頁', () => {
     await page.goto('/yura')
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Yura')
     await expect(page.getByRole('heading', { name: '工作經歷' })).toBeVisible()
-    await expect(page.getByRole('heading', { name: '技能矩陣' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
   })
 
   test('/wilson 能正常導航,且經歷/技能區塊有渲染', async ({ page }) => {
     await page.goto('/wilson')
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Wilson')
     await expect(page.getByRole('heading', { name: '工作經歷' })).toBeVisible()
-    await expect(page.getByRole('heading', { name: '技能矩陣' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
   })
 
   test('列印模式下,微縮導覽列(.no-print)必須被隱藏', async ({ page }) => {

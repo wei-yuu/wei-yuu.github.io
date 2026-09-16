@@ -22,6 +22,7 @@
     --color-accent-hover: 41 73 88; /* #294958 */
     --color-accent-active: 33 61 75; /* #213D4B */
     --color-on-accent: 250 248 243; /* #FAF8F3 */
+    --color-on-image: 241 237 229; /* #F1EDE5 — 疊在海景照片上的文字,兩模式固定暖白 */
     --color-focus: 53 103 127; /* #35677F */
     --color-selected-bg: 220 229 231; /* #DCE5E7 */
     --color-selected-text: 41 73 88; /* #294958 */
@@ -70,6 +71,7 @@
     --color-accent-hover: 202 220 228; /* #CADCE4 */
     --color-accent-active: 158 188 203; /* #9EBCCB */
     --color-on-accent: 20 38 48; /* #142630 */
+    --color-on-image: 241 237 229; /* #F1EDE5 — 疊在海景照片上的文字,兩模式固定暖白 */
     --color-focus: 196 222 234; /* #C4DEEA */
     --color-selected-bg: 48 73 87; /* #304957 */
     --color-selected-text: 226 237 241; /* #E2EDF1 */
@@ -112,9 +114,47 @@
   }
 }
 
-/* SRS §2.5/§4:標準 A4 列印樣式。過濾導覽列與非必要動畫,
-   輸出乾淨雙頁履歷,可直接透過瀏覽器列印成 PDF。 */
+/* SRS §2.5/§4、Website 設計文件 §4.9:標準 A4 列印樣式。過濾導覽列與非必要
+   動畫,輸出乾淨雙頁履歷,可直接透過瀏覽器列印成 PDF。列印永遠強制套用
+   light mode 色票,不受目前畫面明暗模式影響——:root.dark 在此重新覆寫回
+   跟 :root 相同的淺色數值,所有 wy-* utility class 因此自動變回白底黑字,
+   不需要每個元件另外寫一套 print: 覆寫。 */
 @media print {
+  :root,
+  :root.dark {
+    color-scheme: light;
+    --color-bg: 244 240 232;
+    --color-surface: 250 248 243;
+    --color-surface-raised: 255 255 255;
+    --color-surface-subtle: 233 230 222;
+    --color-text: 36 55 70;
+    --color-text-secondary: 82 97 107;
+    --color-text-muted: 100 109 112;
+    --color-border-subtle: 212 217 215;
+    --color-border-control: 124 139 145;
+    --color-accent: 54 91 109;
+    --color-accent-hover: 41 73 88;
+    --color-accent-active: 33 61 75;
+    --color-on-accent: 250 248 243;
+    --color-focus: 53 103 127;
+    --color-selected-bg: 220 229 231;
+    --color-selected-text: 41 73 88;
+    --color-disabled-bg: 227 228 223;
+    --color-disabled-text: 115 126 130;
+    --color-wilson: 165 141 107;
+    --color-yura: 135 166 181;
+    --color-warm-glint: 212 185 149;
+    --color-mist: 182 200 208;
+    --color-success: 50 101 77;
+    --color-success-bg: 230 239 231;
+    --color-warning: 120 90 42;
+    --color-warning-bg: 243 235 220;
+    --color-error: 150 63 64;
+    --color-error-bg: 245 229 227;
+    --color-info: 54 91 109;
+    --color-info-bg: 229 237 240;
+  }
+
   @page {
     size: A4;
     margin: 15mm;

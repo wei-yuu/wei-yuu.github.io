@@ -24,6 +24,8 @@ const label = computed(() => (isDark.value ? '切換為淺色模式' : '切換�
       <circle cx="12" cy="12" r="4.5" />
       <path d="M12 2.5v3M12 18.5v3M4.4 4.4l2.1 2.1M17.5 17.5l2.1 2.1M2.5 12h3M18.5 12h3M4.4 19.6l2.1-2.1M17.5 6.5l2.1-2.1" />
     </svg>
-    <span>{{ label }}</span>
+    <!-- 手機導覽列跟漢堡鈕並列,空間有限,文字標籤縮成 sr-only;桌機常駐導覽
+         有空間,依 §3.4 規則維持圖示+文字標籤都可見。 -->
+    <span class="sr-only md:not-sr-only">{{ label }}</span>
   </button>
 </template>

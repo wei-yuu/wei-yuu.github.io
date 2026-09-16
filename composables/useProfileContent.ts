@@ -25,5 +25,14 @@ export function useProfileContent(person: 'Yura' | 'Wilson') {
     (data.value?.people ?? []).find((item) => item.name.toLowerCase() === person.toLowerCase()),
   )
 
-  return { experiences, skills, profile, status, error }
+  // §4.2 內容順序「相關作品入口」:用 RoleAttribution 判斷此人是否參與該專案,
+  // 未填 Slug 的佔位列跟著濾掉,不產生 /projects/(空字串) 這種連結。
+  const relatedProjects = computed(() =>
+    (data.value?.projects ?? [])
+      .filter((item) => item.slug.length > 0)
+      .filter((item) => item.roleAttribution.some((r) => r.person.toLowerCase() === person.toLowerCase()))
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
+  )
+
+  return { experiences, skills, profile, relatedProjects, status, error }
 }
