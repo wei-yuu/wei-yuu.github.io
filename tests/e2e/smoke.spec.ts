@@ -13,6 +13,7 @@ test.describe('個人履歷頁', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Yura')
     await expect(page.getByRole('heading', { name: '工作經歷' })).toBeVisible()
     await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Yura', exact: true })).toHaveAttribute('aria-current', 'page')
   })
 
   test('/wilson 能正常導航,且經歷/技能區塊有渲染', async ({ page }) => {
@@ -26,6 +27,8 @@ test.describe('個人履歷頁', () => {
     await page.goto('/yura')
     await page.emulateMedia({ media: 'print' })
     await expect(page.locator('.no-print')).toBeHidden()
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)')
+    await expect(page.locator('body')).toHaveCSS('color', 'rgb(0, 0, 0)')
   })
 })
 

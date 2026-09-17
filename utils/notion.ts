@@ -56,6 +56,11 @@ export function getUrl(page: NotionPage, key: string): string | null {
   return p?.type === 'url' ? p.url : null
 }
 
+export function getEmail(page: NotionPage, key: string): string {
+  const p = prop(page, key)
+  return p?.type === 'email' ? p.email ?? '' : ''
+}
+
 // Relation 本身只有 page id,實際名稱要靠 Rollup(見 SRS §3.1「額外關聯資料庫」段落),
 // 所以這裡故意只接受 rollup 型別,不去解析 relation 欄位。
 export function getRollupNames(page: NotionPage, key: string): string[] {
@@ -141,7 +146,11 @@ export function mapPerson(page: NotionPage): PersonItem {
     id: page.id,
     name: getTitleText(page, 'Name'),
     jobTitle: getRichText(page, 'JobTitle'),
+    bio: getRichText(page, 'Bio'),
     seoDescription: getRichText(page, 'SeoDescription'),
+    email: getEmail(page, 'Email'),
+    githubUrl: getUrl(page, 'GitHubUrl'),
+    linkedinUrl: getUrl(page, 'LinkedInUrl'),
   }
 }
 

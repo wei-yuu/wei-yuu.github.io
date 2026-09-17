@@ -39,6 +39,11 @@ export interface NotionUrlProperty {
   url: string | null
 }
 
+export interface NotionEmailProperty {
+  type: 'email'
+  email: string | null
+}
+
 export interface NotionRollupArrayProperty {
   type: 'rollup'
   rollup: {
@@ -57,6 +62,7 @@ export type NotionProperty =
   | NotionRelationProperty
   | NotionRollupArrayProperty
   | NotionUrlProperty
+  | NotionEmailProperty
 
 export interface NotionPage {
   id: string
@@ -99,7 +105,11 @@ export interface PersonItem {
   id: string
   name: string
   jobTitle: string
+  bio: string
   seoDescription: string
+  email: string
+  githubUrl: string | null
+  linkedinUrl: string | null
 }
 
 // RoleAttribution 是「Yura: 視覺/動效, Wilson: 架構/彈幕」這種單行文字,

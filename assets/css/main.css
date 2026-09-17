@@ -116,43 +116,43 @@
 
 /* SRS §2.5/§4、Website 設計文件 §4.9:標準 A4 列印樣式。過濾導覽列與非必要
    動畫,輸出乾淨雙頁履歷,可直接透過瀏覽器列印成 PDF。列印永遠強制套用
-   light mode 色票,不受目前畫面明暗模式影響——:root.dark 在此重新覆寫回
-   跟 :root 相同的淺色數值,所有 wy-* utility class 因此自動變回白底黑字,
+   白底黑字色票,不受目前畫面明暗模式影響——:root.dark 在此重新覆寫全部
+   語意色,所有 wy-* utility class 因此自動轉為黑白／灰階,
    不需要每個元件另外寫一套 print: 覆寫。 */
 @media print {
   :root,
   :root.dark {
     color-scheme: light;
-    --color-bg: 244 240 232;
-    --color-surface: 250 248 243;
+    --color-bg: 255 255 255;
+    --color-surface: 255 255 255;
     --color-surface-raised: 255 255 255;
-    --color-surface-subtle: 233 230 222;
-    --color-text: 36 55 70;
-    --color-text-secondary: 82 97 107;
-    --color-text-muted: 100 109 112;
-    --color-border-subtle: 212 217 215;
-    --color-border-control: 124 139 145;
-    --color-accent: 54 91 109;
-    --color-accent-hover: 41 73 88;
-    --color-accent-active: 33 61 75;
-    --color-on-accent: 250 248 243;
-    --color-focus: 53 103 127;
-    --color-selected-bg: 220 229 231;
-    --color-selected-text: 41 73 88;
-    --color-disabled-bg: 227 228 223;
-    --color-disabled-text: 115 126 130;
-    --color-wilson: 165 141 107;
-    --color-yura: 135 166 181;
-    --color-warm-glint: 212 185 149;
-    --color-mist: 182 200 208;
-    --color-success: 50 101 77;
-    --color-success-bg: 230 239 231;
-    --color-warning: 120 90 42;
-    --color-warning-bg: 243 235 220;
-    --color-error: 150 63 64;
-    --color-error-bg: 245 229 227;
-    --color-info: 54 91 109;
-    --color-info-bg: 229 237 240;
+    --color-surface-subtle: 255 255 255;
+    --color-text: 0 0 0;
+    --color-text-secondary: 0 0 0;
+    --color-text-muted: 64 64 64;
+    --color-border-subtle: 160 160 160;
+    --color-border-control: 96 96 96;
+    --color-accent: 0 0 0;
+    --color-accent-hover: 0 0 0;
+    --color-accent-active: 0 0 0;
+    --color-on-accent: 255 255 255;
+    --color-focus: 0 0 0;
+    --color-selected-bg: 255 255 255;
+    --color-selected-text: 0 0 0;
+    --color-disabled-bg: 255 255 255;
+    --color-disabled-text: 64 64 64;
+    --color-wilson: 0 0 0;
+    --color-yura: 0 0 0;
+    --color-warm-glint: 0 0 0;
+    --color-mist: 0 0 0;
+    --color-success: 0 0 0;
+    --color-success-bg: 255 255 255;
+    --color-warning: 0 0 0;
+    --color-warning-bg: 255 255 255;
+    --color-error: 0 0 0;
+    --color-error-bg: 255 255 255;
+    --color-info: 0 0 0;
+    --color-info-bg: 255 255 255;
   }
 
   @page {

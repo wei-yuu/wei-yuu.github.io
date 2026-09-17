@@ -254,25 +254,37 @@ describe('mapExperience / mapSkill', () => {
     const page = makePage({
       Name: { type: 'title', title: [{ plain_text: 'Wilson' }] },
       JobTitle: { type: 'rich_text', rich_text: [{ plain_text: '前端工程師 · 架構與資料管線工程' }] },
+      Bio: { type: 'rich_text', rich_text: [{ plain_text: '專注可維護的前端架構。' }] },
       SeoDescription: { type: 'rich_text', rich_text: [{ plain_text: 'Wilson 的個人履歷與作品集。' }] },
+      Email: { type: 'email', email: 'wilson@example.com' },
+      GitHubUrl: { type: 'url', url: 'https://github.com/wilson' },
+      LinkedInUrl: { type: 'url', url: 'https://www.linkedin.com/in/wilson' },
     })
 
     expect(mapPerson(page)).toEqual({
       id: 'test-id',
       name: 'Wilson',
       jobTitle: '前端工程師 · 架構與資料管線工程',
+      bio: '專注可維護的前端架構。',
       seoDescription: 'Wilson 的個人履歷與作品集。',
+      email: 'wilson@example.com',
+      githubUrl: 'https://github.com/wilson',
+      linkedinUrl: 'https://www.linkedin.com/in/wilson',
     })
   })
 
-  it('mapPerson 對還沒填 JobTitle/SeoDescription 的資料,回傳空字串而不是拋錯', () => {
+  it('mapPerson 對還沒填個人資料的欄位,回傳安全空值而不是拋錯', () => {
     const page = makePage({ Name: { type: 'title', title: [{ plain_text: 'Yura' }] } })
 
     expect(mapPerson(page)).toEqual({
       id: 'test-id',
       name: 'Yura',
       jobTitle: '',
+      bio: '',
       seoDescription: '',
+      email: '',
+      githubUrl: null,
+      linkedinUrl: null,
     })
   })
 

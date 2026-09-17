@@ -11,7 +11,7 @@
 程式碼之外，這個專案由兩份 Notion 文件驅動——**改規格前先讀這兩份，程式碼實作要跟它們一致，發現不一致時要回頭修文件或修程式碼，不要放著不管**：
 
 - **SRS（系統需求規格書）**：功能、路由、資料庫 schema、效能/a11y/測試門檻、Sprint 計畫。`https://app.notion.com/p/SRS-3d436cd8ad0e808c816bd2abcba15d80`
-- **Website 設計（Design v1.0）**：視覺系統——色票 token、Tailwind 設定、字體/間距/斷點、逐頁內容規範、素材清單。功能與品質門檻仍以 SRS 為準，這份文件補視覺實作細節。`https://app.notion.com/p/Website-3db36cd8ad0e80208308de2ec9bee6be`
+- **Website 設計（Design v1.2）**：視覺系統——色票 token、Tailwind 設定、字體/間距/斷點、逐頁內容規範、素材清單。功能與品質門檻仍以 SRS 為準，這份文件補視覺實作細節。`https://app.notion.com/p/Website-3db36cd8ad0e80208308de2ec9bee6be`
 
 **讀 Notion 文件時的已知陷阱**：用 Notion API 的 `blocks/{id}/children` 讀取頁面內容時，一次最多回傳 100 個 block，`has_more`/`next_cursor` 一定要處理分頁迴圈，不然文件內容會在第 100 個 block 附近被靜默截斷——這份文件本身就曾經因為這個 bug 被讀漏過第 5-7 章。
 
@@ -39,7 +39,7 @@ Nuxt 3（SSG，`nitro.preset: github-pages`）、TypeScript strict、Tailwind CS
 
 ## 視覺系統現況（2026-09-14 起，SRS §2.8 + Website 設計文件）
 
-日夜閱讀模式跟人物切換（Wilson/Yura）**互相獨立**——切換明暗不換人物、路由或內容；兩位人物都各有淺色/深色版本。視覺方向是「海平線 × 方圓與潮汐」：首頁保留完整海景，內頁用淡化海景 + 格線 + 潮汐線條。色票、Tailwind config、全域 CSS 變數已經在 Website 設計文件 §2 給出完整可用的程式碼，實作時直接套用該文件的 token 命名（`wy-*` namespace），不要自己另外發明一套命名。**所有頁面所需的圖檔素材（A01-A13）目前都還沒有真圖**，視覺開發要用清楚標示「待補」的中性色占位圖搭骨架，不能用假截圖或破圖頂著。
+日夜閱讀模式跟人物切換（Wilson/Yura）**互相獨立**——切換明暗不換人物、路由或內容；兩位人物都各有淺色/深色版本。視覺方向是「海平線 × 方圓與潮汐」：首頁保留完整海景，內頁用淡化海景 + 格線 + 潮汐線條。色票、Tailwind config、全域 CSS 變數已經在 Website 設計文件 §2 給出完整可用的程式碼，實作時直接套用該文件的 token 命名（`wy-*` namespace），不要自己另外發明一套命名。A01／A02 海景、A04 潮汐線條與 A12 字標／favicon 已整合；A03、A05-A11、A13 仍依設計文件的個別狀態處理。尚未交付的素材要用清楚標示「待補」的中性色占位圖搭骨架，不能用假截圖或破圖頂著。
 
 ## 工作流程
 

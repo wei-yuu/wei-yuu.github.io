@@ -3,6 +3,9 @@ const props = defineProps<{
   person: 'Yura' | 'Wilson'
   jobTitle: string
   bio: string
+  email: string
+  githubUrl: string | null
+  linkedinUrl: string | null
 }>()
 
 const { experiences, skills, relatedProjects, status } = useProfileContent(props.person)
@@ -12,6 +15,17 @@ const { experiences, skills, relatedProjects, status } = useProfileContent(props
 function downloadResume() {
   window.print()
 }
+
+// SRS v5.2.0 §3.1:聯絡入口依 Email → LinkedIn → GitHub 選第一個可用值。
+// 全部空白時保留 disabled,不輸出空連結或示意帳號。
+const contactUrl = computed(() => {
+  if (props.email) return `mailto:${props.email}`
+  return props.linkedinUrl || props.githubUrl
+})
+
+const hasContactInfo = computed(() =>
+  Boolean(props.email || props.githubUrl || props.linkedinUrl),
+)
 </script>
 
 <template>
@@ -107,7 +121,19 @@ function downloadResume() {
               </svg>
               下載履歷
             </AppButton>
-            <AppButton type="button" variant="secondary" disabled aria-label="聯絡我(尚未開放)">
+            <AppButton
+              v-if="contactUrl"
+              :to="contactUrl"
+              variant="secondary"
+              aria-label="聯絡我"
+            >
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                <rect x="2" y="3.5" width="12" height="9" rx="1.2" />
+                <path d="M2.6 4.2 8 8.5l5.4-4.3" />
+              </svg>
+              聯絡我
+            </AppButton>
+            <AppButton v-else type="button" variant="secondary" disabled aria-label="聯絡我(尚未開放)">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
                 <rect x="2" y="3.5" width="12" height="9" rx="1.2" />
                 <path d="M2.6 4.2 8 8.5l5.4-4.3" />
@@ -168,6 +194,25 @@ function downloadResume() {
                 </p>
                 <p class="mt-1 text-body-sm text-wy-text-secondary">{{ project.summary }}</p>
               </NuxtLink>
+            </li>
+          </ul>
+        </section>
+
+        <section v-if="hasContactInfo" class="mt-12 break-inside-avoid-page lg:mt-16">
+          <div class="flex items-center gap-4">
+            <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">聯絡資訊</h2>
+            <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
+            <p class="shrink-0 font-display-en text-body-sm tracking-wide text-wy-text-muted">CONTACT</p>
+          </div>
+          <ul class="mt-6 space-y-2 text-body-sm text-wy-text-secondary">
+            <li v-if="email">
+              Email：<a :href="`mailto:${email}`" class="underline underline-offset-4">{{ email }}</a>
+            </li>
+            <li v-if="githubUrl">
+              GitHub：<a :href="githubUrl" class="break-all underline underline-offset-4">{{ githubUrl }}</a>
+            </li>
+            <li v-if="linkedinUrl">
+              LinkedIn：<a :href="linkedinUrl" class="break-all underline underline-offset-4">{{ linkedinUrl }}</a>
             </li>
           </ul>
         </section>

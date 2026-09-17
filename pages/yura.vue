@@ -8,6 +8,11 @@ const jobTitle = computed(() => profile.value?.jobTitle || '前端工程師')
 const description = computed(
   () => profile.value?.seoDescription || 'Yura 的個人履歷與作品集,專精互動動效與視覺呈現。',
 )
+const bio = computed(() => profile.value?.bio || description.value)
+const email = computed(() => profile.value?.email || '')
+const githubUrl = computed(() => profile.value?.githubUrl || null)
+const linkedinUrl = computed(() => profile.value?.linkedinUrl || null)
+const sameAs = computed(() => [githubUrl.value, linkedinUrl.value].filter((url): url is string => Boolean(url)))
 const pageTitle = computed(() => `Yura ｜ ${jobTitle.value}`)
 const pageUrl = computed(() => `${siteConfig.url}/yura`)
 
@@ -35,6 +40,7 @@ useHead({
             name: 'Yura',
             jobTitle: jobTitle.value,
             url: pageUrl.value,
+            ...(sameAs.value.length > 0 ? { sameAs: sameAs.value } : {}),
           },
         }),
       ),
@@ -44,5 +50,12 @@ useHead({
 </script>
 
 <template>
-  <ResumeProfile person="Yura" :job-title="jobTitle" :bio="description" />
+  <ResumeProfile
+    person="Yura"
+    :job-title="jobTitle"
+    :bio="bio"
+    :email="email"
+    :github-url="githubUrl"
+    :linkedin-url="linkedinUrl"
+  />
 </template>
