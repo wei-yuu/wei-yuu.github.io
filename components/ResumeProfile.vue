@@ -83,10 +83,14 @@ function downloadResume() {
              操作按鈕靠正文右側對齊(不是緊貼姓名);手機收成單欄,姓名在前、
              操作區在後,且兩顆按鈕並排。不放星座裝飾語(星座僅為品牌靈感,
              不推定職能,§1.1 已明訂),也不放大頭照(提案本身未展示大頭照,
-             A06 非首發必填素材)。姓名/職稱依提案採 Georgia(font-display-en)。 -->
+             A06 非首發必填素材)。姓名/職稱依提案採 Georgia(font-display-en);
+             姓名字級是 H1 的明確例外(桌機 72px、手機 54px,§3.1,2026-09-16
+             確認),不套用一般 h1/h1-lg。 -->
         <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div>
-            <h1 class="font-display-en text-h1 font-semibold text-wy-text lg:text-h1-lg">{{ person }}</h1>
+            <h1 class="font-display-en text-resume-name font-semibold text-wy-text lg:text-resume-name-lg">
+              {{ person }}
+            </h1>
             <p class="mt-2 font-display-en text-h3 font-medium text-wy-text-secondary lg:text-h3-lg">
               {{ jobTitle }}
             </p>
@@ -117,7 +121,7 @@ function downloadResume() {
              →「技能/SKILLS」→「相關作品」,關於我是獨立段落,不縮在姓名下當一行
              副標。中文段落標題用 Noto Serif TC(font-serif-tc);標題—細橫線—
              英文小標同列呈現,不是細線在整列下方。 -->
-        <section class="mt-10 break-inside-avoid-page lg:mt-12">
+        <section class="mt-12 break-inside-avoid-page lg:mt-16">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">關於我</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
@@ -126,7 +130,7 @@ function downloadResume() {
           <p v-if="bio" class="mt-4 max-w-[720px] text-body text-wy-text-secondary">{{ bio }}</p>
         </section>
 
-        <section class="mt-10 break-inside-avoid-page lg:mt-12">
+        <section class="mt-12 break-inside-avoid-page lg:mt-16">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">工作經歷</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
@@ -138,7 +142,7 @@ function downloadResume() {
           <ExperienceTimeline v-else class="mt-6" :items="experiences" :person="person" />
         </section>
 
-        <section class="mt-10 break-inside-avoid-page lg:mt-12">
+        <section class="mt-12 break-inside-avoid-page lg:mt-16">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">技能</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
@@ -150,7 +154,7 @@ function downloadResume() {
 
         <!-- Website 設計文件 §4.2 內容順序「相關作品入口」:只連到該人參與過的
              案例,用 RoleAttribution 篩選,不是列出全站所有專案。 -->
-        <section v-if="relatedProjects.length > 0" class="mt-10 break-inside-avoid-page lg:mt-12">
+        <section v-if="relatedProjects.length > 0" class="mt-12 break-inside-avoid-page lg:mt-16">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">相關作品</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />

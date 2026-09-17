@@ -37,6 +37,10 @@ export default <Partial<Config>>{
         body: ['16px', { lineHeight: '1.75' }],
         'body-sm': ['14px', { lineHeight: '1.6' }],
         btn: ['15px', { lineHeight: '1.4' }],
+        // Website 設計文件 §3.1(2026-09-16 確認):履歷頁 Wilson/Yura 姓名是
+        // H1 字級的明確例外,依 Figma 走自己的一組尺寸,不套用一般 h1/h1-lg。
+        'resume-name': ['54px', { lineHeight: '1.15' }],
+        'resume-name-lg': ['72px', { lineHeight: '1.1' }],
       },
       colors: {
         wy: {
