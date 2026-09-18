@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProjectHighlight } from '~/types/highlight'
+import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
 
 // SRS §4.1:案例總覽頁只放摘要跟亮點列表卡片,個別亮點的完整說明跟 Demo 各自獨立成子頁
 // (bullet-engine.vue / story-timeline.vue),避免總覽頁一次載入所有亮點的 JS——彈幕引擎
@@ -14,18 +14,7 @@ const summary = computed(
   () => project.value?.summary || '雙人協作打造的互動婚禮網站,展示彈幕引擎與視差故事時間軸。',
 )
 
-const HIGHLIGHTS: ProjectHighlight[] = [
-  {
-    slug: 'bullet-engine',
-    title: '賓客祝福彈幕',
-    summary: '忠實移植 wei-yuu/wedding 的彈匣循環填補模式,Demo-only 即時彈幕牆。',
-  },
-  {
-    slug: 'story-timeline',
-    title: '故事時間軸',
-    summary: '忠實移植 wei-yuu/wedding 的左右交錯式時間軸版面。',
-  },
-]
+const HIGHLIGHTS = WEDDING_HIGHLIGHTS
 
 useSeoMeta({
   title: '互動婚禮網站 Case Study ｜ Wei Yu',

@@ -35,7 +35,7 @@ test.describe('個人履歷頁', () => {
 test.describe('專案作品集', () => {
   test('/projects 能正常導航,且列出至少一個專案卡片連結', async ({ page }) => {
     await page.goto('/projects')
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('專案作品集')
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('一起完成的作品')
     await expect(page.getByRole('link', { name: '互動婚禮網站' })).toBeVisible()
   })
 
