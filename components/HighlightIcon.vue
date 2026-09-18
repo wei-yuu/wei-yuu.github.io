@@ -13,7 +13,7 @@ defineProps<{ name: 'book' | 'chat' }>()
     stroke-width="1.4"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="h-5 w-5"
+    class="h-[26px] w-[26px]"
     aria-hidden="true"
   >
     <path d="M4 4.5c2-1 4-1 6 0v11c-2-1-4-1-6 0z" />
@@ -27,7 +27,7 @@ defineProps<{ name: 'book' | 'chat' }>()
     stroke-width="1.4"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="h-5 w-5"
+    class="h-[26px] w-[26px]"
     aria-hidden="true"
   >
     <path d="M3.5 5.5h13a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8l-3.5 3v-3H3.5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z" />
