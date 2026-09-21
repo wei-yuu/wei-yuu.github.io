@@ -38,7 +38,7 @@ useHead({
         <AppBreadcrumb :items="[{ label: '作品集', to: '/projects' }, { label: title }]" />
 
         <!-- Website 設計文件 §4.5:內容順序為麵包屑 → 標題/摘要/技術與真實分工
-             → 封面 → 背景/目標/作法/成果 → 亮點入口 → Demo/Repo → 返回作品集。
+             → 封面 → 背景/作法/成果 → 亮點入口 → Demo/Repo → 返回作品集。
              這個案例頁沒有對應的 Figma 提案畫面(該檔案只做了首頁/履歷/作品集
              列表三頁提案),依文件開頭「尚未做過的子頁視覺為沿用既定系統的實作
              建議」,標題/徽章/技術標籤等樣式直接沿用 /projects 列表頁已對過
@@ -75,31 +75,30 @@ useHead({
         <!-- §4.4/A08:玻璃雙圓是這個案例的專屬風格封面,不是全站通用樣式。 -->
         <GlassCover class="relative mt-8" />
 
-        <section class="mt-12">
+        <!-- SRS §4.1/Website 設計文件 §4.5(2026-09-21 決議):案例正文改讀
+             Notion Projects 的 Background/Approach/Outcome 三個 Rich Text
+             欄位,由 Notion 維護,不寫死於 Vue;取消「目標」段落,不新增 Goal
+             欄位。單欄未填就隱藏對應標題,三欄皆空時整個區塊都不顯示,不回退
+             到舊的硬編碼文案。文字用 whitespace-pre-line 保留 Notion 裡的
+             換行,維持自然高度,不裁切內容。 -->
+        <section v-if="project?.background || project?.approach || project?.outcome" class="mt-12">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">案例背景</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
             <p class="shrink-0 font-display-en text-body-sm tracking-wide text-wy-text-muted">OVERVIEW</p>
           </div>
           <dl class="mt-4 max-w-[720px] space-y-3 text-body text-wy-text-secondary">
-            <div>
+            <div v-if="project.background">
               <dt class="font-medium text-wy-text">背景</dt>
-              <dd>雙人工作室作品集的第一個案例,忠實複刻 Yura 與 Wilson 真實上線的婚禮網站 wei-yuu/wedding。</dd>
+              <dd class="whitespace-pre-line">{{ project.background }}</dd>
             </div>
-            <div>
-              <dt class="font-medium text-wy-text">目標</dt>
-              <dd>在求職導向的作品集裡完整重現這個案例最值得展示的技術模組,而不是重新設計一個新網站。</dd>
-            </div>
-            <div>
+            <div v-if="project.approach">
               <dt class="font-medium text-wy-text">作法</dt>
-              <dd>
-                彈幕牆移植自真實 repo 的彈匣循環填補模式,故事時間軸移植自真實 repo 的純 CSS Grid
-                交錯排版——兩者都比 SRS 原本規劃的做法更單純,細節見下方各亮點頁。
-              </dd>
+              <dd class="whitespace-pre-line">{{ project.approach }}</dd>
             </div>
-            <div>
+            <div v-if="project.outcome">
               <dt class="font-medium text-wy-text">成果</dt>
-              <dd>兩個模組皆為 Demo-only 呈現,不寫入任何後端;完整原始碼可從下方 GitHub Repo 查看。</dd>
+              <dd class="whitespace-pre-line">{{ project.outcome }}</dd>
             </div>
           </dl>
         </section>

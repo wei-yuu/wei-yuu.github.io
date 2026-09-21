@@ -1,9 +1,9 @@
 [
   {
     "object": "page",
-    "id": "3d036cd8-ad0e-809a-b66c-d31b6a4eccdf",
-    "created_time": "2026-09-03T07:59:00.000Z",
-    "last_edited_time": "2026-09-07T09:18:00.000Z",
+    "id": "3da36cd8-ad0e-804b-b10b-efc863ea4205",
+    "created_time": "2026-09-13T13:36:00.000Z",
+    "last_edited_time": "2026-09-13T13:42:00.000Z",
     "created_by": {
       "object": "user",
       "id": "17507561-74e1-4812-a305-00af82e1c357"
@@ -29,7 +29,7 @@
           {
             "type": "text",
             "text": {
-              "content": "  • 擔任前端團隊 Lead (約 4 人)\n      ◦ 負責定義技術選型、分配開發任務\n      ◦ 建立團隊間的溝通橋樑\n  • 主動建立前端開發規範與自動化流程\n      ◦ 提升程式碼一致性與團隊協作效率\n      ◦ 將混亂的開發模式轉型為結構化的工程\n  • EDR (Endpoint Detection and Response) 系統\n      ◦ 開發前端 Dashboard\n      ◦ 利用複雜的數據可視化技術（如圖表、樹狀結構）",
+              "content": "• 提出前後端分離架構並導入 Vue.js，開發水資源即時監控介面與資料圖表。\n• 使用 Java 開發後端商業邏輯，並以 Java Servlet、Golang 開發 API，支援設備資料傳輸及監測資訊整合。\n• 使用 Node.js／Express 與 WebSocket 開發即時影像及設備資料傳輸功能，處理 Client 與 Server 間的通訊。\n• 使用 Nginx、Tomcat 架設系統服務，配置反向代理，參與監測系統的前後端整合與部署。\n• 主導導入 GitLab Flow，建立團隊版本控制與協作開發流程。",
               "link": null
             },
             "annotations": {
@@ -40,7 +40,967 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "  • 擔任前端團隊 Lead (約 4 人)\n      ◦ 負責定義技術選型、分配開發任務\n      ◦ 建立團隊間的溝通橋樑\n  • 主動建立前端開發規範與自動化流程\n      ◦ 提升程式碼一致性與團隊協作效率\n      ◦ 將混亂的開發模式轉型為結構化的工程\n  • EDR (Endpoint Detection and Response) 系統\n      ◦ 開發前端 Dashboard\n      ◦ 利用複雜的數據可視化技術（如圖表、樹狀結構）",
+            "plain_text": "• 提出前後端分離架構並導入 Vue.js，開發水資源即時監控介面與資料圖表。\n• 使用 Java 開發後端商業邏輯，並以 Java Servlet、Golang 開發 API，支援設備資料傳輸及監測資訊整合。\n• 使用 Node.js／Express 與 WebSocket 開發即時影像及設備資料傳輸功能，處理 Client 與 Server 間的通訊。\n• 使用 Nginx、Tomcat 架設系統服務，配置反向代理，參與監測系統的前後端整合與部署。\n• 主導導入 GitLab Flow，建立團隊版本控制與協作開發流程。",
+            "href": null
+          }
+        ]
+      },
+      "TechUsedNames": {
+        "id": "%3D%7C%3E%3D",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Vue",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Vue",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Node.js",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Node.js",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "WebSocket",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "WebSocket",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Java Servlet",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Java Servlet",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Nginx",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Nginx",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Tomcat",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Tomcat",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Express",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Express",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Golang",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Golang",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "TargetUser": {
+        "id": "MJUN",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa"
+          }
+        ],
+        "has_more": false
+      },
+      "TargetUserName": {
+        "id": "%60t%3BC",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Wilson",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Wilson",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "IsCurrent": {
+        "id": "eHG%60",
+        "type": "checkbox",
+        "checkbox": false
+      },
+      "Period": {
+        "id": "f%3Cva",
+        "type": "date",
+        "date": {
+          "start": "2018-11-05",
+          "end": "2021-02-05",
+          "time_zone": null
+        }
+      },
+      "TechUsed": {
+        "id": "z%5Ekl",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8088-9374-de65b9f48d19"
+          },
+          {
+            "id": "3da36cd8-ad0e-80a9-baa8-e7444b0cab8d"
+          },
+          {
+            "id": "3da36cd8-ad0e-80bb-b947-d3496072d9b5"
+          },
+          {
+            "id": "3da36cd8-ad0e-80c9-83f5-cf746160b2fd"
+          },
+          {
+            "id": "3da36cd8-ad0e-8083-b906-faee0892b7e5"
+          },
+          {
+            "id": "3da36cd8-ad0e-80ad-a0df-fea92a1d60bc"
+          },
+          {
+            "id": "3da36cd8-ad0e-8091-a5e7-f0fb911480a7"
+          },
+          {
+            "id": "3da36cd8-ad0e-8083-8d6f-f85c72311b2f"
+          }
+        ],
+        "has_more": false
+      },
+      "Role": {
+        "id": "%7DMdP",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "軟體工程師",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "軟體工程師",
+            "href": null
+          }
+        ]
+      },
+      "Company": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "富鈞水資",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "富鈞水資",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/3da36cd8ad0e804bb10befc863ea4205",
+    "public_url": null,
+    "archived": false
+  },
+  {
+    "object": "page",
+    "id": "3da36cd8-ad0e-800f-a8bb-c919737ef9f6",
+    "created_time": "2026-09-13T13:22:00.000Z",
+    "last_edited_time": "2026-09-13T13:42:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80df-9966-dff6ecf93f3e"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
+    "properties": {
+      "Highlights": {
+        "id": "%3BAr%3E",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "• 擔任智能客服機器人主要開發工程師，以 Nuxt.js 開發交談介面與客製化功能，支援金融及醫療機構的導入需求。\n• 主導程式碼重構，將業務邏輯模組化並整理可共用組件，支援跨專案復用與後續維護。\n• 與 SD、SA 及後端工程師釐清 API 規格與業務流程，並串接第三方語音辨識及 Mobile App API，處理跨系統整合。\n• 使用 Flow Creator 實作客製化對話流程，與 RD 討論工具功能及優化需求。\n• 撰寫開發文件與操作手冊，執行客戶教育訓練及新人輔導，協助使用者與工程師理解系統架構及開發流程。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "• 擔任智能客服機器人主要開發工程師，以 Nuxt.js 開發交談介面與客製化功能，支援金融及醫療機構的導入需求。\n• 主導程式碼重構，將業務邏輯模組化並整理可共用組件，支援跨專案復用與後續維護。\n• 與 SD、SA 及後端工程師釐清 API 規格與業務流程，並串接第三方語音辨識及 Mobile App API，處理跨系統整合。\n• 使用 Flow Creator 實作客製化對話流程，與 RD 討論工具功能及優化需求。\n• 撰寫開發文件與操作手冊，執行客戶教育訓練及新人輔導，協助使用者與工程師理解系統架構及開發流程。",
+            "href": null
+          }
+        ]
+      },
+      "TechUsedNames": {
+        "id": "%3D%7C%3E%3D",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Vue",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Vue",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Tailwindcss",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Tailwindcss",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Fabric.js",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Fabric.js",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Nuxt.js",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Nuxt.js",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Nginx",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Nginx",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "TargetUser": {
+        "id": "MJUN",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa"
+          }
+        ],
+        "has_more": false
+      },
+      "TargetUserName": {
+        "id": "%60t%3BC",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Wilson",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Wilson",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "IsCurrent": {
+        "id": "eHG%60",
+        "type": "checkbox",
+        "checkbox": false
+      },
+      "Period": {
+        "id": "f%3Cva",
+        "type": "date",
+        "date": {
+          "start": "2021-03-01",
+          "end": "2023-03-31",
+          "time_zone": null
+        }
+      },
+      "TechUsed": {
+        "id": "z%5Ekl",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8088-9374-de65b9f48d19"
+          },
+          {
+            "id": "3d036cd8-ad0e-8040-beca-d6bc3d2e9fe8"
+          },
+          {
+            "id": "3da36cd8-ad0e-80fb-9ae8-cff88960b152"
+          },
+          {
+            "id": "3da36cd8-ad0e-80b7-979e-f84e71af1262"
+          },
+          {
+            "id": "3da36cd8-ad0e-8083-b906-faee0892b7e5"
+          }
+        ],
+        "has_more": false
+      },
+      "Role": {
+        "id": "%7DMdP",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "資深工程師",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "資深工程師",
+            "href": null
+          }
+        ]
+      },
+      "Company": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "昕力資訊",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "昕力資訊",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/3da36cd8ad0e800fa8bbc919737ef9f6",
+    "public_url": null,
+    "archived": false
+  },
+  {
+    "object": "page",
+    "id": "3da36cd8-ad0e-8096-ac59-ea8248777ee4",
+    "created_time": "2026-09-13T12:45:00.000Z",
+    "last_edited_time": "2026-09-13T13:22:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80df-9966-dff6ecf93f3e"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
+    "properties": {
+      "Highlights": {
+        "id": "%3BAr%3E",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "• 開發數位簽署管理平台，整合 DocuSign 與 PDF 文件處理，實作簽署介面的互動功能。\n• 使用 Fabric.js 處理畫布元件拖曳與座標計算，完成元件定點、簽章定位與渲染。\n• 開發銀行業資產管理系統，處理複雜金融資料的前端狀態管理與視覺化呈現。\n• 與前端 Lead 協作開發與維護系統，參與程式碼架構調整及前端效能優化。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "• 開發數位簽署管理平台，整合 DocuSign 與 PDF 文件處理，實作簽署介面的互動功能。\n• 使用 Fabric.js 處理畫布元件拖曳與座標計算，完成元件定點、簽章定位與渲染。\n• 開發銀行業資產管理系統，處理複雜金融資料的前端狀態管理與視覺化呈現。\n• 與前端 Lead 協作開發與維護系統，參與程式碼架構調整及前端效能優化。",
+            "href": null
+          }
+        ]
+      },
+      "TechUsedNames": {
+        "id": "%3D%7C%3E%3D",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Vue",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Vue",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Tailwindcss",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Tailwindcss",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "TypeScript",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "TypeScript",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Fabric.js",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Fabric.js",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "DocuSign",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "DocuSign",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "TargetUser": {
+        "id": "MJUN",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa"
+          }
+        ],
+        "has_more": false
+      },
+      "TargetUserName": {
+        "id": "%60t%3BC",
+        "type": "rollup",
+        "rollup": {
+          "type": "array",
+          "array": [
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Wilson",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Wilson",
+                  "href": null
+                }
+              ]
+            }
+          ],
+          "function": "show_original"
+        }
+      },
+      "IsCurrent": {
+        "id": "eHG%60",
+        "type": "checkbox",
+        "checkbox": false
+      },
+      "Period": {
+        "id": "f%3Cva",
+        "type": "date",
+        "date": {
+          "start": "2023-04-03",
+          "end": "2025-03-21",
+          "time_zone": null
+        }
+      },
+      "TechUsed": {
+        "id": "z%5Ekl",
+        "type": "relation",
+        "relation": [
+          {
+            "id": "3d036cd8-ad0e-8088-9374-de65b9f48d19"
+          },
+          {
+            "id": "3d036cd8-ad0e-8040-beca-d6bc3d2e9fe8"
+          },
+          {
+            "id": "3d036cd8-ad0e-8064-865d-dc7ad440d086"
+          },
+          {
+            "id": "3da36cd8-ad0e-80fb-9ae8-cff88960b152"
+          },
+          {
+            "id": "3da36cd8-ad0e-8017-a89b-e7cee77c1adc"
+          }
+        ],
+        "has_more": false
+      },
+      "Role": {
+        "id": "%7DMdP",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "高級前端工程師",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "高級前端工程師",
+            "href": null
+          }
+        ]
+      },
+      "Company": {
+        "id": "title",
+        "type": "title",
+        "title": [
+          {
+            "type": "text",
+            "text": {
+              "content": "殷富資訊",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "殷富資訊",
+            "href": null
+          }
+        ]
+      }
+    },
+    "url": "https://app.notion.com/p/3da36cd8ad0e8096ac59ea8248777ee4",
+    "public_url": null,
+    "archived": false
+  },
+  {
+    "object": "page",
+    "id": "3d036cd8-ad0e-809a-b66c-d31b6a4eccdf",
+    "created_time": "2026-09-03T07:59:00.000Z",
+    "last_edited_time": "2026-09-13T13:43:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "17507561-74e1-4812-a305-00af82e1c357"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+      "type": "database_id",
+      "database_id": "3d036cd8-ad0e-80df-9966-dff6ecf93f3e"
+    },
+    "in_trash": false,
+    "is_archived": false,
+    "is_locked": false,
+    "properties": {
+      "Highlights": {
+        "id": "%3BAr%3E",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "• 擔任約四人前端團隊 Lead，負責技術選型、開發任務分配與跨團隊溝通，協調產品前端開發工作。\n• 使用 React 開發產品前端，參與 EDR（端點偵測與回應）系統 Dashboard 開發，以圖表與樹狀結構呈現複雜資安資料。\n• 參與採用 Nx Monorepo 管理多產品程式碼，撰寫 Monorepo 與各產品開發手冊，建立團隊共通的開發規範與操作流程。\n• 撰寫 gitlab-ci.yml 配置 GitLab CI/CD pipeline，並整理相關流程文件，將開發交付步驟納入版本管理。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "• 擔任約四人前端團隊 Lead，負責技術選型、開發任務分配與跨團隊溝通，協調產品前端開發工作。\n• 使用 React 開發產品前端，參與 EDR（端點偵測與回應）系統 Dashboard 開發，以圖表與樹狀結構呈現複雜資安資料。\n• 參與採用 Nx Monorepo 管理多產品程式碼，撰寫 Monorepo 與各產品開發手冊，建立團隊共通的開發規範與操作流程。\n• 撰寫 gitlab-ci.yml 配置 GitLab CI/CD pipeline，並整理相關流程文件，將開發交付步驟納入版本管理。",
             "href": null
           }
         ]
@@ -101,28 +1061,6 @@
                 {
                   "type": "text",
                   "text": {
-                    "content": "Claude Code",
-                    "link": null
-                  },
-                  "annotations": {
-                    "bold": false,
-                    "italic": false,
-                    "strikethrough": false,
-                    "underline": false,
-                    "code": false,
-                    "color": "default"
-                  },
-                  "plain_text": "Claude Code",
-                  "href": null
-                }
-              ]
-            },
-            {
-              "type": "title",
-              "title": [
-                {
-                  "type": "text",
-                  "text": {
                     "content": "React",
                     "link": null
                   },
@@ -135,6 +1073,94 @@
                     "color": "default"
                   },
                   "plain_text": "React",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Nx",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Nx",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "CICD",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "CICD",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Docker",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Docker",
+                  "href": null
+                }
+              ]
+            },
+            {
+              "type": "title",
+              "title": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Nginx",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Nginx",
                   "href": null
                 }
               ]
@@ -210,10 +1236,19 @@
             "id": "3d036cd8-ad0e-8040-beca-d6bc3d2e9fe8"
           },
           {
-            "id": "3d036cd8-ad0e-8047-aa59-cf1bb57ecb68"
+            "id": "3d036cd8-ad0e-8004-82a1-fa9fef0d1b42"
           },
           {
-            "id": "3d036cd8-ad0e-8004-82a1-fa9fef0d1b42"
+            "id": "3da36cd8-ad0e-8071-a794-d4d55867f65f"
+          },
+          {
+            "id": "3da36cd8-ad0e-8055-bec9-ef6985c14188"
+          },
+          {
+            "id": "3da36cd8-ad0e-8066-a219-ccc1a7e35548"
+          },
+          {
+            "id": "3da36cd8-ad0e-8083-b906-faee0892b7e5"
           }
         ],
         "has_more": false

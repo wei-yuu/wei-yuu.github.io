@@ -119,6 +119,12 @@ export function mapProject(page: NotionPage): ProjectItem {
     title: getTitleText(page, 'Title'),
     slug: getRichText(page, 'Slug'),
     summary: getRichText(page, 'Summary'),
+    // .trim() 只清開頭/結尾的空白,不動內文中間的換行——純空格/換行/Tab
+    // 填的欄位 trim 完是空字串,頁面的 v-if 才會正確判定成「沒填」而隱藏,
+    // 不會顯示一個標題配空白正文。
+    background: getRichText(page, 'Background').trim(),
+    approach: getRichText(page, 'Approach').trim(),
+    outcome: getRichText(page, 'Outcome').trim(),
     roleAttribution: parseRoleAttribution(getRichText(page, 'RoleAttribution')),
     techStack: getRollupNames(page, 'TechStackNames'),
     demoUrl: getUrl(page, 'DemoUrl'),

@@ -3,7 +3,7 @@
     "object": "page",
     "id": "3d036cd8-ad0e-8055-9683-d1b9ad218daa",
     "created_time": "2026-09-03T08:57:00.000Z",
-    "last_edited_time": "2026-09-04T09:16:00.000Z",
+    "last_edited_time": "2026-09-17T05:16:00.000Z",
     "created_by": {
       "object": "user",
       "id": "17507561-74e1-4812-a305-00af82e1c357"
@@ -22,14 +22,14 @@
     "is_archived": false,
     "is_locked": false,
     "properties": {
-      "SeoDescription": {
-        "id": "ue_%7B",
+      "Bio": {
+        "id": "cwsL",
         "type": "rich_text",
         "rich_text": [
           {
             "type": "text",
             "text": {
-              "content": "Wilson 的個人履歷與作品集,專精架構設計與資料管線工程。",
+              "content": "具備七年以上軟體開發經驗的資深前端工程師，擁有 Vue／Nuxt 與 React 實務經驗，曾開發資安監控、數位簽署與智能客服等系統。\n\n擅長處理複雜互動、資料視覺化與跨系統整合，目前帶領約四人的前端團隊，參與多產品架構管理及 CI/CD 流程建置。\n\n希望將技術與使用者需求連結，投入產品的長期迭代，打造易用且可持續維護的介面。",
               "link": null
             },
             "annotations": {
@@ -40,10 +40,48 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "Wilson 的個人履歷與作品集,專精架構設計與資料管線工程。",
+            "plain_text": "具備七年以上軟體開發經驗的資深前端工程師，擁有 Vue／Nuxt 與 React 實務經驗，曾開發資安監控、數位簽署與智能客服等系統。\n\n擅長處理複雜互動、資料視覺化與跨系統整合，目前帶領約四人的前端團隊，參與多產品架構管理及 CI/CD 流程建置。\n\n希望將技術與使用者需求連結，投入產品的長期迭代，打造易用且可持續維護的介面。",
             "href": null
           }
         ]
+      },
+      "LinkedInUrl": {
+        "id": "nN%3D%3F",
+        "type": "url",
+        "url": null
+      },
+      "GitHubUrl": {
+        "id": "pJwl",
+        "type": "url",
+        "url": null
+      },
+      "SeoDescription": {
+        "id": "ue_%7B",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Wilson 的個人履歷與作品集。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Wilson 的個人履歷與作品集。",
+            "href": null
+          }
+        ]
+      },
+      "Email": {
+        "id": "zI%3AH",
+        "type": "email",
+        "email": null
       },
       "JobTitle": {
         "id": "%7D%3ADT",
@@ -100,7 +138,7 @@
     "object": "page",
     "id": "3d036cd8-ad0e-80dc-9d6d-e295b4192b26",
     "created_time": "2026-09-03T08:57:00.000Z",
-    "last_edited_time": "2026-09-04T09:16:00.000Z",
+    "last_edited_time": "2026-09-13T13:51:00.000Z",
     "created_by": {
       "object": "user",
       "id": "17507561-74e1-4812-a305-00af82e1c357"
@@ -119,6 +157,21 @@
     "is_archived": false,
     "is_locked": false,
     "properties": {
+      "Bio": {
+        "id": "cwsL",
+        "type": "rich_text",
+        "rich_text": []
+      },
+      "LinkedInUrl": {
+        "id": "nN%3D%3F",
+        "type": "url",
+        "url": null
+      },
+      "GitHubUrl": {
+        "id": "pJwl",
+        "type": "url",
+        "url": null
+      },
       "SeoDescription": {
         "id": "ue_%7B",
         "type": "rich_text",
@@ -126,7 +179,7 @@
           {
             "type": "text",
             "text": {
-              "content": "Yura 的個人履歷與作品集,專精互動動效與視覺呈現。",
+              "content": "Yura 的個人履歷與作品集。",
               "link": null
             },
             "annotations": {
@@ -137,10 +190,15 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "Yura 的個人履歷與作品集,專精互動動效與視覺呈現。",
+            "plain_text": "Yura 的個人履歷與作品集。",
             "href": null
           }
         ]
+      },
+      "Email": {
+        "id": "zI%3AH",
+        "type": "email",
+        "email": null
       },
       "JobTitle": {
         "id": "%7D%3ADT",
