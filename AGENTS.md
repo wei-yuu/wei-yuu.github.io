@@ -41,6 +41,19 @@ Nuxt 3（SSG，`nitro.preset: github-pages`）、TypeScript strict、Tailwind CS
 
 日夜閱讀模式跟人物切換（Wilson/Yura）**互相獨立**——切換明暗不換人物、路由或內容；兩位人物都各有淺色/深色版本。視覺方向是「海平線 × 方圓與潮汐」：首頁保留完整海景，內頁用淡化海景 + 格線 + 潮汐線條。色票、Tailwind config、全域 CSS 變數已經在 Website 設計文件 §2 給出完整可用的程式碼，實作時直接套用該文件的 token 命名（`wy-*` namespace），不要自己另外發明一套命名。A01／A02 海景、A04 潮汐線條與 A12 字標／favicon 已整合；A03、A05-A11、A13 仍依設計文件的個別狀態處理。尚未交付的素材要用清楚標示「待補」的中性色占位圖搭骨架，不能用假截圖或破圖頂著。
 
+## 對照 Figma 開發
+
+視覺還原（頁面排版、間距、色值、向量圖形）以使用者提供的 Figma 設計稿（含 `node-id` 的 URL）為準，跟 Website 設計文件互補——設計文件給 token/斷點等系統性規則,Figma 稿是逐頁逐元件的實際排版依據,兩者有落差時以 Figma 實測值為準,並回頭補文件。
+
+優先用 `mcp__claude_ai_Figma__get_design_context` 等 MCP 工具讀取。若 MCP 回報無編輯權限（no edit access）等錯誤，改用 `.env` 的 `FIGMA_API_TOKEN` 直接打 Figma REST API 當備援，不要因此放棄比對或憑螢幕截圖臆測數值：
+
+- 節點結構／樣式／變數：`GET https://api.figma.com/v1/files/{fileKey}/nodes?ids={nodeId}`（加 `&geometry=paths` 可取得向量的精確 SVG path 資料，適合截取無法用既有元件還原的客製曲線／圖形）。
+- 渲染截圖：`GET https://api.figma.com/v1/images/{fileKey}?ids={nodeId}&format=png&scale=N`（回傳的是暫存圖片網址，要再對該網址發一次請求才拿到實際圖片，且該網址有時效）。
+- 呼叫方式：`curl -H "X-Figma-Token: $FIGMA_API_TOKEN" "..."`；token 只從 `.env` 讀取，不印出、不寫進程式碼或 commit。
+- 連結指向的節點若是空的（子節點數為 0），先用 `get_metadata`／`nodes` API 查同層級的其他節點（常見情形：真正有內容的 frame 在旁邊的 SECTION 裡），不要就此判定該區塊無需比對。
+
+比對時優先重用專案既有 `wy-*` token／元件；只有實測色值、幾何跟現有 token 有明顯落差時才考慮另立新值，並在程式碼註解或回覆中說明依據（對照的 Figma node、量到的數值），避免日後誤讀成隨意決定。
+
 ## 工作流程
 
 - **GitHub Flow**，無 `develop` 分支；`main` 鎖保護，PR 需另一人 Approve；分支前綴 `feature/`、`fix/`、`docs/`、`chore/`；一個 Sprint 一個分支。

@@ -11,15 +11,14 @@
       <template #opposite="{ item: { year, month } }">
         <span class="text-2xl" :class="[oppositeClass]">{{ year }} 年 {{ month }} 月</span>
       </template>
-      <template #default="{ item: { title, photo, description, color } }">
-        <h2
-          class="rounded-t-lg px-4 pt-4 text-3xl"
-          :class="{
-            'bg-pink-100': color === 'pink',
-            'bg-blue-100': color === 'blue',
-            'bg-gray-100': color === 'gray',
-          }"
-        >
+      <template #default="{ item: { title, photo, description } }">
+        <!-- 原版標題底色依 pink/blue/gray 分類換色,但那三色只在淺色模式讀得出來
+             ——深色模式下文字繼承 wy-text(暖白),疊在同一批淺底上會變成淺字配
+             淺底。這裡不是漏改深色版,是結構性問題:淺色分類底色天生不會有跟
+             它配套的深色模式版本。改用不分類別、隨主題切換的 wy-surface-subtle
+             +wy-text,確保兩種模式都可讀——分類色只留在時間軸節點小圓點
+             (ui/timeline/Item.vue 的 dotColor),不影響閱讀對比。 -->
+        <h2 class="rounded-t-lg bg-wy-surface-subtle px-4 pt-4 text-3xl text-wy-text">
           {{ title }}
         </h2>
         <div
@@ -50,14 +49,13 @@ import type { Story } from '~/types/story'
 // Google Sheets/Drive 執行期抓取,我們的 SRS 沒有規劃對應資料庫,改成由呼叫端
 // (pages/projects/wedding/story-timeline.vue)傳入固定 stories 陣列撐版位。
 //
-// 跟原版一樣,oppositeClass 直接讀 window.innerWidth,這裡加了 SSR 防護
-// (見 components/ui/timeline/Item.vue 同樣的說明)。
 const props = defineProps<{ stories: Story[] }>()
 
-const oppositeClass = computed(() => {
-  if (typeof window === 'undefined' || window.innerWidth >= 768) return ''
-  return '[writing-mode:vertical-lr] [text-orientation:upright]'
-})
+// 跟 ui/timeline/Item.vue 同一類問題:讀 window.innerWidth 算 computed 在 SSG
+// 下會有 SSR/hydration 不一致(SSR 一律當手機版,client 端算出的結果卻不會被
+// 拿去重新套用)。改成手機版直書 class 不加前綴(預設套用),桌機版直接用
+// md: 前綴覆寫回橫書,交給 CSS media query 判斷,不讀 window。
+const oppositeClass = '[writing-mode:vertical-lr] [text-orientation:upright] md:[writing-mode:horizontal-tb] md:[text-orientation:mixed]'
 
 const timelineItems = computed(() =>
   props.stories.map((story) => ({
