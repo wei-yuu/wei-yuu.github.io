@@ -233,11 +233,18 @@ function toggleHighlights(slug: string) {
               <!-- Website 設計文件 §4.4(2026-09-14 確認):案例預覽改圖示＋標題＋
                    一句話的可點列表,首發預設展開,不需要先點一次才能看見。
                    Figma(node 19:1125「圖示圓底」)比對後修正:圓底是實色暖石
-                   底,不是淡色 tint;圖示用 wy-text(淺色模式深色圖示、深色
-                   模式暖白圖示,跟正文文字色一起隨主題切換,不是固定暖石色)。
-                   量出來的圓底色實際對應 wy-wilson 這組 token 的數值(不是
-                   wy-warm-glint),這裡純粹借用其暖棕色調當裝飾底色,跟人物
-                   歸屬無關——沿用 Figma 既有色票,不是我方自創的意義。 -->
+                   底,不是淡色 tint。量出來的圓底色實際對應 wy-wilson 這組
+                   token 的數值(不是 wy-warm-glint),這裡純粹借用其暖棕色調
+                   當裝飾底色,跟人物歸屬無關——沿用 Figma 既有色票,不是我方
+                   自創的意義。
+                   SRS §2.3(a11y 對比度審查):圖示原本跟著 wy-text 隨主題切
+                   換,深色模式下 wy-wilson 會變得比淺色模式更亮(暖石色刻意
+                   調亮以在深色底上維持可見度),疊上同樣變亮的 wy-text(暖白)
+                   後兩者亮度接近,實測對比只有 1.74:1,連圖示用的 3:1 門檔
+                   都不到。改成深色模式固定用 wy-on-accent 的深色模式數值
+                   (直接借用該 token,不是語意上「這是強調色上的文字」)—
+                   —這個值不管在淺色版 wilson(4.91:1)或深色版 wilson
+                   (7.65:1)上都穩穩過門檔,比繼續跟著 wy-text 走更安全。 -->
               <ul
                 v-show="isExpanded(project.slug)"
                 :id="`case-preview-${project.slug}`"
@@ -246,7 +253,7 @@ function toggleHighlights(slug: string) {
                 <li v-for="highlight in highlightsFor(project.slug)" :key="highlight.slug" class="flex-1 py-4 md:px-6 md:py-2 first:md:pl-0">
                   <NuxtLink :to="`/projects/${project.slug}/${highlight.slug}`" class="group flex items-start gap-3">
                     <span
-                      class="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-wy-wilson text-wy-text"
+                      class="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-wy-wilson text-wy-text dark:text-wy-on-accent"
                     >
                       <HighlightIcon :name="highlight.icon" />
                     </span>

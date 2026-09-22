@@ -32,11 +32,14 @@
                網址理論上不會又失敗又成功,用索引比對照片陣列的位置更直接。 -->
           <div
             v-if="!photo || failedPhotos.has(index)"
-            class="flex aspect-video w-4/5 items-center justify-center rounded border border-dashed border-slate-300 text-base text-slate-400 dark:border-slate-600"
+            class="flex aspect-video w-4/5 items-center justify-center rounded border border-dashed border-slate-300 text-base text-wy-text-muted dark:border-slate-600"
           >
             照片待補
           </div>
-          <img v-else class="w-4/5" :src="photo" alt="" @error="handlePhotoError(index)">
+          <!-- SRS §2.3:這張是真實故事節點照片(相識/交往/求婚/婚禮),不是裝
+               飾圖,alt 不能留空——用節點標題當替代文字,不是完美的圖片內容
+               描述,但至少是真實資訊,不是憑空編造的敘述。 -->
+          <img v-else class="w-4/5" :src="photo" :alt="title" @error="handlePhotoError(index)">
           <span v-if="description" class="w-full whitespace-pre-line text-center text-wrap break-all">
             {{ description }}
           </span>

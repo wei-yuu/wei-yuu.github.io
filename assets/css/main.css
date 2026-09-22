@@ -112,6 +112,20 @@
   ::selection {
     @apply bg-wy-selected-bg text-wy-text;
   }
+
+  /* SRS §2.3:所有互動元素都要有清晰的 :focus-visible 外框,不能只靠瀏覽器
+     預設焦點樣式(不同瀏覽器/OS 顏色不一致,也不一定跟站內配色搭)。
+     AppButton、ContextualHeader 漢堡鈕、ThemeToggle 等已各自用
+     focus-visible: utility 客製過同樣的外框;這裡補一個全站預設值,讓單純
+     的 <a>/<button>(導覽連結、聯絡資訊/相關作品連結、人物頁籤等目前沒有
+     另外寫 focus-visible: 的地方)也套用同一套焦點樣式,不用每個地方各自
+     重複宣告。這條規則放在 @layer base,Tailwind 的 focus-visible: utility
+     屬於 utilities layer,層級順序上一定會覆寫這裡,兩者不會互相打架。 */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid rgb(var(--color-focus));
+    outline-offset: 2px;
+  }
 }
 
 /* SRS §2.5/§4、Website 設計文件 §4.9:標準 A4 列印樣式。過濾導覽列與非必要

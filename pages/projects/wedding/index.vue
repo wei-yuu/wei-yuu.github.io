@@ -112,7 +112,12 @@ useHead({
           <ul class="mt-6 flex flex-col divide-y divide-wy-border-subtle md:flex-row md:divide-x md:divide-y-0">
             <li v-for="highlight in HIGHLIGHTS" :key="highlight.slug" class="flex-1 py-4 md:px-6 md:py-2 first:md:pl-0">
               <NuxtLink :to="`/projects/wedding/${highlight.slug}`" class="group flex items-start gap-3">
-                <span class="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-wy-wilson text-wy-text">
+                <!-- SRS §2.3(a11y 對比度審查):深色模式下 wy-wilson 圓底會變亮,
+                     跟著切換的 wy-text(暖白)疊上去只剩 1.74:1,連圖示 3:1 的
+                     門檔都不到——固定用 wy-on-accent 的深色模式數值,在淺色版
+                     wilson(4.91:1)、深色版 wilson(7.65:1)都能穩穩過門檔,
+                     詳細數據見 /projects 列表頁同一處的註解。 -->
+                <span class="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-wy-wilson text-wy-text dark:text-wy-on-accent">
                   <HighlightIcon :name="highlight.icon" />
                 </span>
                 <span>
