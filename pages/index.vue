@@ -61,7 +61,14 @@ useHead({
            手機/桌機是不同構圖裁切(3:4 vs 16:9),不是同一張圖縮放,所以用兩層
            wrapper 各自負責一個軸(斷點/明暗),每層內只有一個 dark: 開關,避免
            疑義。dark: 類別在 Vue 掛載前就由防閃爍 script 設好,不會有 hydration
-           時的內容閃爍。 -->
+           時的內容閃爍。
+           SRS §2.2 CWV 驗收:fetchpriority="high" 只留在 light 版——瀏覽器的
+           preload scanner 在解析 HTML 階段就會把四張圖都排進下載佇列(這時
+           還沒套用 CSS,不知道 dark: 那組其實被隱藏),四張都設高優先度會
+           互相搶頻寬,實測(Lighthouse devtools throttling)LCP 因此多花了
+           一秒多的 resourceLoadDelay。dark 版本仍會照常下載,只是少了高
+           優先度提示,對開啟深色模式的使用者不影響正確性,只是理論上略慢
+           一點點。 -->
       <div aria-hidden="true" class="absolute inset-0 md:hidden">
         <NuxtImg
           src="/images/horizon-light-mobile.png"
@@ -77,7 +84,6 @@ useHead({
           format="avif"
           width="1086"
           height="1448"
-          fetchpriority="high"
           class="hidden h-full w-full object-cover dark:block"
           alt=""
         />
@@ -97,7 +103,6 @@ useHead({
           format="avif"
           width="1672"
           height="941"
-          fetchpriority="high"
           class="hidden h-full w-full object-cover dark:block"
           alt=""
         />
