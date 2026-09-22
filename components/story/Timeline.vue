@@ -24,14 +24,19 @@
         <div
           class="flex w-full flex-wrap items-center justify-evenly gap-4 rounded-b-lg bg-white/70 p-4 text-2xl dark:bg-slate-800/70"
         >
-          <!-- 照片版位:待 Yura 提供實際照片後,把這個 placeholder 換成 <NuxtImg :src="photo">。 -->
+          <!-- 照片版位:待 Yura 提供實際照片後,把這個 placeholder 換成 <NuxtImg :src="photo">。
+               Website 設計文件 §4.8:缺圖用固定比例的中性色占位,不能顯示破圖——
+               這裡分成兩種「缺圖」:一開始就沒有網址(!photo),跟有網址但載入
+               失敗(@error,例如連結失效或圖檔被移除),兩種都要落到同一個占位,
+               不能只處理前者。failedPhotos 記的是索引,不是網址,因為同一個
+               網址理論上不會又失敗又成功,用索引比對照片陣列的位置更直接。 -->
           <div
-            v-if="!photo"
+            v-if="!photo || failedPhotos.has(index)"
             class="flex aspect-video w-4/5 items-center justify-center rounded border border-dashed border-slate-300 text-base text-slate-400 dark:border-slate-600"
           >
             照片待補
           </div>
-          <img v-else class="w-4/5" :src="photo" alt="">
+          <img v-else class="w-4/5" :src="photo" alt="" @error="handlePhotoError(index)">
           <span v-if="description" class="w-full whitespace-pre-line text-center text-wrap break-all">
             {{ description }}
           </span>
@@ -56,6 +61,19 @@ const props = defineProps<{ stories: Story[] }>()
 // 拿去重新套用)。改成手機版直書 class 不加前綴(預設套用),桌機版直接用
 // md: 前綴覆寫回橫書,交給 CSS media query 判斷,不讀 window。
 const oppositeClass = '[writing-mode:vertical-lr] [text-orientation:upright] md:[writing-mode:horizontal-tb] md:[text-orientation:mixed]'
+
+// §4.8:有網址但實際載入失敗(連結失效/圖檔被刪)也要降級成中性色占位,不能
+// 顯示瀏覽器預設的破圖圖示。記錄「哪個索引失敗過」;這裡重新賦值整個 Set
+// 只是配合專案裡 collapsedSlugs(pages/projects/index.vue)已經在用的同一種
+// 寫法保持風格一致——Vue 3 的 reactive Set 本身就能追蹤 .add()/.delete() 這類
+// 原地修改,不是因為原地修改沒有反應性。
+const failedPhotos = ref(new Set<number>())
+
+function handlePhotoError(index: number) {
+  const next = new Set(failedPhotos.value)
+  next.add(index)
+  failedPhotos.value = next
+}
 
 const timelineItems = computed(() =>
   props.stories.map((story) => ({
