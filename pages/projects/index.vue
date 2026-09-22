@@ -51,6 +51,7 @@ function toggleHighlights(slug: string) {
         <div aria-hidden="true" class="no-print pointer-events-none absolute inset-0 opacity-20 md:hidden">
           <NuxtImg
             src="/images/horizon-light-mobile.png"
+            format="avif"
             width="1086"
             height="1448"
             class="h-full w-full object-cover dark:hidden"
@@ -58,6 +59,7 @@ function toggleHighlights(slug: string) {
           />
           <NuxtImg
             src="/images/horizon-dark-mobile.png"
+            format="avif"
             width="1086"
             height="1448"
             class="hidden h-full w-full object-cover dark:block"
@@ -67,6 +69,7 @@ function toggleHighlights(slug: string) {
         <div aria-hidden="true" class="no-print pointer-events-none absolute inset-0 hidden opacity-20 md:block">
           <NuxtImg
             src="/images/horizon-light.png"
+            format="avif"
             width="1672"
             height="941"
             class="h-full w-full object-cover dark:hidden"
@@ -74,6 +77,7 @@ function toggleHighlights(slug: string) {
           />
           <NuxtImg
             src="/images/horizon-dark.png"
+            format="avif"
             width="1672"
             height="941"
             class="hidden h-full w-full object-cover dark:block"

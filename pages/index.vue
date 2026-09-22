@@ -65,6 +65,7 @@ useHead({
       <div aria-hidden="true" class="absolute inset-0 md:hidden">
         <NuxtImg
           src="/images/horizon-light-mobile.png"
+          format="avif"
           width="1086"
           height="1448"
           fetchpriority="high"
@@ -73,6 +74,7 @@ useHead({
         />
         <NuxtImg
           src="/images/horizon-dark-mobile.png"
+          format="avif"
           width="1086"
           height="1448"
           fetchpriority="high"
@@ -83,6 +85,7 @@ useHead({
       <div aria-hidden="true" class="absolute inset-0 hidden md:block">
         <NuxtImg
           src="/images/horizon-light.png"
+          format="avif"
           width="1672"
           height="941"
           fetchpriority="high"
@@ -91,6 +94,7 @@ useHead({
         />
         <NuxtImg
           src="/images/horizon-dark.png"
+          format="avif"
           width="1672"
           height="941"
           fetchpriority="high"
