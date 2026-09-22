@@ -34,12 +34,16 @@ const hasContactInfo = computed(() =>
     <main class="print:max-w-none print:px-0">
       <!-- Website 設計文件 §4.10(視覺回饋修正):淡海紋橫幅是獨立的窄裝飾帶,
            不含姓名/頁籤等正文——沿用首頁 A01/A02 素材低透明度處理成「淡海紋
-           質感」(專用的 A03 橫幅裁切尚未交付);裝飾層全部掛 no-print,列印
-           時只留文字內容(§4.9)。旁註文字改用 muted 色(不是固定暖白的
-           wy-on-image)——原因是淺色模式下海景本身偏亮,暖白文字在淺色海景
-           上對比不足,muted 色雖然是隨主題變的一般文字色,但在兩種模式下都
-           比固定暖白更清楚。潮汐線條移到右上角、縮小尺寸,不橫跨底部整條。 -->
-      <section class="relative isolate overflow-hidden bg-wy-bg">
+           質感」(專用的 A03 橫幅裁切尚未交付)。旁註文字改用 muted 色(不是
+           固定暖白的 wy-on-image)——原因是淺色模式下海景本身偏亮,暖白文字
+           在淺色海景上對比不足,muted 色雖然是隨主題變的一般文字色,但在兩
+           種模式下都比固定暖白更清楚。潮汐線條移到右上角、縮小尺寸,不橫跨
+           底部整條。
+           §4.9:整個橫幅(連同這句英文旁註跟裝飾短線)都不是履歷正文,列印
+           時要整段拿掉,不能只藏海景圖——只藏圖片但留著 h-40/h-56 容器跟
+           文字的話,姓名前面仍會空出一整段裝飾用的版面高度,白白多佔頁數。
+           整個 section 直接掛 no-print,裡面的裝飾層就不用各自再掛一次。 -->
+      <section class="no-print relative isolate overflow-hidden bg-wy-bg">
         <div aria-hidden="true" class="no-print pointer-events-none absolute inset-0 opacity-20 md:hidden">
           <NuxtImg
             src="/images/horizon-light-mobile.png"

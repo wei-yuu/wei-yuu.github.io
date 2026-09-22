@@ -23,12 +23,28 @@ test.describe('個人履歷頁', () => {
     await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
   })
 
-  test('列印模式下,微縮導覽列(.no-print)必須被隱藏', async ({ page }) => {
+  // Website 設計文件 §4.9:列印強制白底黑字,移除導覽/主題切換/互動按鈕,
+  // 但姓名、職稱、經歷、技能等正文要保留(不能連正文一起被藏起來)。
+  test('列印模式下,導覽與互動按鈕隱藏,白底黑字,正文仍保留可讀', async ({ page }) => {
     await page.goto('/yura')
     await page.emulateMedia({ media: 'print' })
-    await expect(page.locator('.no-print')).toBeHidden()
+
+    // 頁面上有多個 .no-print 元素(導覽列、橫幅、頁尾……),對整組 locator
+    // 直接 toBeHidden() 會撞到 Playwright 的 strict mode(要求單一元素)而
+    // 拋錯、卡住後面的斷言——改成先確認數量存在,再逐一檢查每個都真的隱藏。
+    const noPrintElements = page.locator('.no-print')
+    const noPrintCount = await noPrintElements.count()
+    expect(noPrintCount).toBeGreaterThan(0)
+    for (let i = 0; i < noPrintCount; i++) {
+      await expect(noPrintElements.nth(i)).toBeHidden()
+    }
+
+    await expect(page.getByRole('button', { name: '下載履歷' })).toBeHidden()
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)')
     await expect(page.locator('body')).toHaveCSS('color', 'rgb(0, 0, 0)')
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await expect(page.getByRole('heading', { name: '工作經歷' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
   })
 })
 
