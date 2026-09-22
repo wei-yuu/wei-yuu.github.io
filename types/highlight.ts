@@ -5,4 +5,7 @@ export interface ProjectHighlight {
   slug: string
   title: string
   summary: string
+  // Website 設計文件 §4.4/§4.10:「案例預覽」由純文字按鈕改為圖示＋標題＋
+  // 一句話的可點列表,icon 對應 HighlightIcon.vue 認得的圖示名稱。
+  icon: 'book' | 'chat'
 }

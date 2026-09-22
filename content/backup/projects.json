@@ -68,6 +68,11 @@
         "type": "number",
         "number": null
       },
+      "Outcome": {
+        "id": "iB%3EN",
+        "type": "rich_text",
+        "rich_text": []
+      },
       "TechStackNames": {
         "id": "jwGJ",
         "type": "rollup",
@@ -82,10 +87,20 @@
         "type": "url",
         "url": null
       },
+      "Background": {
+        "id": "sxgv",
+        "type": "rich_text",
+        "rich_text": []
+      },
       "RepoUrl": {
         "id": "vHtS",
         "type": "url",
         "url": null
+      },
+      "Approach": {
+        "id": "%7CXeF",
+        "type": "rich_text",
+        "rich_text": []
       },
       "Title": {
         "id": "title",
@@ -101,7 +116,7 @@
     "object": "page",
     "id": "3d036cd8-ad0e-80b5-8f5d-d68b2322d4d2",
     "created_time": "2026-09-03T07:46:00.000Z",
-    "last_edited_time": "2026-09-03T09:14:00.000Z",
+    "last_edited_time": "2026-09-21T09:29:00.000Z",
     "created_by": {
       "object": "user",
       "id": "17507561-74e1-4812-a305-00af82e1c357"
@@ -181,7 +196,7 @@
           {
             "type": "text",
             "text": {
-              "content": "雙人協作打造的互動婚禮網站,展示彈幕引擎與視差故事時間軸。",
+              "content": "為婚禮情境打造的互動網站，整合出席回覆、座位查詢、故事時間軸與祝福彈幕，串接 Google Sheets、Drive、Forms 與 Apps Script，將婚禮資訊與賓客互動集中於同一個入口。",
               "link": null
             },
             "annotations": {
@@ -192,7 +207,7 @@
               "code": false,
               "color": "default"
             },
-            "plain_text": "雙人協作打造的互動婚禮網站,展示彈幕引擎與視差故事時間軸。",
+            "plain_text": "為婚禮情境打造的互動網站，整合出席回覆、座位查詢、故事時間軸與祝福彈幕，串接 Google Sheets、Drive、Forms 與 Apps Script，將婚禮資訊與賓客互動集中於同一個入口。",
             "href": null
           }
         ]
@@ -282,6 +297,29 @@
         "type": "number",
         "number": 1
       },
+      "Outcome": {
+        "id": "iB%3EN",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "婚禮當天實際上線給賓客使用，出席回覆、座位查詢、故事時間軸與祝福彈幕四個功能都在正式婚禮情境中運作；移植到作品集時的 Demo-only 限制與差異，已在彈幕引擎/故事時間軸兩個亮點子頁另外說明。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "婚禮當天實際上線給賓客使用，出席回覆、座位查詢、故事時間軸與祝福彈幕四個功能都在正式婚禮情境中運作；移植到作品集時的 Demo-only 限制與差異，已在彈幕引擎/故事時間軸兩個亮點子頁另外說明。",
+            "href": null
+          }
+        ]
+      },
       "TechStackNames": {
         "id": "jwGJ",
         "type": "rollup",
@@ -363,10 +401,56 @@
         "type": "url",
         "url": "https://wei-yuu.github.io/wedding"
       },
+      "Background": {
+        "id": "sxgv",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "為 Wilson 與 Yura 自己的婚禮打造的互動網站，讓賓客能在同一個入口完成出席回覆、查詢座位、瀏覽故事時間軸，並在祝福彈幕牆留言。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "為 Wilson 與 Yura 自己的婚禮打造的互動網站，讓賓客能在同一個入口完成出席回覆、查詢座位、瀏覽故事時間軸，並在祝福彈幕牆留言。",
+            "href": null
+          }
+        ]
+      },
       "RepoUrl": {
         "id": "vHtS",
         "type": "url",
         "url": "https://github.com/wei-yuu/wedding"
+      },
+      "Approach": {
+        "id": "%7CXeF",
+        "type": "rich_text",
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "前端獨立開發，後端不建資料庫，改串接 Google Sheets、Drive、Forms 與 Apps Script 當輕量後台——用試算表管理賓客名單與座位資料，表單蒐集出席回覆。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "前端獨立開發，後端不建資料庫，改串接 Google Sheets、Drive、Forms 與 Apps Script 當輕量後台——用試算表管理賓客名單與座位資料，表單蒐集出席回覆。",
+            "href": null
+          }
+        ]
       },
       "Title": {
         "id": "title",

@@ -2,19 +2,186 @@
 @tailwind components;
 @tailwind utilities;
 
-/* SRS §2.5/§4:標準 A4 列印樣式。過濾導覽列與非必要動畫,
-   輸出乾淨雙頁履歷,可直接透過瀏覽器列印成 PDF。 */
+/* SRS §2.8:人物識別與日夜閱讀模式分離的色票 token。
+   RGB 數值與 --fx- 效果變數直接沿用 Website 設計文件(Design v1.0)§2.4——
+   實色 token 存空白分隔的 RGB 通道(供 Tailwind 透明度修飾用),--fx- 是完整
+   RGBA,兩種變數的用途跟寫法不能混用。色值集中在這裡改,不要各元件各寫一份。 */
+@layer base {
+  :root {
+    color-scheme: light;
+    --color-bg: 244 240 232; /* #F4F0E8 */
+    --color-surface: 250 248 243; /* #FAF8F3 */
+    --color-surface-raised: 255 255 255; /* #FFFFFF */
+    --color-surface-subtle: 233 230 222; /* #E9E6DE */
+    --color-text: 36 55 70; /* #243746 */
+    --color-text-secondary: 82 97 107; /* #52616B */
+    --color-text-muted: 100 109 112; /* #646D70 */
+    --color-border-subtle: 212 217 215; /* #D4D9D7 */
+    --color-border-control: 124 139 145; /* #7C8B91 */
+    --color-accent: 54 91 109; /* #365B6D */
+    --color-accent-hover: 41 73 88; /* #294958 */
+    --color-accent-active: 33 61 75; /* #213D4B */
+    --color-on-accent: 250 248 243; /* #FAF8F3 */
+    --color-on-image: 241 237 229; /* #F1EDE5 — 疊在海景照片上的文字,兩模式固定暖白 */
+    --color-focus: 53 103 127; /* #35677F */
+    --color-selected-bg: 220 229 231; /* #DCE5E7 */
+    --color-selected-text: 41 73 88; /* #294958 */
+    --color-disabled-bg: 227 228 223; /* #E3E4DF */
+    --color-disabled-text: 115 126 130; /* #737E82 */
+    --color-wilson: 165 141 107; /* #A58D6B */
+    --color-yura: 135 166 181; /* #87A6B5 */
+    --color-warm-glint: 212 185 149; /* #D4B995 */
+    --color-mist: 182 200 208; /* #B6C8D0 */
+    --color-success: 50 101 77; /* #32654D */
+    --color-success-bg: 230 239 231; /* #E6EFE7 */
+    --color-warning: 120 90 42; /* #785A2A */
+    --color-warning-bg: 243 235 220; /* #F3EBDC */
+    --color-error: 150 63 64; /* #963F40 */
+    --color-error-bg: 245 229 227; /* #F5E5E3 */
+    --color-info: 54 91 109; /* #365B6D */
+    --color-info-bg: 229 237 240; /* #E5EDF0 */
+    --color-print-bg: 255 255 255; /* #FFFFFF */
+    --color-print-text: 0 0 0; /* #000000 */
+    --fx-nav: rgba(250, 248, 243, 0.92);
+    --fx-hero-start: rgba(244, 240, 232, 0.88);
+    --fx-hero-end: rgba(244, 240, 232, 0.18);
+    --fx-fade-start: rgba(244, 240, 232, 0);
+    --fx-tide: rgba(135, 166, 181, 0.2);
+    --fx-grid: rgba(54, 91, 109, 0.06);
+    --fx-glass-start: rgba(255, 255, 255, 0.24);
+    --fx-glass-end: rgba(182, 200, 208, 0.08);
+    --fx-glass-cool: rgba(255, 255, 255, 0.65);
+    --fx-glass-warm: rgba(212, 185, 149, 0.55);
+    --fx-scrim: rgba(20, 31, 40, 0.38);
+    --fx-card-shadow: rgba(36, 55, 70, 0.08);
+  }
+
+  :root.dark {
+    color-scheme: dark;
+    --color-bg: 20 31 40; /* #141F28 */
+    --color-surface: 27 42 53; /* #1B2A35 */
+    --color-surface-raised: 35 53 65; /* #233541 */
+    --color-surface-subtle: 32 48 58; /* #20303A */
+    --color-text: 241 237 229; /* #F1EDE5 */
+    --color-text-secondary: 186 198 205; /* #BAC6CD */
+    --color-text-muted: 156 174 184; /* #9CAEB8 */
+    --color-border-subtle: 52 70 80; /* #344650 */
+    --color-border-control: 113 136 149; /* #718895 */
+    --color-accent: 180 203 215; /* #B4CBD7 */
+    --color-accent-hover: 202 220 228; /* #CADCE4 */
+    --color-accent-active: 158 188 203; /* #9EBCCB */
+    --color-on-accent: 20 38 48; /* #142630 */
+    --color-on-image: 241 237 229; /* #F1EDE5 — 疊在海景照片上的文字,兩模式固定暖白 */
+    --color-focus: 196 222 234; /* #C4DEEA */
+    --color-selected-bg: 48 73 87; /* #304957 */
+    --color-selected-text: 226 237 241; /* #E2EDF1 */
+    --color-disabled-bg: 43 57 66; /* #2B3942 */
+    --color-disabled-text: 135 151 160; /* #8797A0 */
+    --color-wilson: 200 179 148; /* #C8B394 */
+    --color-yura: 159 186 201; /* #9FBAC9 */
+    --color-warm-glint: 203 180 148; /* #CBB494 */
+    --color-mist: 102 131 145; /* #668391 */
+    --color-success: 166 211 183; /* #A6D3B7 */
+    --color-success-bg: 32 59 48; /* #203B30 */
+    --color-warning: 225 194 139; /* #E1C28B */
+    --color-warning-bg: 66 54 37; /* #423625 */
+    --color-error: 233 164 163; /* #E9A4A3 */
+    --color-error-bg: 68 43 48; /* #442B30 */
+    --color-info: 180 203 215; /* #B4CBD7 */
+    --color-info-bg: 37 61 73; /* #253D49 */
+    --color-print-bg: 255 255 255; /* #FFFFFF */
+    --color-print-text: 0 0 0; /* #000000 */
+    --fx-nav: rgba(20, 31, 40, 0.94);
+    --fx-hero-start: rgba(20, 31, 40, 0.9);
+    --fx-hero-end: rgba(20, 31, 40, 0.25);
+    --fx-fade-start: rgba(20, 31, 40, 0);
+    --fx-tide: rgba(159, 186, 201, 0.14);
+    --fx-grid: rgba(180, 203, 215, 0.05);
+    --fx-glass-start: rgba(180, 203, 215, 0.14);
+    --fx-glass-end: rgba(35, 53, 65, 0.06);
+    --fx-glass-cool: rgba(212, 227, 234, 0.42);
+    --fx-glass-warm: rgba(203, 180, 148, 0.42);
+    --fx-scrim: rgba(0, 0, 0, 0.55);
+    --fx-card-shadow: rgba(0, 0, 0, 0.22);
+  }
+
+  body {
+    @apply bg-wy-bg text-wy-text font-sans text-body;
+  }
+
+  ::selection {
+    @apply bg-wy-selected-bg text-wy-text;
+  }
+
+  /* SRS §2.3:所有互動元素都要有清晰的 :focus-visible 外框,不能只靠瀏覽器
+     預設焦點樣式(不同瀏覽器/OS 顏色不一致,也不一定跟站內配色搭)。
+     AppButton、ContextualHeader 漢堡鈕、ThemeToggle 等已各自用
+     focus-visible: utility 客製過同樣的外框;這裡補一個全站預設值,讓單純
+     的 <a>/<button>(導覽連結、聯絡資訊/相關作品連結、人物頁籤等目前沒有
+     另外寫 focus-visible: 的地方)也套用同一套焦點樣式,不用每個地方各自
+     重複宣告。這條規則放在 @layer base,Tailwind 的 focus-visible: utility
+     屬於 utilities layer,層級順序上一定會覆寫這裡,兩者不會互相打架。 */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid rgb(var(--color-focus));
+    outline-offset: 2px;
+  }
+}
+
+/* SRS §2.5/§4、Website 設計文件 §4.9:標準 A4 列印樣式。過濾導覽列與非必要
+   動畫,輸出乾淨雙頁履歷,可直接透過瀏覽器列印成 PDF。列印永遠強制套用
+   白底黑字色票,不受目前畫面明暗模式影響——:root.dark 在此重新覆寫全部
+   語意色,所有 wy-* utility class 因此自動轉為黑白／灰階,
+   不需要每個元件另外寫一套 print: 覆寫。 */
 @media print {
+  :root,
+  :root.dark {
+    color-scheme: light;
+    --color-bg: 255 255 255;
+    --color-surface: 255 255 255;
+    --color-surface-raised: 255 255 255;
+    --color-surface-subtle: 255 255 255;
+    --color-text: 0 0 0;
+    --color-text-secondary: 0 0 0;
+    --color-text-muted: 64 64 64;
+    --color-border-subtle: 160 160 160;
+    --color-border-control: 96 96 96;
+    --color-accent: 0 0 0;
+    --color-accent-hover: 0 0 0;
+    --color-accent-active: 0 0 0;
+    --color-on-accent: 255 255 255;
+    --color-focus: 0 0 0;
+    --color-selected-bg: 255 255 255;
+    --color-selected-text: 0 0 0;
+    --color-disabled-bg: 255 255 255;
+    --color-disabled-text: 64 64 64;
+    --color-wilson: 0 0 0;
+    --color-yura: 0 0 0;
+    --color-warm-glint: 0 0 0;
+    --color-mist: 0 0 0;
+    --color-success: 0 0 0;
+    --color-success-bg: 255 255 255;
+    --color-warning: 0 0 0;
+    --color-warning-bg: 255 255 255;
+    --color-error: 0 0 0;
+    --color-error-bg: 255 255 255;
+    --color-info: 0 0 0;
+    --color-info-bg: 255 255 255;
+  }
+
   @page {
     size: A4;
     margin: 15mm;
   }
 
   /* Safari 的已知 bug:@page margin 生效時,html/body 有時仍套用畫面寬度去縮放整頁內容,
-     導致列印結果跟畫面比例跑掉。明確鎖定 A4 寬度可繞過這個問題。 */
+     導致列印結果跟畫面比例跑掉。明確鎖定寬度可繞過這個問題——但這裡要鎖的是頁面「可印
+     內容區」的寬度,不是整張紙的寬度:上面 @page 已經吃掉左右各 15mm 頁邊距,A4 210mm
+     扣掉左右邊距後,body 實際可用的只有 180mm,鎖 210mm 會讓內容比可印範圍還寬,造成
+     縮放或右側被裁掉。兩個數字要一起改,改了上面的 margin 記得同步改這裡。 */
   html,
   body {
-    width: 210mm;
+    width: 180mm;
   }
 
   .no-print {

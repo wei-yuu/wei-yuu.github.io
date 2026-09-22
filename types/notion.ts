@@ -39,6 +39,11 @@ export interface NotionUrlProperty {
   url: string | null
 }
 
+export interface NotionEmailProperty {
+  type: 'email'
+  email: string | null
+}
+
 export interface NotionRollupArrayProperty {
   type: 'rollup'
   rollup: {
@@ -57,6 +62,7 @@ export type NotionProperty =
   | NotionRelationProperty
   | NotionRollupArrayProperty
   | NotionUrlProperty
+  | NotionEmailProperty
 
 export interface NotionPage {
   id: string
@@ -99,7 +105,11 @@ export interface PersonItem {
   id: string
   name: string
   jobTitle: string
+  bio: string
   seoDescription: string
+  email: string
+  githubUrl: string | null
+  linkedinUrl: string | null
 }
 
 // RoleAttribution 是「Yura: 視覺/動效, Wilson: 架構/彈幕」這種單行文字,
@@ -114,6 +124,12 @@ export interface ProjectItem {
   title: string
   slug: string
   summary: string
+  // SRS §4.1(2026-09-21 決議):案例正文改由 Notion 的 Background/Approach/
+  // Outcome 三個 Rich Text 欄位維護,不寫死於 Vue;不新增 Goal 欄位。缺欄位
+  // 或空白值一律是空字串,由頁面自行判斷要不要顯示對應段落。
+  background: string
+  approach: string
+  outcome: string
   roleAttribution: RoleAttributionItem[]
   techStack: string[]
   demoUrl: string | null

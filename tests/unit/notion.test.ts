@@ -254,25 +254,37 @@ describe('mapExperience / mapSkill', () => {
     const page = makePage({
       Name: { type: 'title', title: [{ plain_text: 'Wilson' }] },
       JobTitle: { type: 'rich_text', rich_text: [{ plain_text: '前端工程師 · 架構與資料管線工程' }] },
+      Bio: { type: 'rich_text', rich_text: [{ plain_text: '專注可維護的前端架構。' }] },
       SeoDescription: { type: 'rich_text', rich_text: [{ plain_text: 'Wilson 的個人履歷與作品集。' }] },
+      Email: { type: 'email', email: 'wilson@example.com' },
+      GitHubUrl: { type: 'url', url: 'https://github.com/wilson' },
+      LinkedInUrl: { type: 'url', url: 'https://www.linkedin.com/in/wilson' },
     })
 
     expect(mapPerson(page)).toEqual({
       id: 'test-id',
       name: 'Wilson',
       jobTitle: '前端工程師 · 架構與資料管線工程',
+      bio: '專注可維護的前端架構。',
       seoDescription: 'Wilson 的個人履歷與作品集。',
+      email: 'wilson@example.com',
+      githubUrl: 'https://github.com/wilson',
+      linkedinUrl: 'https://www.linkedin.com/in/wilson',
     })
   })
 
-  it('mapPerson 對還沒填 JobTitle/SeoDescription 的資料,回傳空字串而不是拋錯', () => {
+  it('mapPerson 對還沒填個人資料的欄位,回傳安全空值而不是拋錯', () => {
     const page = makePage({ Name: { type: 'title', title: [{ plain_text: 'Yura' }] } })
 
     expect(mapPerson(page)).toEqual({
       id: 'test-id',
       name: 'Yura',
       jobTitle: '',
+      bio: '',
       seoDescription: '',
+      email: '',
+      githubUrl: null,
+      linkedinUrl: null,
     })
   })
 
@@ -281,6 +293,9 @@ describe('mapExperience / mapSkill', () => {
       Title: { type: 'title', title: [{ plain_text: '互動婚禮網站' }] },
       Slug: { type: 'rich_text', rich_text: [{ plain_text: 'wedding' }] },
       Summary: { type: 'rich_text', rich_text: [{ plain_text: '雙人協作打造的互動婚禮網站。' }] },
+      Background: { type: 'rich_text', rich_text: [{ plain_text: '真實上線的婚禮網站,想留存技術亮點。' }] },
+      Approach: { type: 'rich_text', rich_text: [{ plain_text: '移植真實 repo 的彈幕與時間軸模組。' }] },
+      Outcome: { type: 'rich_text', rich_text: [{ plain_text: '兩個模組皆為 Demo-only 呈現。' }] },
       RoleAttribution: {
         type: 'rich_text',
         rich_text: [{ plain_text: 'Yura: 視覺/動效, Wilson: 架構/彈幕' }],
@@ -306,6 +321,9 @@ describe('mapExperience / mapSkill', () => {
       title: '互動婚禮網站',
       slug: 'wedding',
       summary: '雙人協作打造的互動婚禮網站。',
+      background: '真實上線的婚禮網站,想留存技術亮點。',
+      approach: '移植真實 repo 的彈幕與時間軸模組。',
+      outcome: '兩個模組皆為 Demo-only 呈現。',
       roleAttribution: [
         { person: 'Yura', role: '視覺/動效' },
         { person: 'Wilson', role: '架構/彈幕' },
@@ -318,6 +336,33 @@ describe('mapExperience / mapSkill', () => {
     })
   })
 
+  it('mapProject 的 Background/Approach/Outcome 純空白(空格/換行/Tab)要 trim 成空字串', () => {
+    const page = makePage({
+      Background: { type: 'rich_text', rich_text: [{ plain_text: '   ' }] },
+      Approach: { type: 'rich_text', rich_text: [{ plain_text: '\n\n' }] },
+      Outcome: { type: 'rich_text', rich_text: [{ plain_text: '\t \n' }] },
+    })
+
+    const project = mapProject(page)
+    expect(project.background).toBe('')
+    expect(project.approach).toBe('')
+    expect(project.outcome).toBe('')
+  })
+
+  it('mapProject 的 Background/Approach/Outcome 只清開頭/結尾空白,保留內文中間的換行', () => {
+    const page = makePage({
+      Approach: {
+        type: 'rich_text',
+        rich_text: [
+          { plain_text: '  第一段文字\n' },
+          { plain_text: '第二段文字  ' },
+        ],
+      },
+    })
+
+    expect(mapProject(page).approach).toBe('第一段文字\n第二段文字')
+  })
+
   it('mapProject 對還沒填任何欄位的佔位列,回傳安全預設值而不是拋錯', () => {
     const page = makePage({})
 
@@ -326,6 +371,9 @@ describe('mapExperience / mapSkill', () => {
       title: '',
       slug: '',
       summary: '',
+      background: '',
+      approach: '',
+      outcome: '',
       roleAttribution: [],
       techStack: [],
       demoUrl: null,
