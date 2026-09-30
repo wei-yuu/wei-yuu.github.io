@@ -23,6 +23,41 @@ test.describe('個人履歷頁', () => {
     await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
   })
 
+  // P0-01:主導覽的「履歷」預設連到 /wilson,但 /wilson、/yura 都要標示成
+  // 目前頁面(桌機/手機皆需底線 + aria-current),不能只有連結目標本身的
+  // /wilson 才會被判定成 active。同時 aria-current="page" 語意上代表
+  // 「這個連結指到的就是目前這頁」,所以連結的 href 也要跟著目前路由變動
+  // (在 /yura 時連結要指回 /yura,不能宣告 aria-current="page" 卻連去
+  // 另一個會離開目前頁面的 /wilson——code review 抓到的語意問題)。
+  for (const path of ['/wilson', '/yura']) {
+    test(`桌機主導覽「履歷」在 ${path} 會標示為目前頁面`, async ({ page }) => {
+      await page.goto(path)
+      const desktopNav = page.getByRole('navigation', { name: '主要導覽' })
+      const resumeLink = desktopNav.getByRole('link', { name: '履歷' })
+      await expect(resumeLink).toHaveAttribute('aria-current', 'page')
+      await expect(resumeLink).toHaveAttribute('href', path)
+      await expect(resumeLink).toHaveCSS('text-decoration-line', 'underline')
+    })
+  }
+
+  // 手機斷點(<768px)導覽收進漢堡選單,要展開後才能檢查到選單裡的「履歷」
+  // 連結,不能只驗證桌機版——這是清單原本要求、上一輪漏掉的測試覆蓋。
+  test.describe('手機版漢堡選單', () => {
+    test.use({ viewport: { width: 375, height: 812 } })
+
+    for (const path of ['/wilson', '/yura']) {
+      test(`手機主導覽「履歷」在 ${path} 會標示為目前頁面`, async ({ page }) => {
+        await page.goto(path)
+        await page.getByRole('button', { name: '開啟選單' }).click()
+        const mobileNav = page.locator('#mobile-nav')
+        const resumeLink = mobileNav.getByRole('link', { name: '履歷' })
+        await expect(resumeLink).toHaveAttribute('aria-current', 'page')
+        await expect(resumeLink).toHaveAttribute('href', path)
+        await expect(resumeLink).toHaveCSS('text-decoration-line', 'underline')
+      })
+    }
+  })
+
   // Website 設計文件 §4.9:列印強制白底黑字,移除導覽/主題切換/互動按鈕,
   // 但姓名、職稱、經歷、技能等正文要保留(不能連正文一起被藏起來)。
   test('列印模式下,導覽與互動按鈕隱藏,白底黑字,正文仍保留可讀', async ({ page }) => {
@@ -46,6 +81,38 @@ test.describe('個人履歷頁', () => {
     await expect(page.getByRole('heading', { name: '工作經歷' })).toBeVisible()
     await expect(page.getByRole('heading', { name: '技能' })).toBeVisible()
   })
+})
+
+test.describe('深色偏好 hydration', () => {
+  // P0-02:使用者已存 dark 偏好時,直接載入 /wilson、/projects 不能出現
+  // hydration mismatch——SSR 永遠算 isDark=false,如果 initTheme() 校正
+  // 時機比 hydration 還早,client 端第一次 render 用的 isDark 就會跟
+  // SSR 對不上。用 addInitScript 在真正 load 頁面前先寫入 localStorage,
+  // 模擬「已存深色偏好」的回訪使用者,再確認畫面主題正確且 console 沒有
+  // 任何 hydration 相關警告/錯誤。
+  for (const path of ['/wilson', '/projects', '/projects/wedding']) {
+    test(`已存深色偏好時載入 ${path},不出現 hydration mismatch`, async ({ page }) => {
+      const consoleIssues: string[] = []
+      page.on('console', (msg) => {
+        if (/hydration/i.test(msg.text())) consoleIssues.push(msg.text())
+      })
+      page.on('pageerror', (err) => {
+        if (/hydration/i.test(err.message)) consoleIssues.push(err.message)
+      })
+
+      await page.addInitScript(() => {
+        localStorage.setItem('wy-theme', 'dark')
+      })
+      await page.goto(path)
+
+      await expect(page.locator('html')).toHaveClass(/dark/)
+      // 桌機/手機各有一顆 ThemeToggle,兩顆同時存在 DOM(靠 CSS class 決定
+      // 顯示哪一顆,不是 v-if),用 .first() 避免撞到 strict mode。
+      const themeToggle = page.getByRole('button', { name: '切換為淺色模式' }).first()
+      await expect(themeToggle).toHaveAttribute('aria-pressed', 'true')
+      expect(consoleIssues).toEqual([])
+    })
+  }
 })
 
 test.describe('專案作品集', () => {
