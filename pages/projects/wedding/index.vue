@@ -34,6 +34,7 @@ useHead({
   <div>
     <ContextualHeader />
     <main>
+      <InnerPageHero :lines="['IDEAS FLOW', 'INTO REALITY', 'LIKE TIDES']" show-grid />
       <PageContainer class="py-10 lg:py-14">
         <AppBreadcrumb :items="[{ label: '作品集', to: '/projects' }, { label: title }]" />
 

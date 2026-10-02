@@ -16,10 +16,27 @@
            矯枉過正。下面固定存在同一份訊息列表,用 sr-only 視覺隱藏但留在
            無障礙樹裡,讀屏器使用者可以自己主動瀏覽/讀取,只是不會被強制
            自動播報(沒有 aria-live/role)。 -->
-      <BulletScreen v-if="!prefersReducedMotion" v-model:magazine="magazine" :quantity="TRACK_COUNT" aria-hidden="true" />
-      <ul :class="prefersReducedMotion ? 'flex h-full flex-col gap-1.5 overflow-y-auto p-3 text-body-sm text-white' : 'sr-only'">
+      <BulletScreen
+        v-if="!prefersReducedMotion"
+        v-model:magazine="magazine"
+        :quantity="TRACK_COUNT"
+        aria-hidden="true"
+        data-testid="bullet-stage"
+      />
+      <ul
+        data-testid="bullet-static-list"
+        :class="prefersReducedMotion ? 'flex h-full flex-col gap-1.5 overflow-y-auto p-3 text-body-sm text-white' : 'sr-only'"
+      >
         <li v-for="bullet in staticMessages" :key="bullet.id">{{ bullet.text }}</li>
       </ul>
+      <!-- 純粹給 E2E 測試讀取彈匣(magazine,真正驅動動畫播放的佇列)真實狀態
+           用,不給使用者看、也不進無障礙樹——sr-only 清單(displayMessages)
+           是獨立於 magazine 的另一份資料(見下方註解),只測 sr-only 清單
+           沒辦法證明送出的內容真的進了會播放的佇列,之前 code review 抓到
+           這個落差(測試用 getByText 不小心連到 sr-only 的 1px 元素,動畫
+           佇列即使完全沒收到訊息也可能通過)。 -->
+      <p data-testid="bullet-magazine-length" class="hidden" aria-hidden="true">{{ magazine.length }}</p>
+      <p data-testid="bullet-magazine-last" class="hidden" aria-hidden="true">{{ magazine.at(-1)?.text ?? '' }}</p>
     </div>
 
     <form class="mt-4" @submit.prevent="handleSubmit">
@@ -142,9 +159,7 @@ watch(inputText, () => {
 watch(
   magazine,
   (current) => {
-    if (current.length === 0) {
-      magazine.value.push(...DEFAULT_BULLETS.map(createBulletMessage));
-    }
+    refillMagazineIfEmpty(current, () => DEFAULT_BULLETS.map(createBulletMessage));
   },
   { deep: true },
 );
