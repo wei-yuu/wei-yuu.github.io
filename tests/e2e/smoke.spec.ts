@@ -194,4 +194,14 @@ test.describe('專案作品集', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('故事時間軸')
     await expect(page.getByText('相識')).toBeVisible()
   })
+
+  // P1-10(code review 修正):撐版資料原本放真實格式的年份(如「2023 年 1
+  // 月」),使用者容易誤以為時間軸日期已經確定——跟文案/照片一樣應明確標示
+  // 待確認,不能顯示看起來很真的日期。
+  test('/projects/wedding/story-timeline 的日期未確認前,一律顯示「待確認」,不顯示假日期', async ({ page }) => {
+    await page.goto('/projects/wedding/story-timeline')
+    const dateLabels = page.getByText('待確認')
+    await expect(dateLabels).toHaveCount(4)
+    await expect(page.getByText(/\d{4}\s*年/)).toHaveCount(0)
+  })
 })

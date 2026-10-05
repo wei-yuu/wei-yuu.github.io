@@ -15,6 +15,7 @@ const linkedinUrl = computed(() => profile.value?.linkedinUrl || null)
 const sameAs = computed(() => [githubUrl.value, linkedinUrl.value].filter((url): url is string => Boolean(url)))
 const pageTitle = computed(() => `Yura ｜ ${jobTitle.value}`)
 const pageUrl = computed(() => `${siteConfig.url}/yura`)
+const ogImage = computed(() => `${siteConfig.url}/images/og-yura.png`)
 
 // SRS §2.4:每個獨立頁面要有各自的 OG meta 與 JSON-LD,不是共用首頁那組
 useSeoMeta({
@@ -24,6 +25,9 @@ useSeoMeta({
   ogDescription: description,
   ogType: 'profile',
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({

@@ -7,6 +7,7 @@ import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
 // 下,使用者只點開哪個亮點才會載入對應的 JS。
 const siteConfig = useSiteConfig()
 const pageUrl = computed(() => `${siteConfig.url}/projects/wedding`)
+const ogImage = computed(() => `${siteConfig.url}/images/og-wedding.png`)
 const { findProjectBySlug } = useProjects()
 const project = findProjectBySlug('wedding')
 
@@ -23,6 +24,9 @@ useSeoMeta({
   ogTitle: '互動婚禮網站 Case Study',
   ogDescription: summary,
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({
@@ -75,6 +79,61 @@ useHead({
 
         <!-- §4.4/A08:玻璃雙圓是這個案例的專屬風格封面,不是全站通用樣式。 -->
         <GlassCover class="relative mt-8" />
+
+        <!-- P1-09/A09/A10:案例頁只使用真實上線婚禮網站的桌機/手機截圖，
+             以及本專案實際彈幕 Demo 的靜態預覽；不以假 UI 或示意稿代替。 -->
+        <section class="mt-12">
+          <div class="flex items-center gap-4">
+            <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">實際畫面</h2>
+            <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
+            <p class="shrink-0 font-display-en text-body-sm tracking-wide text-wy-text-muted">PRODUCT PREVIEW</p>
+          </div>
+          <div class="mt-6 grid gap-6 lg:grid-cols-2">
+            <figure>
+              <!-- P1-09(code review 修正):桌機/手機截圖是直的手機跟橫的桌機
+                   兩種完全不同的長寬比,原本兩者共用同一個固定 aspect-[8/5]
+                   (桌機比例)——object-cover 要把直向照片硬塞進橫向的框,得把
+                   圖片放大到寬度填滿整個框,結果高度大幅溢出被裁掉(舊版
+                   390×844 塞進 8:5 框只留得住最上面 28.8% 高度,裁掉約
+                   71%)。改成預設(手機斷點)用跟手機截圖一致的長寬比,
+                   sm: 以上才切回跟桌機截圖一致的比例——兩邊長寬比都跟實際
+                   圖片一致,object-cover 不會再裁到關鍵 UI。
+                   兩張圖都已換成從真實上線站(wei-yuu.github.io/wedding)
+                   實際擷取的畫面,解析度符合 Website 設計文件 §5.1 的
+                   A09 規格(桌機 ≥1600、手機 ≥750):桌機 1600×1000、
+                   手機 750×1624。 -->
+              <picture>
+                <source media="(max-width: 639px)" srcset="/images/wedding-site-mobile.png">
+                <img
+                  src="/images/wedding-site-desktop.png"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  alt="互動婚禮網站首頁的實際上線畫面"
+                  class="aspect-[750/1624] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top sm:aspect-[1600/1000]"
+                >
+              </picture>
+              <figcaption class="mt-2 text-body-sm text-wy-text-muted">婚禮網站首頁（桌機與手機實際畫面）</figcaption>
+            </figure>
+            <figure>
+              <!-- P1-09(code review 修正):原本的截圖幾乎都是導覽列/頁首/
+                   說明文字,只截到舞台最上緣,輸入框跟發送按鈕完全沒入鏡;
+                   尺寸 1200×675 也低於 Website 設計文件 §5.1 的 A10 規格
+                   (1600×900)。重新擷取本專案 /projects/wedding/bullet-engine
+                   的實際畫面,涵蓋標題/說明/完整彈幕舞台/輸入框/發送按鈕/
+                   字數提示,尺寸改為規格要求的 1600×900。 -->
+              <img
+                src="/images/bullet-engine-preview.png"
+                width="1600"
+                height="900"
+                loading="lazy"
+                alt="賓客祝福彈幕引擎的實際執行畫面,含輸入框與發送按鈕"
+                class="aspect-video w-full rounded border border-wy-border-subtle bg-wy-surface object-cover"
+              >
+              <figcaption class="mt-2 text-body-sm text-wy-text-muted">賓客祝福彈幕引擎靜態預覽</figcaption>
+            </figure>
+          </div>
+        </section>
 
         <!-- SRS §4.1/Website 設計文件 §4.5(2026-09-21 決議):案例正文改讀
              Notion Projects 的 Background/Approach/Outcome 三個 Rich Text

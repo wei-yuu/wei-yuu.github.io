@@ -4,6 +4,7 @@ import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
 // SRS §4.1:/projects 是資料驅動的列表頁,卡片點進去對應各自手刻的 /projects/{slug} 詳情頁。
 const siteConfig = useSiteConfig()
 const pageUrl = computed(() => `${siteConfig.url}/projects`)
+const ogImage = computed(() => `${siteConfig.url}/images/og-projects.png`)
 const { projects } = useProjects()
 
 useSeoMeta({
@@ -12,6 +13,9 @@ useSeoMeta({
   ogTitle: '專案作品集',
   ogDescription: 'Yura 與 Wilson 的作品集專案列表,點進去看每個案例的技術亮點剖析。',
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({

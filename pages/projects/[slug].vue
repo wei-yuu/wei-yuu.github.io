@@ -35,6 +35,9 @@ if (!project.value) {
 const title = computed(() => project.value?.title ?? '')
 const summary = computed(() => project.value?.summary ?? '')
 const pageUrl = computed(() => `${siteConfig.url}/projects/${slug.value}`)
+// P1-08:沒有經確認的專案專屬封面時，不生成假 UI；動態案例先沿用
+// 作品集 OG 圖，待真實素材交付後再為該 slug 指定獨立圖片。
+const ogImage = computed(() => `${siteConfig.url}/images/og-projects.png`)
 
 useSeoMeta({
   title: () => `${title.value} Case Study ｜ Wei Yu`,
@@ -42,6 +45,9 @@ useSeoMeta({
   ogTitle: () => `${title.value} Case Study`,
   ogDescription: summary,
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({

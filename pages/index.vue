@@ -13,6 +13,8 @@ const { projects } = useProjects();
 
 const description =
   "兩位資深前端工程師 Yura 與 Wilson 共同打造的技術工作室與個人品牌網站。";
+const pageUrl = computed(() => siteConfig.url);
+const ogImage = computed(() => `${siteConfig.url}/images/og-home.png`);
 
 // 星座是品牌靈感裝飾(不推定職能),搭配 People 資料庫的真實職稱英文部分,
 // 組成提案樣式裡「Libra · Frontend Engineer」這種簡短單行介紹。
@@ -32,10 +34,14 @@ useSeoMeta({
   description,
   ogTitle: "Wei Yu ｜ Yura & Wilson",
   ogDescription: description,
+  ogUrl: pageUrl,
+  ogImage,
+  twitterCard: "summary_large_image",
+  twitterImage: ogImage,
 });
 
 useHead({
-  link: [{ rel: "canonical", href: computed(() => siteConfig.url) }],
+  link: [{ rel: "canonical", href: pageUrl }],
   script: [
     {
       type: "application/ld+json",
