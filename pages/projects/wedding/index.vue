@@ -101,18 +101,31 @@ useHead({
                    兩張圖都已換成從真實上線站(wei-yuu.github.io/wedding)
                    實際擷取的畫面,解析度符合 Website 設計文件 §5.1 的
                    A09 規格(桌機 ≥1600、手機 ≥750):桌機 1600×1000、
-                   手機 750×1624。 -->
-              <picture>
-                <source media="(max-width: 639px)" srcset="/images/wedding-site-mobile.png">
-                <img
-                  src="/images/wedding-site-desktop.png"
-                  width="1600"
-                  height="1000"
-                  loading="lazy"
-                  alt="互動婚禮網站首頁的實際上線畫面"
-                  class="aspect-[750/1624] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top sm:aspect-[1600/1000]"
-                >
-              </picture>
+                   手機 750×1624。
+                   P1-09(code review 修正):原生 <picture><source> 直接
+                   載入原始 PNG(桌機約 1.60MB、手機約 0.99MB),沒有經過
+                   設計文件 §5.1 要求的轉碼最佳化。改用跟首頁海景圖
+                   (pages/index.vue)同一套手法——兩張 NuxtImg 各自負責
+                   一個斷點、用 class 切換顯示,而不是 <picture><source>,
+                   這樣才能吃到 @nuxt/image 的 format="avif" 轉碼。 -->
+              <NuxtImg
+                src="/images/wedding-site-mobile.png"
+                format="avif"
+                width="750"
+                height="1624"
+                loading="lazy"
+                alt="互動婚禮網站首頁的實際上線畫面(手機版)"
+                class="aspect-[750/1624] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top sm:hidden"
+              />
+              <NuxtImg
+                src="/images/wedding-site-desktop.png"
+                format="avif"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                alt="互動婚禮網站首頁的實際上線畫面(桌機版)"
+                class="hidden aspect-[1600/1000] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top sm:block"
+              />
               <figcaption class="mt-2 text-body-sm text-wy-text-muted">婚禮網站首頁（桌機與手機實際畫面）</figcaption>
             </figure>
             <figure>
@@ -121,15 +134,21 @@ useHead({
                    尺寸 1200×675 也低於 Website 設計文件 §5.1 的 A10 規格
                    (1600×900)。重新擷取本專案 /projects/wedding/bullet-engine
                    的實際畫面,涵蓋標題/說明/完整彈幕舞台/輸入框/發送按鈕/
-                   字數提示,尺寸改為規格要求的 1600×900。 -->
-              <img
+                   字數提示,尺寸改為規格要求的 1600×900。
+                   第二輪 code review 修正:原本截圖時 5 條彈幕都停在剛進場
+                   的最右緣,只露出開頭幾個字——改成擷取前先把每條彈幕的
+                   CSS animation 暫停在各自 duration 的 50% 進度,確保每句
+                   祝福都完整滑進舞台中央可讀的範圍。改用 NuxtImg
+                   format="avif" 轉碼,不直接載入原始 PNG。 -->
+              <NuxtImg
                 src="/images/bullet-engine-preview.png"
+                format="avif"
                 width="1600"
                 height="900"
                 loading="lazy"
                 alt="賓客祝福彈幕引擎的實際執行畫面,含輸入框與發送按鈕"
                 class="aspect-video w-full rounded border border-wy-border-subtle bg-wy-surface object-cover"
-              >
+              />
               <figcaption class="mt-2 text-body-sm text-wy-text-muted">賓客祝福彈幕引擎靜態預覽</figcaption>
             </figure>
           </div>
