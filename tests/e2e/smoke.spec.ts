@@ -183,6 +183,24 @@ test.describe('專案作品集', () => {
     await expect(page.getByRole('link', { name: '故事時間軸' })).toBeVisible()
   })
 
+  // P1-09(code review 修正):這三張圖之前用 NuxtImg + format="avif" 只會
+  // 輸出單一 AVIF 格式,Safari 15.4(SRS 要求支援的最低版本)還不支援
+  // AVIF(要到 Safari 16 才支援),會直接破圖——改成 NuxtPicture +
+  // format="avif,webp" 之後,真正產出的是 <picture><source> 多格式
+  // fallback,這裡直接檢查 HTML 結構確保兩種格式的 source 都存在,不是
+  // 只肉眼看渲染結果(換成只支援其中一種格式的瀏覽器也不會壞)。
+  test('/projects/wedding 的真實截圖都有 AVIF 與 WebP 雙重備援格式', async ({ page }) => {
+    await page.goto('/projects/wedding')
+    const pictures = page.locator('picture')
+    const count = await pictures.count()
+    expect(count).toBeGreaterThan(0)
+    for (let i = 0; i < count; i++) {
+      const picture = pictures.nth(i)
+      await expect(picture.locator('source[type="image/avif"]')).toHaveCount(1)
+      await expect(picture.locator('source[type="image/webp"]')).toHaveCount(1)
+    }
+  })
+
   test('/projects/wedding/bullet-engine 能正常導航,且彈幕 Demo 有渲染', async ({ page }) => {
     await page.goto('/projects/wedding/bullet-engine')
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('賓客祝福彈幕')
