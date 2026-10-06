@@ -9,7 +9,15 @@
       :color="item.color"
     >
       <template #opposite="{ item: { year, month } }">
-        <span class="text-2xl" :class="[oppositeClass]">{{ year }} 年 {{ month }} 月</span>
+        <!-- P1-10(code review 修正):年/月撐版資料目前是真實日期格式的字串
+             (如 "2023"/"1"),直接套進「{{ year }} 年 {{ month }} 月」會呈現
+             成跟真實資訊一樣的日期,使用者容易誤以為是確定的故事時間軸,跟
+             文案/照片一樣需要明確標示「待確認」。month 留空時代表撐版資料
+             本身就是待確認狀態(見 story-timeline.vue 的 STORY_PLACEHOLDER),
+             這裡就不再補「年」「月」這兩個字,避免變成「日期待確認 年  月」
+             這種奇怪的半成品文字;有真實 month 時維持原本格式,不影響未來
+             真實資料。 -->
+        <span class="text-2xl" :class="[oppositeClass]">{{ year }}<template v-if="month"> 年 {{ month }} 月</template></span>
       </template>
       <template #default="{ item: { title, photo, description } }">
         <!-- 原版標題底色依 pink/blue/gray 分類換色,但那三色只在淺色模式讀得出來

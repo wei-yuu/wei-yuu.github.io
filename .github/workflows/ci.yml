@@ -1,7 +1,10 @@
 name: CI & Deploy
 
-# SRS §5.2:PR 僅觸發無副作用的 Stage 1-2(不消耗 Notion API 額度、不暴露 Secrets);
+# SRS §5.2:PR 僅觸發無副作用的 Stage 1-2.5(不消耗 Notion API 額度、不暴露 Secrets);
 # 只有 push main / workflow_dispatch / 每週排程,才會跑到會打 Notion API 與部署的 Stage 3-4。
+# Stage 2.5(P1-04 動態案例頁回歸測試)會實際跑兩次 nuxi generate 加一次
+# server 啟動,比 Stage 1-2 慢(本機約 60 秒),但不需要 secrets,也不會
+# 動到 Stage 3/4 的部署產物(verify 跟 deploy 是不同 job、各自獨立 checkout)。
 on:
   pull_request:
   push:
@@ -35,6 +38,8 @@ jobs:
           npm run typecheck
       - name: 'Stage 2: Unit Testing'
         run: npm run test
+      - name: 'Stage 2.5: Dynamic Route Integration Testing'
+        run: npm run test:integration
 
   # Stage 3 / 3.5 / 4:只在 push main、手動觸發或排程時跑,PR 不會執行這個 job
   deploy:

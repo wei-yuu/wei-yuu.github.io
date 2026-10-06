@@ -11,6 +11,16 @@ const props = defineProps<{
 const nodeColorClass = computed(() =>
   props.person === 'Wilson' ? 'border-wy-warm-glint' : 'border-wy-mist',
 )
+
+// P1-01:起訖時間僅顯示「年／月」。Notion 的日期屬性是 'YYYY-MM-DD' 純日期
+// 字串,直接切字串取年月,不透過 Date 物件——用 new Date() 解析純日期字串
+// 會被當成 UTC 午夜,client 時區落在 UTC 之前時 getMonth() 可能倒退一天,
+// 進而算出錯誤的月份。
+function formatYearMonth(date: string | null | undefined): string {
+  if (!date) return ''
+  const [year, month] = date.split('-')
+  return month ? `${year}/${month}` : year
+}
 </script>
 
 <template>
@@ -29,7 +39,7 @@ const nodeColorClass = computed(() =>
       <div class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-4">
         <p class="text-h3 font-semibold text-wy-text lg:text-h3-lg">{{ item.company }}</p>
         <p class="shrink-0 text-body-sm text-wy-text-muted">
-          {{ item.period?.start }} – {{ item.isCurrent ? '現職' : item.period?.end ?? '' }}
+          {{ formatYearMonth(item.period?.start) }} – {{ item.isCurrent ? '現職' : formatYearMonth(item.period?.end) }}
         </p>
       </div>
       <p class="mt-1 text-body font-medium text-wy-text">{{ item.role }}</p>

@@ -7,6 +7,7 @@ import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
 // 下,使用者只點開哪個亮點才會載入對應的 JS。
 const siteConfig = useSiteConfig()
 const pageUrl = computed(() => `${siteConfig.url}/projects/wedding`)
+const ogImage = computed(() => `${siteConfig.url}/images/og-wedding.png`)
 const { findProjectBySlug } = useProjects()
 const project = findProjectBySlug('wedding')
 
@@ -23,6 +24,9 @@ useSeoMeta({
   ogTitle: '互動婚禮網站 Case Study',
   ogDescription: summary,
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({
@@ -34,6 +38,7 @@ useHead({
   <div>
     <ContextualHeader />
     <main>
+      <InnerPageHero :lines="['IDEAS FLOW', 'INTO REALITY', 'LIKE TIDES']" show-grid />
       <PageContainer class="py-10 lg:py-14">
         <AppBreadcrumb :items="[{ label: '作品集', to: '/projects' }, { label: title }]" />
 
@@ -74,6 +79,102 @@ useHead({
 
         <!-- §4.4/A08:玻璃雙圓是這個案例的專屬風格封面,不是全站通用樣式。 -->
         <GlassCover class="relative mt-8" />
+
+        <!-- P1-09/A09/A10:案例頁只使用真實上線婚禮網站的桌機/手機截圖，
+             以及本專案實際彈幕 Demo 的靜態預覽；不以假 UI 或示意稿代替。 -->
+        <section class="mt-12">
+          <div class="flex items-center gap-4">
+            <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">實際畫面</h2>
+            <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
+            <p class="shrink-0 font-display-en text-body-sm tracking-wide text-wy-text-muted">PRODUCT PREVIEW</p>
+          </div>
+          <div class="mt-6 grid gap-6 lg:grid-cols-2">
+            <figure>
+              <!-- P1-09(code review 修正):桌機/手機截圖是直的手機跟橫的桌機
+                   兩種完全不同的長寬比,原本兩者共用同一個固定 aspect-[8/5]
+                   (桌機比例)——object-cover 要把直向照片硬塞進橫向的框,得把
+                   圖片放大到寬度填滿整個框,結果高度大幅溢出被裁掉(舊版
+                   390×844 塞進 8:5 框只留得住最上面 28.8% 高度,裁掉約
+                   71%)。改成預設(手機斷點)用跟手機截圖一致的長寬比,
+                   sm: 以上才切回跟桌機截圖一致的比例——兩邊長寬比都跟實際
+                   圖片一致,object-cover 不會再裁到關鍵 UI。
+                   兩張圖都已換成從真實上線站(wei-yuu.github.io/wedding)
+                   實際擷取的畫面,解析度符合 Website 設計文件 §5.1 的
+                   A09 規格(桌機 ≥1600、手機 ≥750):桌機 1600×1000、
+                   手機 750×1624。
+                   P1-09(code review 修正):原生 <picture><source> 直接
+                   載入原始 PNG(桌機約 1.60MB、手機約 0.99MB),沒有經過
+                   設計文件 §5.1 要求的轉碼最佳化。改用跟首頁海景圖
+                   (pages/index.vue)同一套手法——兩張圖各自負責一個斷點、
+                   用 class 切換顯示,而不是 <picture><source> 手動指定
+                   單一 src。
+                   第三輪 code review 修正:改用 NuxtImg + format="avif"
+                   時,產出的 HTML 只有一個 <img src>,一律是 AVIF,沒有
+                   備援格式——SRS 要求支援 Safari 15.4,但 AVIF 要 Safari
+                   16 才開始支援,15.4 會直接破圖。換成 NuxtPicture +
+                   format="avif,webp",它會產生真正的 <picture><source>
+                   結構(avif → webp → 原始 PNG 三層 fallback),WebP 從
+                   Safari 14 就支援,舊版 Safari 也不會破圖。 -->
+              <!-- sizes 固定成單一尺寸(不給 $img.options.screens 的預設值):
+                   這兩張圖本來就是用兩張固定圖片手動切斷點(art direction),
+                   不是同一張圖縮放成不同寬度的響應式情境——不指定 sizes
+                   的話,NuxtPicture 會依預設的一整組響應式斷點(320~3072px)
+                   各生成一份 avif/webp/png,一張圖就衍生出三十幾個檔案,
+                   generate 時間跟產物數量暴增卻完全用不到。 -->
+              <NuxtPicture
+                src="/images/wedding-site-mobile.png"
+                format="avif,webp"
+                width="750"
+                height="1624"
+                sizes="750px"
+                loading="lazy"
+                alt="互動婚禮網站首頁的實際上線畫面(手機版)"
+                :img-attrs="{ class: 'aspect-[750/1624] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top' }"
+                class="block sm:hidden"
+              />
+              <NuxtPicture
+                src="/images/wedding-site-desktop.png"
+                format="avif,webp"
+                width="1600"
+                height="1000"
+                sizes="1600px"
+                loading="lazy"
+                alt="互動婚禮網站首頁的實際上線畫面(桌機版)"
+                :img-attrs="{ class: 'aspect-[1600/1000] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top' }"
+                class="hidden sm:block"
+              />
+              <figcaption class="mt-2 text-body-sm text-wy-text-muted">婚禮網站首頁（桌機與手機實際畫面）</figcaption>
+            </figure>
+            <figure>
+              <!-- P1-09(code review 修正):原本的截圖幾乎都是導覽列/頁首/
+                   說明文字,只截到舞台最上緣,輸入框跟發送按鈕完全沒入鏡;
+                   尺寸 1200×675 也低於 Website 設計文件 §5.1 的 A10 規格
+                   (1600×900)。重新擷取本專案 /projects/wedding/bullet-engine
+                   的實際畫面,涵蓋標題/說明/完整彈幕舞台/輸入框/發送按鈕/
+                   字數提示,尺寸改為規格要求的 1600×900。
+                   第二輪 code review 修正:原本截圖時 5 條彈幕都停在剛進場
+                   的最右緣,只露出開頭幾個字——改成擷取前先把每條彈幕的
+                   CSS animation 暫停在各自 duration 的 50% 進度,確保每句
+                   祝福都完整滑進舞台中央可讀的範圍。
+                   第三輪 code review 修正:NuxtImg + format="avif" 只會
+                   輸出單一 AVIF,Safari 15.4 還不支援 AVIF(要到 Safari 16
+                   才支援)會直接破圖。換成 NuxtPicture + format="avif,webp"
+                   產生 avif → webp → 原始 PNG 三層 <picture><source>
+                   fallback,WebP 從 Safari 14 就支援。 -->
+              <NuxtPicture
+                src="/images/bullet-engine-preview.png"
+                format="avif,webp"
+                width="1600"
+                height="900"
+                sizes="1600px"
+                loading="lazy"
+                alt="賓客祝福彈幕引擎的實際執行畫面,含輸入框與發送按鈕"
+                :img-attrs="{ class: 'aspect-video w-full rounded border border-wy-border-subtle bg-wy-surface object-cover' }"
+              />
+              <figcaption class="mt-2 text-body-sm text-wy-text-muted">賓客祝福彈幕引擎靜態預覽</figcaption>
+            </figure>
+          </div>
+        </section>
 
         <!-- SRS §4.1/Website 設計文件 §4.5(2026-09-21 決議):案例正文改讀
              Notion Projects 的 Background/Approach/Outcome 三個 Rich Text

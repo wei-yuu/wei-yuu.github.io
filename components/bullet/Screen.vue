@@ -34,15 +34,11 @@ function fillBullet(index: number) {
   bullets.value.splice(index, 1, next)
 }
 
-function fillEmptySlots() {
-  for (let index = 0; index < bullets.value.length; index++) {
-    if (bullets.value[index] === undefined && magazine.value.length > 0) {
-      fillBullet(index)
-    }
-  }
+function backfillEmptySlots() {
+  fillEmptySlots(bullets.value, magazine.value)
 }
 
-watch(magazine, fillEmptySlots, { deep: true })
+watch(magazine, backfillEmptySlots, { deep: true })
 
-onMounted(fillEmptySlots)
+onMounted(backfillEmptySlots)
 </script>

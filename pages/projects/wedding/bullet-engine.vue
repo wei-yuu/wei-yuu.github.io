@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const siteConfig = useSiteConfig()
 const pageUrl = computed(() => `${siteConfig.url}/projects/wedding/bullet-engine`)
+const ogImage = computed(() => `${siteConfig.url}/images/og-bullet-engine.png`)
 const description = '忠實移植 wei-yuu/wedding 的彈匣循環填補模式,Demo-only 即時彈幕牆。'
 
 useSeoMeta({
@@ -9,6 +10,9 @@ useSeoMeta({
   ogTitle: '賓客祝福彈幕',
   ogDescription: description,
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({
@@ -20,6 +24,7 @@ useHead({
   <div>
     <ContextualHeader />
     <main>
+      <InnerPageHero :lines="['IDEAS FLOW', 'INTO REALITY', 'LIKE TIDES']" show-grid />
       <PageContainer class="py-10 lg:py-14">
         <AppBreadcrumb
           :items="[

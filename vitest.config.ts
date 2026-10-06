@@ -6,8 +6,12 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     environment: 'happy-dom',
-    // tests/e2e/** 是 Playwright 的測試,不歸 Vitest 管,避免重複執行/型別衝突
-    exclude: ['node_modules/**', 'tests/e2e/**'],
+    // tests/e2e/** 是 Playwright 的測試,不歸 Vitest 管,避免重複執行/型別衝突。
+    // tests/integration/** 會透過 @nuxt/test-utils 實際啟動一個 Nuxt server,
+    // 比純函式單元測試慢、且需要能綁定本機連接埠,不納入預設 `npm run test`
+    // (Stage 2 應保持快速、無網路相依),改用獨立的 `npm run test:integration`
+    // 執行,CI 要不要在哪個 Stage 跑待確認。
+    exclude: ['node_modules/**', 'tests/e2e/**', 'tests/integration/**'],
     coverage: {
       provider: 'v8',
       include: ['scripts/**/*.ts', 'utils/**/*.ts'],

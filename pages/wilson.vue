@@ -13,6 +13,7 @@ const linkedinUrl = computed(() => profile.value?.linkedinUrl || null)
 const sameAs = computed(() => [githubUrl.value, linkedinUrl.value].filter((url): url is string => Boolean(url)))
 const pageTitle = computed(() => `Wilson ｜ ${jobTitle.value}`)
 const pageUrl = computed(() => `${siteConfig.url}/wilson`)
+const ogImage = computed(() => `${siteConfig.url}/images/og-wilson.png`)
 
 useSeoMeta({
   title: pageTitle,
@@ -21,6 +22,9 @@ useSeoMeta({
   ogDescription: description,
   ogType: 'profile',
   ogUrl: pageUrl,
+  ogImage,
+  twitterCard: 'summary_large_image',
+  twitterImage: ogImage,
 })
 
 useHead({

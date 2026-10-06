@@ -43,8 +43,8 @@
     --color-print-bg: 255 255 255; /* #FFFFFF */
     --color-print-text: 0 0 0; /* #000000 */
     --fx-nav: rgba(250, 248, 243, 0.92);
-    --fx-hero-start: rgba(244, 240, 232, 0.88);
-    --fx-hero-end: rgba(244, 240, 232, 0.18);
+    --fx-hero-start: rgba(244, 240, 232, 0.05);
+    --fx-hero-end: rgba(244, 240, 232, 0.05);
     --fx-fade-start: rgba(244, 240, 232, 0);
     --fx-tide: rgba(135, 166, 181, 0.2);
     --fx-grid: rgba(54, 91, 109, 0.06);
@@ -92,8 +92,8 @@
     --color-print-bg: 255 255 255; /* #FFFFFF */
     --color-print-text: 0 0 0; /* #000000 */
     --fx-nav: rgba(20, 31, 40, 0.94);
-    --fx-hero-start: rgba(20, 31, 40, 0.9);
-    --fx-hero-end: rgba(20, 31, 40, 0.25);
+    --fx-hero-start: rgba(20, 31, 40, 0.05);
+    --fx-hero-end: rgba(20, 31, 40, 0.05);
     --fx-fade-start: rgba(20, 31, 40, 0);
     --fx-tide: rgba(159, 186, 201, 0.14);
     --fx-grid: rgba(180, 203, 215, 0.05);
