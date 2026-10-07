@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
-
 // SRS §4.1:/projects 是資料驅動的列表頁,卡片點進去對應各自手刻的 /projects/{slug} 詳情頁。
 const siteConfig = useSiteConfig()
 const pageUrl = computed(() => `${siteConfig.url}/projects`)
 const ogImage = computed(() => `${siteConfig.url}/images/og-projects.png`)
-const { projects } = useProjects()
+const { projects, projectPages } = useProjects()
 
 useSeoMeta({
   title: '專案作品集 ｜ Wei Yu',
@@ -22,9 +20,10 @@ useHead({
   link: [{ rel: 'canonical', href: pageUrl }],
 })
 
-// 亮點清單目前只有婚禮案例手刻,之後新增案例時再依 slug 對應各自的清單。
-function highlightsFor(slug: string) {
-  return slug === 'wedding' ? WEDDING_HIGHLIGHTS : []
+// SRS §3.2:亮點來自各專案頁面內文的 highlights 模組,跟案例總覽共用同一份;
+// 契約只接受已有子頁路由的亮點,不會產生無效入口。
+function highlightsFor(projectId: string) {
+  return projectPages.value[projectId]?.highlights ?? []
 }
 
 // Figma(node 19:1117「案例預覽 / 預設展開」)比對後新增:標題旁有獨立的
@@ -134,7 +133,7 @@ function toggleHighlights(slug: string) {
                  比對後修正:標題是襯線字 22/26px(不是無襯線 16px),收合鈕
                  緊貼在標題右邊(不是被 justify-between 推到最右);亮點標題
                  也是襯線 20/22px,圖示圓底是 52px(不是 36px)。 -->
-            <div v-if="highlightsFor(project.slug).length" class="mt-6 border-t border-wy-border-subtle pt-4">
+            <div v-if="highlightsFor(project.id).length" class="mt-6 border-t border-wy-border-subtle pt-4">
               <div class="flex items-center gap-3">
                 <p class="font-serif-tc text-[22px] text-wy-text md:text-[26px]">案例預覽</p>
                 <button
@@ -174,7 +173,7 @@ function toggleHighlights(slug: string) {
                 :id="`case-preview-${project.slug}`"
                 class="mt-4 flex flex-col divide-y divide-wy-border-subtle md:flex-row md:divide-x md:divide-y-0"
               >
-                <li v-for="highlight in highlightsFor(project.slug)" :key="highlight.slug" class="flex-1 py-4 md:px-6 md:py-2 first:md:pl-0">
+                <li v-for="highlight in highlightsFor(project.id)" :key="highlight.slug" class="flex-1 py-4 md:px-6 md:py-2 first:md:pl-0">
                   <NuxtLink :to="`/projects/${project.slug}/${highlight.slug}`" class="group flex items-start gap-3">
                     <span
                       class="inline-flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-wy-wilson text-wy-text dark:text-wy-on-accent"

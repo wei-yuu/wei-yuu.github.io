@@ -1,3 +1,5 @@
+import type { ProjectPageContent } from '~/types/projectContent'
+
 // 對應 SRS §3.1 最終 schema:只描述我們實際會用到的屬性形態,不是完整 Notion API 型別。
 export interface NotionTitleProperty {
   type: 'title'
@@ -140,6 +142,9 @@ export interface ProjectItem {
 
 export interface ProfileContent {
   projects: ProjectItem[]
+  // SRS §3.3.1:以 Projects 紀錄的 page id 對應已驗證的頁面內文客製內容;
+  // 沒有客製內容的專案不會有對應 key。
+  projectPages: Record<string, ProjectPageContent>
   experiences: ExperienceItem[]
   skills: SkillItem[]
   people: PersonItem[]

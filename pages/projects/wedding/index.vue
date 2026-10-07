@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
-
 // SRS §4.1:案例總覽頁只放摘要跟亮點列表卡片,個別亮點的完整說明跟 Demo 各自獨立成子頁
 // (bullet-engine.vue / story-timeline.vue),避免總覽頁一次載入所有亮點的 JS——彈幕引擎
 // 持續跑的計時器邏輯跟故事時間軸元件不應該互相拖累對方的載入成本,Nuxt 逐頁 code-split
@@ -8,20 +6,21 @@ import { WEDDING_HIGHLIGHTS } from '~/data/wedding-highlights'
 const siteConfig = useSiteConfig()
 const pageUrl = computed(() => `${siteConfig.url}/projects/wedding`)
 const ogImage = computed(() => `${siteConfig.url}/images/og-wedding.png`)
-const { findProjectBySlug } = useProjects()
-const project = findProjectBySlug('wedding')
+// SRS §3.2:標題/摘要來自 Projects 欄位;亮點入口與實際畫面的 alt/caption 來自
+// 頁面內文的 highlights/previews 模組,跟 /projects 列表共用同一份資料。
+const { project, content, findPreview } = useWeddingContent()
 
-const summary = computed(
-  () => project.value?.summary || '雙人協作打造的互動婚禮網站,展示彈幕引擎與視差故事時間軸。',
-)
-const title = computed(() => project.value?.title || '互動婚禮網站')
-
-const HIGHLIGHTS = WEDDING_HIGHLIGHTS
+const summary = computed(() => project.value?.summary ?? '')
+const title = computed(() => project.value?.title ?? '')
+const highlights = computed(() => content.value?.highlights ?? [])
+const desktopPreview = findPreview('site-desktop')
+const mobilePreview = findPreview('site-mobile')
+const bulletPreview = findPreview('bullet-engine')
 
 useSeoMeta({
-  title: '互動婚禮網站 Case Study ｜ Wei Yu',
+  title: () => `${title.value} Case Study ｜ Wei Yu`,
   description: summary,
-  ogTitle: '互動婚禮網站 Case Study',
+  ogTitle: () => `${title.value} Case Study`,
   ogDescription: summary,
   ogUrl: pageUrl,
   ogImage,
@@ -82,7 +81,7 @@ useHead({
 
         <!-- P1-09/A09/A10:案例頁只使用真實上線婚禮網站的桌機/手機截圖，
              以及本專案實際彈幕 Demo 的靜態預覽；不以假 UI 或示意稿代替。 -->
-        <section class="mt-12">
+        <section v-if="desktopPreview && mobilePreview && bulletPreview" class="mt-12">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">實際畫面</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
@@ -122,28 +121,29 @@ useHead({
                    各生成一份 avif/webp/png,一張圖就衍生出三十幾個檔案,
                    generate 時間跟產物數量暴增卻完全用不到。 -->
               <NuxtPicture
-                src="/images/wedding-site-mobile.png"
+                :src="mobilePreview.assetPath"
                 format="avif,webp"
                 width="750"
                 height="1624"
                 sizes="750px"
                 loading="lazy"
-                alt="互動婚禮網站首頁的實際上線畫面(手機版)"
+                :alt="mobilePreview.alt"
                 :img-attrs="{ class: 'aspect-[750/1624] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top' }"
                 class="block sm:hidden"
               />
               <NuxtPicture
-                src="/images/wedding-site-desktop.png"
+                :src="desktopPreview.assetPath"
                 format="avif,webp"
                 width="1600"
                 height="1000"
                 sizes="1600px"
                 loading="lazy"
-                alt="互動婚禮網站首頁的實際上線畫面(桌機版)"
+                :alt="desktopPreview.alt"
                 :img-attrs="{ class: 'aspect-[1600/1000] w-full rounded border border-wy-border-subtle bg-wy-surface object-cover object-top' }"
                 class="hidden sm:block"
               />
-              <figcaption class="mt-2 text-body-sm text-wy-text-muted">婚禮網站首頁（桌機與手機實際畫面）</figcaption>
+              <!-- 桌機/手機共用說明由 site-desktop 的 caption 提供,site-mobile 的 caption 留空。 -->
+              <figcaption v-if="desktopPreview.caption" class="mt-2 text-body-sm text-wy-text-muted">{{ desktopPreview.caption }}</figcaption>
             </figure>
             <figure>
               <!-- P1-09(code review 修正):原本的截圖幾乎都是導覽列/頁首/
@@ -162,16 +162,16 @@ useHead({
                    產生 avif → webp → 原始 PNG 三層 <picture><source>
                    fallback,WebP 從 Safari 14 就支援。 -->
               <NuxtPicture
-                src="/images/bullet-engine-preview.png"
+                :src="bulletPreview.assetPath"
                 format="avif,webp"
                 width="1600"
                 height="900"
                 sizes="1600px"
                 loading="lazy"
-                alt="賓客祝福彈幕引擎的實際執行畫面,含輸入框與發送按鈕"
+                :alt="bulletPreview.alt"
                 :img-attrs="{ class: 'aspect-video w-full rounded border border-wy-border-subtle bg-wy-surface object-cover' }"
               />
-              <figcaption class="mt-2 text-body-sm text-wy-text-muted">賓客祝福彈幕引擎靜態預覽</figcaption>
+              <figcaption v-if="bulletPreview.caption" class="mt-2 text-body-sm text-wy-text-muted">{{ bulletPreview.caption }}</figcaption>
             </figure>
           </div>
         </section>
@@ -204,14 +204,14 @@ useHead({
           </dl>
         </section>
 
-        <section v-if="HIGHLIGHTS.length" class="mt-12">
+        <section v-if="highlights.length" class="mt-12">
           <div class="flex items-center gap-4">
             <h2 class="shrink-0 font-serif-tc text-h2 font-semibold text-wy-text lg:text-h2-lg">亮點入口</h2>
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
             <p class="shrink-0 font-display-en text-body-sm tracking-wide text-wy-text-muted">HIGHLIGHTS</p>
           </div>
           <ul class="mt-6 flex flex-col divide-y divide-wy-border-subtle md:flex-row md:divide-x md:divide-y-0">
-            <li v-for="highlight in HIGHLIGHTS" :key="highlight.slug" class="flex-1 py-4 md:px-6 md:py-2 first:md:pl-0">
+            <li v-for="highlight in highlights" :key="highlight.slug" class="flex-1 py-4 md:px-6 md:py-2 first:md:pl-0">
               <NuxtLink :to="`/projects/wedding/${highlight.slug}`" class="group flex items-start gap-3">
                 <!-- SRS §2.3(a11y 對比度審查):深色模式下 wy-wilson 圓底會變亮,
                      跟著切換的 wy-text(暖白)疊上去只剩 1.74:1,連圖示 3:1 的

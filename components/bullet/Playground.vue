@@ -68,38 +68,25 @@
         <span class="text-wy-text-muted">{{ inputText.length }}/{{ MAX_LENGTH }}</span>
       </div>
     </form>
-    <p class="mt-2 text-body-sm text-wy-text-muted">
-      模擬演示模式,內容不會持久化——僅存於當前瀏覽器記憶體,重新整理即清空。
-    </p>
+    <p class="mt-2 text-body-sm text-wy-text-muted">{{ demoOnlyNote }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { BulletMessage } from "~/types/bullet";
 
-// SRS §4.2:DanmakuPlayground 資料語意與安全性規格,套在移植過來的 bullet/screen 引擎上。
-const MAX_LENGTH = 30;
-const THROTTLE_MS = 1500;
-const TRACK_COUNT = 5;
+// SRS §3.2:預設祝福與 Demo-only 提醒由頁面內文(default-wishes / bullet-notes)
+// 提供;表單 UI 標籤、錯誤/狀態訊息與限制數值留在元件內。
+const props = defineProps<{ defaultWishes: string[]; demoOnlyNote: string }>();
 
-// 預設彈幕:一開始畫面就有內容可看,不用等面試官先打字。跑完 14 則後自動從頭循環,
+// SRS §4.2:DanmakuPlayground 資料語意與安全性規格,套在移植過來的 bullet/screen 引擎上。
+const MAX_LENGTH = BULLET_MAX_LENGTH;
+const THROTTLE_MS = BULLET_THROTTLE_MS;
+const TRACK_COUNT = BULLET_TRACK_COUNT;
+
+// 預設彈幕:一開始畫面就有內容可看,不用等面試官先打字。全部播完後自動從頭循環,
 // 讓 Demo 畫面永遠熱鬧,不會播到一半突然安靜下來。
-const DEFAULT_BULLETS = [
-  "祝福新人百年好合、永浴愛河！",
-  "早生貴子，幸福美滿～",
-  "Yura & Wilson 恭喜你們，要一直這麼幸福喔！",
-  "看著你們從相識、相戀，一直牽手走到婚禮這一天，真的很感動",
-  "祝你們新婚快樂，未來的每一天都甜甜蜜蜜",
-  "終於等到這一天了，恭喜恭喜！！",
-  "願你們攜手到老，幸福永遠不遲到",
-  "新婚愉快！記得要常常放閃喔～",
-  "祝福你們像今天一樣，永遠這麼閃亮動人",
-  "愛情長跑終於開花結果，太替你們開心了",
-  "從朋友變家人，祝福滿滿送給你們！",
-  "希望你們的婚姻生活可以像今天在婚禮現場放送的這些彈幕一樣，永遠熱鬧、永遠有新鮮事",
-  "恭喜步入人生的下一個章節，加油！",
-  "祝福新婚快樂，早日聽到好消息～",
-];
+const DEFAULT_BULLETS = props.defaultWishes;
 
 function createBulletMessage(text: string): BulletMessage {
   return {
@@ -154,7 +141,7 @@ watch(inputText, () => {
   if (errorMessage.value) errorMessage.value = "";
 });
 
-// 彈匣跑空時(預設 14 則全部進到軌道播放中),重新塞一輪預設彈幕,達成無限循環播放。
+// 彈匣跑空時(預設祝福全部進到軌道播放中),重新塞一輪預設彈幕,達成無限循環播放。
 // 面試官自己輸入的彈幕會插進佇列尾端,不會被這個循環蓋掉,只是要排隊等目前這輪播完。
 watch(
   magazine,
