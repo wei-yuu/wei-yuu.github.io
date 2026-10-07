@@ -63,22 +63,12 @@ useHead({
       <PageContainer class="py-10 lg:py-14">
         <AppBreadcrumb :items="[{ label: '作品集', to: '/projects' }, { label: title }]" />
 
-        <!-- 沿用 /projects 列表頁跟 wedding 案例頁已對過 Figma 的既有樣式,
-             這個泛用案例頁沒有專屬設計稿。 -->
-        <div class="mt-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <h1 class="font-serif-tc text-h1 font-semibold text-wy-text lg:text-h1-lg">{{ title }} Case Study</h1>
-            <p class="mt-2 text-body text-wy-text-secondary">{{ summary }}</p>
-          </div>
-          <div v-if="project?.roleAttribution.length" class="flex shrink-0 flex-col gap-2">
-            <span
-              v-for="attribution in project.roleAttribution"
-              :key="attribution.person"
-              class="rounded-full border border-wy-border-control px-3 py-1 text-body-sm text-wy-text"
-            >
-              {{ attribution.person }}<span class="text-wy-text-secondary">：{{ attribution.role }}</span>
-            </span>
-          </div>
+        <!-- 沿用 /projects 列表頁跟 wedding 案例頁已對過 Figma 的既有樣式,這個泛用
+             案例頁沒有專屬設計稿。Website 設計文件 §4.5(2026-10-07):案例頁不顯示
+             「人名:職責」分工標籤。 -->
+        <div class="mt-6">
+          <h1 class="font-serif-tc text-h1 font-semibold text-wy-text lg:text-h1-lg">{{ title }} Case Study</h1>
+          <p class="mt-2 text-body text-wy-text-secondary">{{ summary }}</p>
         </div>
 
         <ul v-if="project?.techStack.length" class="mt-3 flex flex-wrap gap-1.5">
@@ -101,7 +91,8 @@ useHead({
             <span aria-hidden="true" class="h-px flex-1 bg-wy-border-subtle" />
             <p class="shrink-0 font-display-en text-body-sm tracking-wide text-wy-text-muted">OVERVIEW</p>
           </div>
-          <dl class="mt-4 max-w-[720px] space-y-3 text-body text-wy-text-secondary">
+          <!-- P1-20:正文使用內容外框全寬,跟章節標題對齊。 -->
+          <dl class="mt-4 space-y-3 text-body text-wy-text-secondary" data-testid="case-overview">
             <div v-if="project.background">
               <dt class="font-medium text-wy-text">背景</dt>
               <dd class="whitespace-pre-line">{{ project.background }}</dd>

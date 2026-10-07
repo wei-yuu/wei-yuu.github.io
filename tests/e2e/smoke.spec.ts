@@ -219,6 +219,38 @@ test.describe('專案作品集', () => {
     }
   })
 
+  // P1-18/P1-19/P1-20(Website 設計文件 §4.5,2026-10-07):案例頁不顯示分工標籤;
+  // 兩個實際畫面預覽共用同一組外框、並排時頂/底對齊;背景正文用內容外框全寬。
+  for (const viewport of [{ name: '桌機', width: 1280, height: 900 }, { name: '手機', width: 390, height: 844 }]) {
+    test(`/projects/wedding 於${viewport.name}:無分工標籤、預覽外框一致、正文對齊外框`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height })
+      await page.goto('/projects/wedding')
+
+      await expect(page.getByText(/^(Yura|Wilson)：/)).toHaveCount(0)
+
+      const frames = page.getByTestId('preview-frame')
+      await expect(frames).toHaveCount(2)
+      const [a, b] = await Promise.all([frames.nth(0).boundingBox(), frames.nth(1).boundingBox()])
+      expect(a && b).toBeTruthy()
+      expect(Math.abs(a!.width - b!.width)).toBeLessThanOrEqual(1)
+      expect(Math.abs(a!.height - b!.height)).toBeLessThanOrEqual(1)
+      if (viewport.width >= 1024) {
+        expect(Math.abs(a!.y - b!.y)).toBeLessThanOrEqual(1)
+      }
+
+      const overview = page.getByTestId('case-overview')
+      if (await overview.count()) {
+        const heading = page.getByRole('heading', { name: '案例背景' })
+        const [dl, section] = await Promise.all([overview.boundingBox(), heading.locator('xpath=ancestor::section[1]').boundingBox()])
+        expect(Math.abs(dl!.x - section!.x)).toBeLessThanOrEqual(1)
+        expect(Math.abs(dl!.width - section!.width)).toBeLessThanOrEqual(1)
+      }
+
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+      expect(overflow).toBeLessThanOrEqual(0)
+    })
+  }
+
   test('/projects/wedding/bullet-engine 能正常導航,且彈幕 Demo 有渲染', async ({ page }) => {
     await page.goto('/projects/wedding/bullet-engine')
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('賓客祝福彈幕')
