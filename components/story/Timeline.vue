@@ -19,7 +19,7 @@
              真實資料。 -->
         <span class="text-2xl" :class="[oppositeClass]">{{ year }}<template v-if="month"> 年 {{ month }} 月</template></span>
       </template>
-      <template #default="{ item: { title, photo, description } }">
+      <template #default="{ item: { title, photo, photoAlt, description } }">
         <!-- 原版標題底色依 pink/blue/gray 分類換色,但那三色只在淺色模式讀得出來
              ——深色模式下文字繼承 wy-text(暖白),疊在同一批淺底上會變成淺字配
              淺底。這裡不是漏改深色版,是結構性問題:淺色分類底色天生不會有跟
@@ -44,10 +44,9 @@
           >
             照片待補
           </div>
-          <!-- SRS §2.3:這張是真實故事節點照片(相識/交往/求婚/婚禮),不是裝
-               飾圖,alt 不能留空——用節點標題當替代文字,不是完美的圖片內容
-               描述,但至少是真實資訊,不是憑空編造的敘述。 -->
-          <img v-else class="w-4/5" :src="photo" :alt="title" @error="handlePhotoError(index)">
+          <!-- SRS §2.3:真實故事照片的 alt 不能留空——優先用 story-events 的
+               imageAlt,沒有時退回節點標題。 -->
+          <img v-else class="w-4/5" :src="photo" :alt="photoAlt || title" @error="handlePhotoError(index)">
           <span v-if="description" class="w-full whitespace-pre-line text-center text-wrap break-all">
             {{ description }}
           </span>
@@ -93,6 +92,7 @@ const timelineItems = computed(() =>
     title: story.title,
     description: story.description,
     photo: story.photo,
+    photoAlt: story.photoAlt,
     fullDot: story.majorEvent,
     color: story.color,
   })),

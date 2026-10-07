@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "v1",
+  "pageId": "3d036cd8-ad0e-80b5-8f5d-d68b2322d4d2",
+  "slug": "wedding",
+  "fetchedAt": "2026-10-07T01:40:46.397Z",
+  "content": {
+    "schemaVersion": "v1",
+    "pageId": "3d036cd8-ad0e-80b5-8f5d-d68b2322d4d2",
+    "slug": "wedding",
+    "highlights": [
+      {
+        "slug": "story-timeline",
+        "title": "故事時間軸",
+        "summary": "桌機左右交錯、手機靠左排列的故事時間軸，純 CSS Grid 完成。",
+        "intro": "純 CSS Grid 排版，桌機依單雙數左右交錯，手機一律靠左，不依賴 IntersectionObserver 或捲動聯動。目前內容為待確認的占位資料，確認後才會替換。",
+        "icon": "book"
+      },
+      {
+        "slug": "bullet-engine",
+        "title": "賓客祝福彈幕",
+        "summary": "以彈匣循環補位的即時彈幕牆，僅供展示（Demo-only）。",
+        "intro": "採彈匣循環補位（Magazine Pattern）：軌道數量固定，每條軌道一次只播一則，播畢即從佇列依序補位，不會互相重疊，不需要碰撞偵測演算法。",
+        "icon": "chat"
+      }
+    ],
+    "previews": [
+      {
+        "key": "site-desktop",
+        "assetPath": "/images/wedding-site-desktop.png",
+        "alt": "婚禮網站首頁的實際上線畫面（桌機版）",
+        "caption": "婚禮網站首頁（桌機與手機實際畫面）"
+      },
+      {
+        "key": "site-mobile",
+        "assetPath": "/images/wedding-site-mobile.png",
+        "alt": "互動婚禮網站首頁的實際上線畫面（手機版）",
+        "caption": ""
+      },
+      {
+        "key": "bullet-engine",
+        "assetPath": "/images/bullet-engine-preview.png",
+        "alt": "賓客祝福彈幕的實際執行畫面，含輸入框與發送按鈕",
+        "caption": "賓客祝福彈幕靜態預覽"
+      }
+    ],
+    "contract": "wedding",
+    "bulletNotes": {
+      "demoOnly": "僅供展示（Demo-only）：內容只存在於目前瀏覽器的記憶體，重新整理即清空。",
+      "tech": "每條軌道是一個固定格子，彈幕播完動畫後，即從彈匣佇列依序抽出下一則補進同一格。同一時刻、同一軌道永遠只有一則在播放，因此不會互相重疊。移動距離依「軌道寬度＋文字實際寬度」量測計算，不論文字長短都能剛好跑完整條軌道。",
+      "usage": [
+        "單則祝福上限 {maxLength} 字，送出後需間隔 {throttleSeconds} 秒才能再送，避免連續送出造成畫面暴增。",
+        "{demoOnly}",
+        "空白內容不會送出，也不會出現在彈幕牆上。"
+      ]
+    },
+    "defaultWishes": [
+      "祝福新人百年好合、永浴愛河！",
+      "早生貴子，幸福美滿～",
+      "Yura & Wilson 恭喜你們，要一直這麼幸福喔！",
+      "看著你們從相識、相戀，一路牽手走到婚禮這一天，真的很感動。",
+      "祝你們新婚快樂，未來的每一天都甜甜蜜蜜。",
+      "終於等到這一天了，恭喜恭喜！",
+      "願你們攜手到老，幸福永遠不遲到。",
+      "新婚愉快！記得要常常放閃喔～",
+      "祝福你們像今天一樣，永遠這麼閃亮動人。",
+      "愛情長跑終於開花結果，太替你們開心了！",
+      "從朋友變家人，祝福滿滿送給你們！",
+      "希望你們的婚姻生活，就像婚禮現場滿滿的彈幕一樣，永遠熱鬧、永遠有新鮮事。",
+      "恭喜步入人生的下一個章節，加油！",
+      "新婚快樂，早日聽到好消息～"
+    ],
+    "storyEvents": [
+      {
+        "key": "meeting",
+        "dateStatus": "pending",
+        "year": "",
+        "month": "",
+        "title": "相識",
+        "description": "故事文案待 Yura 補上",
+        "majorEvent": false,
+        "color": "blue",
+        "imagePath": "",
+        "imageAlt": ""
+      },
+      {
+        "key": "dating",
+        "dateStatus": "pending",
+        "year": "",
+        "month": "",
+        "title": "交往",
+        "description": "故事文案待 Yura 補上",
+        "majorEvent": false,
+        "color": "pink",
+        "imagePath": "",
+        "imageAlt": ""
+      },
+      {
+        "key": "proposal",
+        "dateStatus": "pending",
+        "year": "",
+        "month": "",
+        "title": "求婚",
+        "description": "故事文案待 Yura 補上",
+        "majorEvent": true,
+        "color": "pink",
+        "imagePath": "",
+        "imageAlt": ""
+      },
+      {
+        "key": "wedding",
+        "dateStatus": "pending",
+        "year": "",
+        "month": "",
+        "title": "婚禮",
+        "description": "故事文案待 Yura 補上",
+        "majorEvent": true,
+        "color": "blue",
+        "imagePath": "",
+        "imageAlt": ""
+      }
+    ]
+  }
+}

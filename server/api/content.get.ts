@@ -1,8 +1,10 @@
-import { readFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
+import { readdir, readFile } from 'node:fs/promises'
 import * as path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import type { NotionPage, ProfileContent, ProjectItem } from '~/types/notion'
+import type { ProjectPageBackup, ProjectPageContent } from '~/types/projectContent'
 import { mapExperience, mapPerson, mapProject, mapSkill } from '~/utils/notion'
+import { validateProjectPageBackup } from '~/utils/projectContent'
 
 // P1-04 回歸測試(code review 要求):/projects/[slug].vue 只有在真的有
 // 「wedding 以外」的專案時才會被 generate/SSR 走過——目前 Notion 只有
@@ -34,18 +36,27 @@ function buildFixtureProject(): ProjectItem {
   }
 }
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const CACHE_FILE = path.resolve(__dirname, '../../.cache/active-content.json')
-const PROJECTS_BACKUP = path.resolve(__dirname, '../../content/backup/projects.json')
-const EXPERIENCES_BACKUP = path.resolve(__dirname, '../../content/backup/experiences.json')
-const SKILLS_BACKUP = path.resolve(__dirname, '../../content/backup/skills.json')
-const PEOPLE_BACKUP = path.resolve(__dirname, '../../content/backup/people.json')
+// 專案根目錄由 nuxt.config.ts 的 runtimeConfig.contentRoot 在建置期注入。
+function contentPaths() {
+  const root = useRuntimeConfig().contentRoot
+  const backupDir = path.join(root, 'content/backup')
+  return {
+    cacheFile: path.join(root, '.cache/active-content.json'),
+    projectsBackup: path.join(backupDir, 'projects.json'),
+    experiencesBackup: path.join(backupDir, 'experiences.json'),
+    skillsBackup: path.join(backupDir, 'skills.json'),
+    peopleBackup: path.join(backupDir, 'people.json'),
+    projectPagesBackupDir: path.join(backupDir, 'project-pages'),
+    publicDir: path.join(root, 'public'),
+  }
+}
 
 interface RawContent {
   projects: NotionPage[]
   experiences: NotionPage[]
   skills: NotionPage[]
   people: NotionPage[]
+  projectPages?: Record<string, ProjectPageBackup>
   updatedAt?: string
 }
 
@@ -57,34 +68,65 @@ async function readJson<T>(filePath: string): Promise<T | undefined> {
   }
 }
 
+async function readProjectPageBackups(dir: string, publicDir: string): Promise<Record<string, ProjectPageBackup>> {
+  let files: string[]
+  try {
+    files = (await readdir(dir)).filter((name) => name.endsWith('.json'))
+  } catch {
+    return {}
+  }
+  const backups = await Promise.all(files.map((name) => readJson<ProjectPageBackup>(path.join(dir, name))))
+  // 跟 fetch-notion.ts 的降級共用同一套驗證:半份或不符契約的備份不進頁面。
+  const valid = backups.filter((b): b is ProjectPageBackup => {
+    if (!b) return false
+    const issues = validateProjectPageBackup(b, {
+      pageId: b.pageId,
+      slug: b.slug,
+      assetExists: (assetPath) => existsSync(path.join(publicDir, assetPath)),
+    })
+    if (issues.length) console.warn(`[content] 略過不可用的備份 ${b.pageId}: ${issues.join('; ')}`)
+    return issues.length === 0
+  })
+  return Object.fromEntries(valid.map((b) => [b.pageId, b]))
+}
+
 async function loadRawContent(): Promise<RawContent> {
-  const cached = await readJson<RawContent>(CACHE_FILE)
+  const paths = contentPaths()
+  const cached = await readJson<RawContent>(paths.cacheFile)
   if (cached) return cached
 
   // 本機開發還沒跑過 `npm run fetch:content` 時,直接讀本地備份——
   // 跟 fetch-notion.ts 的降級精神一致,不因為忘了跑一次腳本就整個頁面掛掉。
-  const [projects, experiences, skills, people] = await Promise.all([
-    readJson<NotionPage[]>(PROJECTS_BACKUP),
-    readJson<NotionPage[]>(EXPERIENCES_BACKUP),
-    readJson<NotionPage[]>(SKILLS_BACKUP),
-    readJson<NotionPage[]>(PEOPLE_BACKUP),
+  const [projects, experiences, skills, people, projectPages] = await Promise.all([
+    readJson<NotionPage[]>(paths.projectsBackup),
+    readJson<NotionPage[]>(paths.experiencesBackup),
+    readJson<NotionPage[]>(paths.skillsBackup),
+    readJson<NotionPage[]>(paths.peopleBackup),
+    readProjectPageBackups(paths.projectPagesBackupDir, paths.publicDir),
   ])
   return {
     projects: projects ?? [],
     experiences: experiences ?? [],
     skills: skills ?? [],
     people: people ?? [],
+    projectPages,
   }
 }
 
 export default defineEventHandler(async (): Promise<ProfileContent> => {
   const raw = await loadRawContent()
   const projects = raw.projects.map(mapProject)
+  // 只輸出已驗證的公開內容,不帶原始 blocks 或抓取時間以外的管線資訊。
+  const projectPages: Record<string, ProjectPageContent> = Object.fromEntries(
+    Object.values(raw.projectPages ?? {}).map((backup) => [backup.pageId, backup.content]),
+  )
+  // fixture 專案刻意沒有客製內容,用來驗證「無客製內容的專案」不會串到別人的資料。
   if (process.env.E2E_FIXTURE_PROJECTS === '1') {
     projects.push(buildFixtureProject())
   }
   return {
     projects,
+    projectPages,
     experiences: raw.experiences.map(mapExperience),
     skills: raw.skills.map(mapSkill),
     people: raw.people.map(mapPerson),

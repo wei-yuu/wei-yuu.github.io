@@ -1,7 +1,16 @@
+import { fileURLToPath } from 'node:url'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+
+  // server/api/content.get.ts 讀 .cache 與 content/backup 時用的專案根目錄。
+  // 建置期固定成絕對路徑,不依賴 server bundle 的輸出位置(prerender 與
+  // @nuxt/test-utils 的 node-server 產物目錄層級不同,用 __dirname 推回去會算錯)。
+  runtimeConfig: {
+    contentRoot: fileURLToPath(new URL('.', import.meta.url)),
+  },
 
   // SRS §2.1:核心框架採 SSG 靜態導出
   ssr: true,

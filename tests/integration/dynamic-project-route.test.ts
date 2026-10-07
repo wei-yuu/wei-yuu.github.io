@@ -51,4 +51,49 @@ describe('動態案例頁 /projects/[slug]', async () => {
     const res = await fetch('/projects/this-slug-does-not-exist-anywhere')
     expect(res.status).toBe(404)
   })
+
+  // SRS §3.3.1 / §5.1.1:API 只輸出已驗證的公開內容,並以 ProjectItem.id 對應;
+  // 沒有客製內容的 fixture 專案不會拿到婚禮的資料,婚禮內容也不會串到別的專案。
+  it('/api/content 以 pageId 回傳已驗證的 projectPages,fixture 專案沒有客製內容', async () => {
+    const res = await fetch('/api/content')
+    const body = (await res.json()) as {
+      projects: Array<{ id: string; slug: string }>
+      projectPages: Record<string, { contract: string; slug: string; highlights: Array<{ slug: string; summary: string }> }>
+    }
+    const wedding = body.projects.find((p) => p.slug === 'wedding')
+    const fixture = body.projects.find((p) => p.slug === 'e2e-fixture-project')
+    expect(wedding && body.projectPages[wedding.id]).toMatchObject({ contract: 'wedding', slug: 'wedding' })
+    expect(fixture && body.projectPages[fixture.id]).toBeUndefined()
+    expect(Object.values(body.projectPages).every((page) => page.slug === 'wedding')).toBe(true)
+    expect(JSON.stringify(body)).not.toMatch(/ntn_|secret_|"blocks"/)
+  })
+
+  it('婚禮亮點摘要在 /projects、總覽與子頁 meta 都讀同一份 Notion 內容;fixture 專案頁沒有亮點入口', async () => {
+    const api = (await (await fetch('/api/content')).json()) as {
+      projects: Array<{ id: string; slug: string }>
+      projectPages: Record<string, { highlights: Array<{ slug: string; summary: string; intro: string }> }>
+    }
+    const wedding = api.projects.find((p) => p.slug === 'wedding')!
+    const highlights = api.projectPages[wedding.id].highlights
+    expect(highlights.map((h) => h.slug)).toEqual(['story-timeline', 'bullet-engine'])
+
+    const listHtml = await (await fetch('/projects')).text()
+    const overviewHtml = await (await fetch('/projects/wedding')).text()
+    for (const highlight of highlights) {
+      expect(listHtml).toContain(highlight.summary)
+      expect(overviewHtml).toContain(highlight.summary)
+      const subHtml = await (await fetch(`/projects/wedding/${highlight.slug}`)).text()
+      expect(subHtml).toContain(`<meta name="description" content="${highlight.summary}"`)
+      expect(subHtml).toContain(highlight.intro)
+    }
+
+    // 內嵌的 __NUXT_DATA__ payload 本來就帶整份 /api/content,所以只檢查渲染出來的
+    // 標記:fixture 專案不能出現亮點入口區塊,也不能長出指向自己 slug 的亮點連結。
+    const fixtureHtml = await (await fetch('/projects/e2e-fixture-project')).text()
+    const rendered = fixtureHtml.replace(/<script[\s\S]*?<\/script>/g, '')
+    expect(rendered).not.toContain('亮點入口')
+    expect(rendered).not.toContain(highlights[0].summary)
+    expect(fixtureHtml).not.toContain('/projects/e2e-fixture-project/story-timeline')
+    expect(fixtureHtml).not.toContain('/projects/e2e-fixture-project/bullet-engine')
+  })
 })

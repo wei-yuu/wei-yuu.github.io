@@ -24,5 +24,15 @@ export function useProjects() {
     return computed(() => projects.value.find((item) => item.slug === slug))
   }
 
-  return { projects, featuredProjects, findProjectBySlug, status, error }
+  // SRS §3.2:頁面內文客製內容依 ProjectItem.id 接回,沒有客製內容的專案回傳 undefined。
+  const projectPages = computed(() => data.value?.projectPages ?? {})
+
+  function findProjectContent(slug: string) {
+    return computed(() => {
+      const project = projects.value.find((item) => item.slug === slug)
+      return project ? projectPages.value[project.id] : undefined
+    })
+  }
+
+  return { projects, featuredProjects, projectPages, findProjectBySlug, findProjectContent, status, error }
 }

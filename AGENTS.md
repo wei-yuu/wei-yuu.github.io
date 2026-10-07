@@ -13,11 +13,20 @@
 - **SRS（系統需求規格書）**：功能、路由、資料庫 schema、效能/a11y/測試門檻、Sprint 計畫。`https://app.notion.com/p/SRS-3d436cd8ad0e808c816bd2abcba15d80`
 - **Website 設計（Design v1.2）**：視覺系統——色票 token、Tailwind 設定、字體/間距/斷點、逐頁內容規範、素材清單。功能與品質門檻仍以 SRS 為準，這份文件補視覺實作細節。`https://app.notion.com/p/Website-3db36cd8ad0e80208308de2ec9bee6be`
 
+## 讀取 Notion／Figma 的方式（token 一律取自專案 `.env`）
+
+需要讀 Notion 或 Figma 時，**直接讀專案根目錄 `.env` 取得 token，用 REST API 讀取**，不要先判定「沒有權限／沒有 MCP／頁面要登入」就放棄或請使用者貼內容（`WebFetch` 打不開私人 Notion 頁面，這條路不通）：
+
+- `NOTION_API_KEY`（備用 `NOTION_API_KEY2`）：Notion Internal Integration token。`curl -H "Authorization: Bearer $NOTION_API_KEY" -H "Notion-Version: 2022-06-28" "https://api.notion.com/v1/blocks/{pageId}/children?page_size=100"`；頁面網址最後 32 碼即 pageId（可加 `-` 成 UUID 格式）。四個資料庫 ID 為 `NOTION_DB_PROJECTS`／`NOTION_DB_EXP`／`NOTION_DB_SKILLS`／`NOTION_DB_PEOPLE`。
+- `FIGMA_API_TOKEN`：Figma REST API，用法見下方「對照 Figma 開發」。
+- 載入方式：`set -a && source .env && set +a`，之後只在指令裡引用 `$NOTION_API_KEY`／`$FIGMA_API_TOKEN`。不要用 `cat`／Read 把 `.env` 內容印出來，不要把 token 寫進程式碼、註解、commit 或回覆。
+- 回傳 404／`object_not_found` 代表該頁面尚未分享給這個 integration，改試 `NOTION_API_KEY2`，仍失敗再請使用者到 Notion 頁面的「連線」加入 integration，不要改成請使用者整頁貼文字。
+
 **讀 Notion 文件時的已知陷阱**：用 Notion API 的 `blocks/{id}/children` 讀取頁面內容時，一次最多回傳 100 個 block，`has_more`/`next_cursor` 一定要處理分頁迴圈，不然文件內容會在第 100 個 block 附近被靜默截斷——這份文件本身就曾經因為這個 bug 被讀漏過第 5-7 章。
 
 ## 技術棧
 
-Nuxt 3（SSG，`nitro.preset: github-pages`）、TypeScript strict、Tailwind CSS 3.x + CSS 變數雙主題、`@nuxt/image`、`@nuxtjs/sitemap`、Vitest（單元測試）、Playwright（E2E，這個開發環境目前缺 `libnspr4.so` 跑不起來，只能寫測試、不能實際執行驗證，要誠實跟使用者說清楚）。
+Nuxt 3（SSG，`nitro.preset: github-pages`）、TypeScript strict、Tailwind CSS 3.x + CSS 變數雙主題、`@nuxt/image`、`@nuxtjs/sitemap`、Vitest（單元測試）、Playwright（E2E，`npm run test:e2e` 可在這個環境實際執行）。
 
 **開發環境版本鎖定**（SRS §2.9）：Node 22.x LTS、npm 10.9.8。`package.json` 的 `engines`/`packageManager`、`.nvmrc`、CI 的 `node-version: 22` 都已對齊，改動前先確認本機版本一致，避免 lockfile 不同步。
 
@@ -45,7 +54,7 @@ Nuxt 3（SSG，`nitro.preset: github-pages`）、TypeScript strict、Tailwind CS
 
 視覺還原（頁面排版、間距、色值、向量圖形）以使用者提供的 Figma 設計稿（含 `node-id` 的 URL）為準，跟 Website 設計文件互補——設計文件給 token/斷點等系統性規則,Figma 稿是逐頁逐元件的實際排版依據,兩者有落差時以 Figma 實測值為準,並回頭補文件。
 
-優先用 `mcp__claude_ai_Figma__get_design_context` 等 MCP 工具讀取。若 MCP 回報無編輯權限（no edit access）等錯誤，改用 `.env` 的 `FIGMA_API_TOKEN` 直接打 Figma REST API 當備援，不要因此放棄比對或憑螢幕截圖臆測數值：
+讀取一律先從 `.env` 取得 `FIGMA_API_TOKEN`，直接打 Figma REST API；`mcp__claude_ai_Figma__get_design_context` 等 MCP 工具可作輔助，但 MCP 回報無編輯權限（no edit access）等錯誤時，不要因此放棄比對或憑螢幕截圖臆測數值：
 
 - 節點結構／樣式／變數：`GET https://api.figma.com/v1/files/{fileKey}/nodes?ids={nodeId}`（加 `&geometry=paths` 可取得向量的精確 SVG path 資料，適合截取無法用既有元件還原的客製曲線／圖形）。
 - 渲染截圖：`GET https://api.figma.com/v1/images/{fileKey}?ids={nodeId}&format=png&scale=N`（回傳的是暫存圖片網址，要再對該網址發一次請求才拿到實際圖片，且該網址有時效）。
@@ -58,5 +67,5 @@ Nuxt 3（SSG，`nitro.preset: github-pages`）、TypeScript strict、Tailwind CS
 
 - **GitHub Flow**，無 `develop` 分支；`main` 鎖保護，PR 需另一人 Approve；分支前綴 `feature/`、`fix/`、`docs/`、`chore/`；一個 Sprint 一個分支。
 - **commit 前一定要先給使用者看過、明確同意才 commit**——不要自己判斷「這樣應該可以」就直接 commit。
-- 改動後跑 `npm run lint` / `npm run typecheck` / `npm run test` / `npm run generate`，確認靜態產出內容正確（`grep` 生成的 HTML）。Playwright E2E 只能寫，不能在這個環境實際跑，要明確告知使用者這個限制。
+- 改動後跑 `npm run lint` / `npm run typecheck` / `npm run test` / `npm run generate`，確認靜態產出內容正確（`grep` 生成的 HTML）。也要跑 `npm run test:e2e`（需先 `generate`）；動態路由整合測試用 `npm run test:integration`。Safari 與讀屏器無法在這個環境驗證，要明確告知使用者。
 - 這個環境沒有 `gh` CLI 也沒有 GitHub token，無法直接建立 PR，只能給使用者可以直接點擊、已經填好標題/內文的 GitHub compare URL。
